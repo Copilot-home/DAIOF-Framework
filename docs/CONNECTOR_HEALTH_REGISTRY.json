@@ -1,0 +1,297 @@
+{
+  "schema_version": "0.2",
+  "architect": "alpha_prime_omega Nguyễn Đức Cường",
+  "repository": "NguyenCuong1989/DAIOF-Framework",
+  "branch": "architect/connector-governance-kernel-v0.2",
+  "purpose": "Machine-readable registry for routing authenticated connector apps as domain agents in the DAIOF global operating mesh.",
+  "last_probe_context": "ChatGPT connector runtime probe; read-only and controlled-write operations only.",
+  "risk_classes": {
+    "R0": "Public or harmless read",
+    "R1": "Private metadata read",
+    "R2": "Draft artifact",
+    "R3": "Internal write in branch/sandbox/draft",
+    "R4": "External, irreversible, financial, production, phone-call, delete, merge, publish, or deploy side effect"
+  },
+  "health_states": {
+    "active": "Tool succeeds and returns usable data",
+    "active_empty": "Tool succeeds but accessible dataset is empty",
+    "expired": "Authentication/session expired",
+    "blocked": "Safety/policy layer blocked current probe path",
+    "upstream_error": "External service returned infrastructure/service error",
+    "untested": "Connector discovered but not probed in this session",
+    "available_tools_discovered": "Tool surface discovered through registry but no live identity/data probe executed"
+  },
+  "agents": [
+    {
+      "connector": "GitHub",
+      "agent_name": "GitHubAgent",
+      "health": "active",
+      "authority": ["repo_read", "branch_create", "file_create", "pr_create", "issue_create", "merge_capable"],
+      "observed_scope": ["NguyenCuong1989/DAIOF-Framework", "NguyenCuong1989/hyperai1989", "NguyenCuong1989/vietnamese-ai-consciousness"],
+      "default_risk": "R1-R4",
+      "routing_role": "Source-of-truth, code/doc evolution, branch-first audit ledger",
+      "governance": "Never write to main by default; prefer branch and draft PR; merge is R4."
+    },
+    {
+      "connector": "Asana",
+      "agent_name": "AsanaAgent",
+      "health": "active",
+      "authority": ["user_read", "workspace_read", "task_read", "project_read", "task_create", "project_create"],
+      "observed_scope": ["workspace available", "my incomplete tasks empty"],
+      "default_risk": "R1-R3",
+      "routing_role": "Execution queue and operational work graph",
+      "governance": "Task/project creation should be sandboxed or explicitly tied to current operational objective."
+    },
+    {
+      "connector": "Linear",
+      "agent_name": "LinearAgent",
+      "health": "expired",
+      "authority": ["issue_read", "project_read", "document_read", "issue_write", "project_write", "document_write"],
+      "observed_scope": ["session expired on profile probe"],
+      "default_risk": "R1-R3",
+      "routing_role": "Product/engineering execution graph after reconnect",
+      "governance": "Do not route live execution to Linear until reauthenticated."
+    },
+    {
+      "connector": "HubSpot",
+      "agent_name": "HubSpotAgent",
+      "health": "active",
+      "authority": ["crm_schema_read", "contact_read_write", "company_read_write", "deal_read_write", "ticket_read_write", "product_read_write", "note_read_write", "task_read_write"],
+      "observed_scope": ["account 245514442", "owner 89480099"],
+      "default_risk": "R1-R4",
+      "routing_role": "Business memory, CRM, customer and commercial pipeline",
+      "governance": "CRM writes require explicit confirmation unless confirmations are waived for the session."
+    },
+    {
+      "connector": "Stripe",
+      "agent_name": "StripeAgent",
+      "health": "active",
+      "authority": ["account_read", "customer_read_write", "product_read_write", "price_read_write", "invoice_read_write", "payment_link_create", "refund_create", "subscription_update"],
+      "observed_scope": ["account acct_1RyF0QJFF7DYQeWf"],
+      "default_risk": "R1-R4",
+      "routing_role": "Payment, billing, monetization, financial boundary",
+      "governance": "Reads and integration planning allowed; financial side effects are R4 and require separate confirmation."
+    },
+    {
+      "connector": "Figma",
+      "agent_name": "FigmaAgent",
+      "health": "active",
+      "authority": ["whoami", "design_context_read", "diagram_generate", "deck_generate", "figma_write_with_file_key"],
+      "observed_scope": ["team: cuong nguyen's team", "seat: View"],
+      "default_risk": "R1-R4",
+      "routing_role": "Design cognition, design-to-code, diagrams, visual planning",
+      "governance": "Design reads are R1; new diagrams/decks are R2/R3; direct Figma mutations require explicit file context."
+    },
+    {
+      "connector": "Canva",
+      "agent_name": "CanvaAgent",
+      "health": "active_empty",
+      "authority": ["design_search", "folder_read_write", "generate_design", "import_design", "edit_transaction"],
+      "observed_scope": ["design search returned empty"],
+      "default_risk": "R1-R4",
+      "routing_role": "Visual document and marketing artifact generation",
+      "governance": "Existing design edits require transaction discipline; commits to designs require explicit approval."
+    },
+    {
+      "connector": "Airtable",
+      "agent_name": "AirtableAgent",
+      "health": "active_empty",
+      "authority": ["base_list", "table_schema_read", "record_read_write", "table_create"],
+      "observed_scope": ["no bases returned"],
+      "default_risk": "R1-R3",
+      "routing_role": "Structured operations database once seeded",
+      "governance": "Cannot serve as source-of-truth until base exists."
+    },
+    {
+      "connector": "Notion",
+      "agent_name": "NotionAgent",
+      "health": "available_tools_discovered",
+      "authority": ["workspace_search", "page_fetch", "page_create", "database_create", "database_query", "meeting_notes_query"],
+      "observed_scope": ["self-user probe previously blocked by safety path", "tool surface available via registry"],
+      "default_risk": "R1-R3",
+      "routing_role": "Knowledge base, structured memory, meeting notes",
+      "governance": "Prefer search/fetch before create; do not delete or replace content without review."
+    },
+    {
+      "connector": "Netlify",
+      "agent_name": "NetlifyAgent",
+      "health": "available_tools_discovered",
+      "authority": ["coding_context", "user_read", "team_read", "project_read", "deploy", "env_var_manage", "project_create"],
+      "observed_scope": ["initial user reader blocked by safety path", "tool surface available via registry"],
+      "default_risk": "R1-R4",
+      "routing_role": "Deployment, preview, hosting, serverless and environment operations",
+      "governance": "Production deploy, env var mutation, and access-control updates are R4."
+    },
+    {
+      "connector": "Malwarebytes",
+      "agent_name": "SecurityAgent",
+      "health": "active",
+      "authority": ["url_reputation", "email_reputation", "phone_reputation", "whois", "indicator_report"],
+      "observed_scope": ["OpenAI developers URL verdict unknown", "GitHub URL verdict unknown"],
+      "default_risk": "R0-R2",
+      "routing_role": "Trust and threat-intelligence guard",
+      "governance": "Unknown verdict is not proof of safety; reporting requires explicit user intent."
+    },
+    {
+      "connector": "DataCamp",
+      "agent_name": "LearningAgent",
+      "health": "active",
+      "authority": ["content_search", "course_fetch", "tutorial_fetch", "webinar_fetch"],
+      "observed_scope": ["AI agent courses and tutorials returned"],
+      "default_risk": "R0-R1",
+      "routing_role": "Skill acquisition and training reference",
+      "governance": "Use for capability learning; not a source for private execution state."
+    },
+    {
+      "connector": "edX",
+      "agent_name": "AcademicLearningAgent",
+      "health": "active",
+      "authority": ["course_search", "course_preview", "course_compare"],
+      "observed_scope": ["Agentic AI course search returned"],
+      "default_risk": "R0-R1",
+      "routing_role": "Strategic academic learning and course comparison",
+      "governance": "Use only for edX-related educational queries."
+    },
+    {
+      "connector": "Hugging Face",
+      "agent_name": "ModelResearchAgent",
+      "health": "upstream_error",
+      "authority": ["model_search", "dataset_search", "paper_search", "space_search", "doc_search", "jobs_compute"],
+      "observed_scope": ["hf_whoami returned 502 upstream error"],
+      "default_risk": "R0-R4",
+      "routing_role": "Models, datasets, ML docs, Spaces, compute jobs",
+      "governance": "Do not route compute jobs without explicit objective and cost/risk boundary."
+    },
+    {
+      "connector": "Granola",
+      "agent_name": "MeetingMemoryAgent",
+      "health": "available_tools_discovered",
+      "authority": ["meeting_search", "meeting_list", "meeting_fetch", "transcript_fetch"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R1-R3",
+      "routing_role": "Meeting memory, decisions, action items",
+      "governance": "Use only when meeting context is relevant; preserve citations."
+    },
+    {
+      "connector": "Wix",
+      "agent_name": "WixSiteAgent",
+      "health": "available_tools_discovered",
+      "authority": ["site_list", "site_build", "site_api_read_write", "media_upload", "publish_capable"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R2-R4",
+      "routing_role": "Website generation, site management, publishing",
+      "governance": "Site creation/publishing is high-impact; listing sites is safe read."
+    },
+    {
+      "connector": "Lovable",
+      "agent_name": "AppBuilderAgent",
+      "health": "available_tools_discovered",
+      "authority": ["project_initiate", "project_status", "open_project_for_editing"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R2-R4",
+      "routing_role": "AI app generation and product prototyping",
+      "governance": "Creating app projects should be sandboxed and explicitly scoped."
+    },
+    {
+      "connector": "B12 Website Generator",
+      "agent_name": "B12WebsiteAgent",
+      "health": "available_tools_discovered",
+      "authority": ["website_preview_generate"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R2-R3",
+      "routing_role": "Business website preview generation",
+      "governance": "Requires real business name and description; do not invent identity."
+    },
+    {
+      "connector": "PayPal",
+      "agent_name": "PayPalAgent",
+      "health": "available_tools_discovered",
+      "authority": ["invoice_form", "invoice_send"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R3-R4",
+      "routing_role": "Invoice and business payment operations",
+      "governance": "Sending invoices is R4; interactive form is safer than direct send."
+    },
+    {
+      "connector": "Network Solutions",
+      "agent_name": "DomainAgent",
+      "health": "available_tools_discovered",
+      "authority": ["domain_availability_check"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R0-R1",
+      "routing_role": "Domain discovery and availability checks",
+      "governance": "Availability checks are safe; registration actions are outside this tool surface."
+    },
+    {
+      "connector": "Apple Music",
+      "agent_name": "MusicCatalogAgent",
+      "health": "available_tools_discovered",
+      "authority": ["catalog_search", "track_batch_match"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R0-R1",
+      "routing_role": "Music catalog lookup and playlist draft enrichment",
+      "governance": "Do not claim playlist creation; only draft and link via returned metadata."
+    },
+    {
+      "connector": "Botlab CALL-E",
+      "agent_name": "CallAgent",
+      "health": "available_tools_discovered",
+      "authority": ["plan_call", "run_call", "call_status"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R3-R4",
+      "routing_role": "External phone-call execution",
+      "governance": "Phone calls are external side effects; require ready plan and confirmation."
+    },
+    {
+      "connector": "Wednesday.app",
+      "agent_name": "InfluencerDiscoveryAgent",
+      "health": "available_tools_discovered",
+      "authority": ["creator_search"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R0-R2",
+      "routing_role": "Creator and influencer discovery",
+      "governance": "Use for campaign research; outreach would require a separate channel and confirmation."
+    },
+    {
+      "connector": "DEWA",
+      "agent_name": "DubaiUtilityAgent",
+      "health": "available_tools_discovered",
+      "authority": ["outstanding_balance", "services", "ev_chargers", "happiness_centers", "geocode"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R1-R3",
+      "routing_role": "Dubai utility service operations",
+      "governance": "Balance checks require exact account number from latest user message only."
+    },
+    {
+      "connector": "OpenAI Platform",
+      "agent_name": "OpenAIPlatformAgent",
+      "health": "available_tools_discovered",
+      "authority": ["api_key_setup_flow", "encrypted_key_creation"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R3-R4",
+      "routing_role": "API key provisioning and OpenAI platform setup",
+      "governance": "Never expose raw keys in chat; use setup flow or encrypted local flow depending on surface."
+    },
+    {
+      "connector": "Internshala",
+      "agent_name": "TalentMarketAgent",
+      "health": "available_tools_discovered",
+      "authority": ["job_search", "internship_search", "job_detail", "internship_detail"],
+      "observed_scope": ["tool surface discovered"],
+      "default_risk": "R0-R1",
+      "routing_role": "Job and internship market discovery",
+      "governance": "Search/list only; applications or outreach are out-of-scope."
+    }
+  ],
+  "default_route_order": [
+    "SecurityAgent for suspicious URLs/emails/phones",
+    "GitHubAgent for source-of-truth and governed artifacts",
+    "AsanaAgent or LinearAgent for execution graph",
+    "HubSpotAgent for business memory",
+    "StripeAgent or PayPalAgent for monetization planning",
+    "FigmaAgent or CanvaAgent for design artifacts",
+    "NetlifyAgent/WixSiteAgent/LovableAgent for deployment or app surfaces",
+    "DataCamp/edX/HuggingFace for learning and model research"
+  ],
+  "global_governance_rule": "Connector apps are authenticated domain agents. Route through D&R, evidence, risk class, and audit trail before mutation."
+}
