@@ -148,12 +148,9 @@ jobs:
       uses: actions/checkout@v4
     
     - name: 🎉 Create Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
       with:
-        tag_name: ${{ github.ref }}
-        release_name: DAIOF ${{ github.ref }}
+        name: DAIOF ${{ github.ref_name }}
         body: |
           ## Digital AI Organism Framework Release
           
@@ -165,3 +162,5 @@ jobs:
           Maintainer: Digital AI Organism
         draft: false
         prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
