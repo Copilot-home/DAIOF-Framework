@@ -1,0 +1,20 @@
+registry_metadata:
+  doctrine_version: 0.1.0
+  source_of_truth: github_repo
+  last_synced_from: null
+  last_verified_at: 2026-05-14T23:47:26Z
+  runtime_consumer: DAIOF-Framework
+  connector_state: null
+
+evidence:
+  - id: EVID-0001
+    title: Canonicalize SAR doctrine and connector lifecycle
+    path: docs/doctrine/sovereign-agentic-runtime.md
+    connector: GitHub
+    connector_state: ACTIVE
+    doctrine_version: 0.1.0
+    source_of_truth: github_repo
+    last_synced_from: null
+    last_verified_at: 2026-05-14T23:47:26Z
+    runtime_consumer: DAIOF-Framework
+

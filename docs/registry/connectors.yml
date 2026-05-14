@@ -1,0 +1,64 @@
+registry_metadata:
+  doctrine_version: 0.1.0
+  source_of_truth: github_repo
+  last_synced_from: null
+  last_verified_at: 2026-05-14T23:47:26Z
+  runtime_consumer: DAIOF-Framework
+  connector_state: null
+
+connectors:
+  - name: GitHub
+    type: repo_substrate
+    primary_url: https://github.com/NguyenCuong1989/DAIOF-Framework
+    connector_state: ACTIVE
+    doctrine_version: 0.1.0
+    source_of_truth: github_repo
+    last_synced_from: https://github.com/
+    last_verified_at: 2026-05-14T23:47:26Z
+    runtime_consumer: DAIOF-Framework
+    notes: Canonical repo substrate and evidence store.
+
+  - name: Figma
+    type: visual_topology
+    primary_url: https://www.figma.com/
+    connector_state: ACTIVE
+    doctrine_version: 0.1.0
+    source_of_truth: github_repo
+    last_synced_from: https://www.figma.com/
+    last_verified_at: 2026-05-14T23:47:26Z
+    runtime_consumer: DAIOF-Framework
+    notes: Visual topology substrate; evidence must be mirrored into `docs/evidence/`.
+
+  - name: Asana
+    type: execution_backlog
+    primary_url: https://app.asana.com/
+    connector_state: ACTIVE
+    doctrine_version: 0.1.0
+    source_of_truth: github_repo
+    last_synced_from: https://app.asana.com/
+    last_verified_at: 2026-05-14T23:47:26Z
+    runtime_consumer: DAIOF-Framework
+    notes: Execution backlog substrate; mirror critical decisions and progress to GitHub issues/docs.
+
+  - name: Linear
+    type: execution_backlog
+    primary_url: https://linear.app/
+    connector_state: DEGRADED
+    doctrine_version: 0.1.0
+    source_of_truth: github_repo
+    last_synced_from: https://linear.app/
+    last_verified_at: 2026-05-14T23:47:26Z
+    runtime_consumer: DAIOF-Framework
+    notes: DEGRADED due to 401 session expired; requires re-authorization and re-verification.
+
+  - name: Airtable
+    type: data_plane
+    primary_url: https://airtable.com/
+    connector_state: DISCOVERED
+    doctrine_version: 0.1.0
+    source_of_truth: github_repo
+    last_synced_from: https://airtable.com/
+    last_verified_at: 2026-05-14T23:47:26Z
+    runtime_consumer: DAIOF-Framework
+    notes: Requires re-check; do not treat Airtable as canonical.
+
