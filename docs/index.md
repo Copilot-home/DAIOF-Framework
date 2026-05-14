@@ -33,6 +33,12 @@ python digital_ai_organism_framework.py
 - [API Reference](api.html)
 - [Tutorials](tutorials.html)
 - [FAQ](faq.html)
+- [Sovereign Agentic Runtime Doctrine](doctrine/sovereign-agentic-runtime.html)
+- [Source-of-Truth Metadata](doctrine/source-of-truth-metadata.html)
+- [Connector Lifecycle](runtime/connector-lifecycle.html)
+- [Runtime State Machine + Probes](runtime/state-machine.html)
+- [Canonical Registries](registry/README.html)
+- [Execution Evidence](evidence/README.html)
 
 ### 🔒 Revolutionary Safety
 
