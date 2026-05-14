@@ -10,8 +10,8 @@ services:
       - GITHUB_REPOSITORY=NguyenCuong1989/DAIOF-Framework
     volumes:
       - .:/app
-      - /app/logs
-      - /Users/andy/.con-memory:/con-memory:rw
+      - logs:/app/logs
+      - con_memory:/con-memory
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python3", "-c", "import haios_core; print('OK')"]
@@ -61,6 +61,10 @@ services:
       hyperai-orchestrator:
         condition: service_healthy
     command: ["python3", "evaluation_service.py"]
+
+volumes:
+  logs:
+  con_memory:
 
 networks:
   default:
