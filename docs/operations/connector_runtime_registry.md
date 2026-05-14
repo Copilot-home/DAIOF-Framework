@@ -40,7 +40,7 @@ This document is the operational registry for connector lifecycle state, runtime
 | AUTHORIZED → ACTIVE | Re-confirm active token identity | Read lightweight health payload | Write no-op or draft heartbeat | Verify minimum runtime scopes still present | Token revoked, scope drift, write denied | Refresh token/session and re-scope | `connector.activation.probe` |
 | ACTIVE → DEGRADED | Identity still resolves | Read latency/error threshold exceeded | Write intermittently fails | Scope partially valid | Partial outage, throttling, elevated error rate | Enter safe-mode retries and reduce write pressure | `connector.degraded.detected` |
 | DEGRADED → ACTIVE | Identity stable after mitigation | Read probe success restored | Write probe success restored | Scope check returns full required set | Recovery incomplete | Keep degraded safeguards active until all probes pass | `connector.recovery.completed` |
-| ANY → EXPIRED | Identity cannot be validated due expired session | Read returns auth/session errors | Write denied with auth/session errors | Scope inaccessible | Session/token expiration | Re-authorize and re-run full probe chain | `connector.session.expired` |
+| ANY → EXPIRED | Identity cannot be validated due to expired session | Read returns auth/session errors | Write denied with auth/session errors | Scope inaccessible | Session/token expiration | Re-authorize and re-run full probe chain | `connector.session.expired` |
 | ANY → BLOCKED | Identity may resolve but policy denies use | Read intentionally disabled | Write intentionally disabled | Scope blocked by policy/compliance gate | Governance or security block | Escalate to owner decision and document unblock criteria | `connector.blocked.enforced` |
 | ANY → RETIRED | Identity archived for audit only | Read optional for historical export | Write disabled permanently | Scope revoked permanently | Connector sunset | Archive evidence and remove from active runtime graph | `connector.retired.archived` |
 
@@ -55,4 +55,3 @@ Operational evidence from external execution planes MUST be mirrored into reposi
 | Asana | Issue/docs snapshot of backlog status and key execution evidence | ACTIVE |
 | Linear | Issue/docs incident entry with session status and recovery plan | EXPIRED (401) |
 | Airtable | Issue/docs verification checkpoint and decision record | RE-CHECK REQUIRED |
-

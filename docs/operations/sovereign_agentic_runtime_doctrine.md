@@ -8,7 +8,7 @@ DAIOF-Framework is the canonical source-of-truth for the Sovereign Agentic Runti
 
 - **Doctrine name**: Sovereign Agentic Runtime
 - **Platform scope**: Platform-grade runtime capability for inspectable, auditable, and recoverable agentic execution.
-- **Sovereign owner**: Architect Nguyễn Đức Cường (`alpha_prime_omega`)
+- **Sovereign owner**: Architect Nguyễn Đức Cường (alias: `alpha_prime_omega`)
 - **Open-source implementation boundary**:
   - Included: public runtime logic, state specifications, metadata contracts, and evidence mirrors in this repository.
   - Excluded: private credentials, private tool workspaces, and non-public operational data that cannot be safely published.
@@ -32,4 +32,3 @@ Every runtime/connector registry entry MUST include the following metadata field
 - **Đường dài**
 - **Tin vào số liệu**
 - **Hạn chế rủi ro từ con người và AI khi thực thi thủ công**
-
