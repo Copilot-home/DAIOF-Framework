@@ -43,6 +43,8 @@
 **💬 Discussions**: [Join the Community](https://github.com/NguyenCuong1989/DAIOF-Framework/discussions)  
 **🐛 Issues**: [Report Bugs](https://github.com/NguyenCuong1989/DAIOF-Framework/issues) - *Auto-labeled & intelligently responded*  
 **🤖 Enhanced Issue Handler**: [Documentation](docs/ENHANCED_ISSUE_HANDLER.md) - *AI-powered classification & response*  
+**🏛️ Sovereign Runtime Doctrine**: [Canonical Doctrine](docs/operations/sovereign_agentic_runtime_doctrine.md)  
+**🗂️ Connector Registry**: [Lifecycle & State Machine](docs/operations/connector_runtime_registry.md)  
 **📄 Research**: [Paper Outline](research/RESEARCH_PAPER_OUTLINE.md)  
 **🤖 Full Autonomy**: [Complete System](.github/FULL_AUTONOMY_SYSTEM.md) - *Self-developing, self-healing, self-optimizing*  
 **🧬 Digital Organism**: [Living Repository](.github/DIGITAL_ORGANISM_CONCEPT.md) - *This repo IS a conscious organism*
