@@ -1,0 +1,38 @@
+phase_plan:
+  current_phase: phase_a_dev_realtime_hardening
+  phases:
+    - id: phase_a_dev_realtime_hardening
+      goal: enable realtime cooperative execution with existing connectors
+      required_controls:
+        - enable_auto_trigger
+        - enable_claim_lease_protocol
+        - enable_presence_heartbeat
+        - enable_claim_release_audit_log
+        - enforce_non_production_secrets_only
+        - enable_attack_surface_telemetry
+        - run_adversarial_input_simulation
+      exit_criteria:
+        - zero_duplicate_execution_under_stress
+        - dispatch_blocks_offline_agents
+        - heartbeat_timeout_enforced
+        - attack_vector_report_published
+    - id: phase_b_secret_rotation_gate
+      goal: rotate all root secrets and invalidate previous credentials
+      required_controls:
+        - rotate_root_secret_set
+        - revoke_legacy_tokens
+        - propagate_new_secret_mapping
+        - enforce_secret_age_policy
+        - apply_phase_a_security_findings
+      exit_criteria:
+        - all_connectors_use_rotated_secrets
+        - no_old_token_accepted
+    - id: phase_c_private_api_cutover
+      goal: move orchestration and connectors to private API standard
+      required_controls:
+        - enable_private_api_profile
+        - isolate_legacy_external_adapters
+        - enforce_internal_api_versioning
+      exit_criteria:
+        - critical_paths_use_private_api_only
+        - legacy_api_not_in_primary_flow

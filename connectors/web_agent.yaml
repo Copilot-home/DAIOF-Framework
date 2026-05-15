@@ -1,0 +1,48 @@
+id: web_agent
+type: web_agent
+version: "1.0.0"
+capabilities:
+  - web_recon
+  - open_url
+  - scrape
+  - search
+  - follow_links
+mailbox_in: queue.web_agent.in
+mailbox_out: queue.web_agent.out
+scheduler:
+  poll_interval: null
+  cron_rules: []
+triggers:
+  - web_recon
+  - open_url
+  - scrape
+  - search
+state:
+  auth: {}
+  cursor: {}
+  cache:
+    last_queries: []
+  metrics: {}
+health:
+  status: ok
+  last_heartbeat: null
+policies:
+  rate_limit:
+    max_per_minute: 30
+  retry:
+    max_attempts: 2
+    backoff_seconds: 3
+  circuit_breaker:
+    failure_threshold: 5
+    reset_timeout_seconds: 30
+  auth_scope: {}
+guardrails:
+  max_depth: 2
+  max_breadth: 5
+  obey_robots_txt: true
+  deny_list: []
+  allow_list: []
+contracts:
+  input_schema: {}
+  output_schema: {}
+  error_schema: {}
