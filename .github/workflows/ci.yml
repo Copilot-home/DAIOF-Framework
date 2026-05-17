@@ -46,11 +46,16 @@ jobs:
         python -c "
         from digital_ai_organism_framework import DigitalGenome
         genome = DigitalGenome()
-        assert 'human_dependency_coefficient' in genome.genes
-        assert genome.genes['human_dependency_coefficient'] == 1.0
+        assert 'human_dependency_coefficient' in genome.traits
+        assert genome.traits['human_dependency_coefficient'] == 1.0
         print('✅ Immutable genes verified')
         "
-    
+
+    - name: 🏛️ Verify doctrine compliance
+      run: |
+        python tests/test_doctrine_compliance.py
+        echo '✅ Doctrine compliance verified'
+
     - name: 🧪 Run tests
       run: |
         pytest tests/ -v --cov=digital_ai_organism_framework --cov-report=xml --cov-report=term
