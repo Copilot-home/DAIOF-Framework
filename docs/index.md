@@ -35,6 +35,11 @@ python digital_ai_organism_framework.py
 - [API Reference](api.html)
 - [Tutorials](tutorials.html)
 - [FAQ](faq.html)
+- [Realtime Cooperative Execution Spec](operations/REALTIME_COOPERATIVE_EXECUTION_SPEC.md)
+- [Ecosystem Relationship Report](operations/ECOSYSTEM_RELATIONSHIP_REPORT.md)
+- [Ecosystem Node Map (YAML)](operations/ECOSYSTEM_NODE_MAP.yaml)
+- [Search Space Collapse Execution Map](operations/SEARCH_SPACE_COLLAPSE_EXECUTION_MAP.md)
+- [Search Space Collapse Policy (YAML)](operations/search_space_collapse_policy.yaml)
 
 #### Canonical Doctrine & Specifications
 - **[Sovereign Agentic Runtime Doctrine](SOVEREIGN_AGENTIC_RUNTIME_DOCTRINE.html)** - Constitutional foundation
