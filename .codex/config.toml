@@ -1,0 +1,105 @@
+# APO local-first operating default.
+# Keep reasoning lean unless a task explicitly needs deep research/refactor work.
+model = 'gpt-5.5'
+model_reasoning_effort = 'low'
+
+[marketplaces]
+[marketplaces.openai-bundled]
+last_updated = '2026-05-19T19:21:44Z'
+source = '/Users/andy/.codex/.tmp/bundled-marketplaces/openai-bundled'
+source_type = 'local'
+
+[mcp_servers]
+[mcp_servers.AIOS_MISSION_ROUTER]
+args = ['/Users/andy/workbench/aios_runtime_orchestrator/mcp_server.py']
+command = '/opt/homebrew/bin/python3'
+
+[mcp_servers.GitKraken]
+args = ['mcp', '--host=codex', '--source=gitlens', '--scheme=vscode']
+command = '/Users/andy/Library/Application Support/Code/User/globalStorage/eamodio.gitlens/gk'
+
+[mcp_servers.MCP_DOCKER]
+command = 'docker'
+args = ['mcp', 'gateway', 'run', '--profile', 'dev_workflow']
+
+[mcp_servers.linear]
+url = 'https://mcp.linear.app/mcp'
+
+[mcp_servers.openaiDeveloperDocs]
+url = 'https://developers.openai.com/mcp'
+
+[plugins]
+# APO plugin fabric: keep cloud connectors visible as limbs.
+# Do not fan out to plugins unless the task needs that surface.
+[plugins.'atlassian-rovo@openai-curated']
+enabled = true
+
+[plugins.'canva@openai-curated']
+enabled = true
+
+[plugins.'figma@openai-curated']
+enabled = true
+
+[plugins.'github@openai-curated']
+enabled = true
+
+[plugins.'gmail@openai-curated']
+enabled = true
+
+[plugins.'google-drive@openai-curated']
+enabled = true
+
+[plugins.'granola@openai-curated']
+enabled = true
+
+[plugins.'hubspot@openai-curated']
+enabled = true
+
+[plugins.'hugging-face@openai-curated']
+enabled = true
+
+[plugins.'linear@openai-curated']
+enabled = true
+
+[plugins.'netlify@openai-curated']
+enabled = true
+
+[plugins.'network-solutions@openai-curated']
+enabled = true
+
+[plugins.'notion@openai-curated']
+enabled = true
+
+[plugins.'outlook-calendar@openai-curated']
+enabled = true
+
+[plugins.'slack@openai-curated']
+enabled = true
+
+[plugins.'stripe@openai-curated']
+enabled = true
+
+[plugins.'taxdown@openai-curated']
+enabled = true
+
+[plugins.'teams@openai-curated']
+enabled = true
+
+[plugins.'third-bridge@openai-curated']
+enabled = true
+
+[projects]
+[projects.'/']
+trust_level = 'trusted'
+
+[projects.'/Users/andy']
+trust_level = 'trusted'
+
+[projects.'/Volumes/External/OS_LOGICAL_DEPENDENCY_REGISTRY']
+trust_level = 'trusted'
+
+[projects.'/Users/andy/Documents/MacOSMac']
+trust_level = 'trusted'
+
+[projects.'/Users/andy/Documents/New project']
+trust_level = 'trusted'
