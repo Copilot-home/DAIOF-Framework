@@ -8,7 +8,8 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test apps/sse-gateway/*.test.mjs",
+    "sse:gateway": "node apps/sse-gateway/server.mjs"
   },
   "repository": {
     "type": "git",

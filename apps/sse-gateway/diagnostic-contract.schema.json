@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daiof.local/sse-gateway/diagnostic-contract.schema.json",
+  "title": "SSE Gateway Deployment Diagnostic Contract",
+  "type": "object",
+  "properties": {
+    "input": {
+      "type": "object",
+      "required": ["bug_type", "environment", "commands", "symptoms", "constraints"],
+      "properties": {
+        "bug_type": {
+          "type": "string",
+          "enum": ["STRUCTURAL", "SILENT", "RUNTIME", "PERFORMANCE"]
+        },
+        "file_red": { "type": "boolean" },
+        "environment": { "type": "string" },
+        "commands": { "type": "array", "items": { "type": "string" } },
+        "symptoms": { "type": "array", "items": { "type": "string" } },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["NO_HACK", "NO_MUTATE", "DATA_FIRST", "TOPOLOGY_CLEAN"]
+              },
+              "value": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": [
+        "root_cause_branch",
+        "diagnostic_steps",
+        "root_cause",
+        "fix",
+        "verify",
+        "constraints",
+        "evaluation",
+        "gate"
+      ],
+      "properties": {
+        "root_cause_branch": {
+          "type": "string",
+          "enum": ["STRUCTURAL", "SILENT", "RUNTIME", "PERFORMANCE"]
+        },
+        "diagnostic_steps": { "type": "array" },
+        "root_cause": {
+          "type": "object",
+          "required": ["type", "description", "confidence"],
+          "properties": {
+            "file": { "type": "string" },
+            "line": { "type": "number" },
+            "layer": { "type": "string" },
+            "type": {
+              "type": "string",
+              "enum": ["IMPORT", "PATH", "NAMESPACE", "PYC", "ENVIRONMENT", "ASYNC", "RACE", "LOGIC", "DATA"]
+            },
+            "description": { "type": "string" },
+            "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "fix": {
+          "type": "object",
+          "required": ["type", "risk"],
+          "properties": {
+            "type": { "type": "string", "enum": ["ARCHITECTURE", "IMPORT", "PATH", "ENVIRONMENT", "DATA", "LOGIC"] },
+            "commands": { "type": "array", "items": { "type": "string" } },
+            "scope": { "type": "string" },
+            "impact": { "type": "array", "items": { "type": "string" } },
+            "risk": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] }
+          }
+        },
+        "verify": { "type": "object", "required": ["steps"] },
+        "constraints": { "type": "object" },
+        "evaluation": {
+          "type": "object",
+          "required": ["score", "drift", "consistency"],
+          "properties": {
+            "score": { "type": "number", "minimum": 0, "maximum": 1 },
+            "drift": { "type": "number", "minimum": 0, "maximum": 1 },
+            "consistency": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "gate": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "enum": ["ACCEPT", "REJECT"] },
+            "reason": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
