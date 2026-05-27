@@ -35,6 +35,8 @@ python digital_ai_organism_framework.py
 - [API Reference](api.html)
 - [Tutorials](tutorials.html)
 - [FAQ](faq.html)
+- [Sovereign Runtime Doctrine](operations/sovereign_agentic_runtime_doctrine.md)
+- [Connector Runtime Registry](operations/connector_runtime_registry.md)
 - [Realtime Cooperative Execution Spec](operations/REALTIME_COOPERATIVE_EXECUTION_SPEC.md)
 - [Ecosystem Relationship Report](operations/ECOSYSTEM_RELATIONSHIP_REPORT.md)
 - [Ecosystem Node Map (YAML)](operations/ECOSYSTEM_NODE_MAP.yaml)
