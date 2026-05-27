@@ -1,0 +1,44 @@
+id: linear
+type: issue_tracker
+version: "1.0.0"
+capabilities:
+  - sync_issues
+  - create_task
+  - update_task
+  - comment_task
+mailbox_in: queue.linear.in
+mailbox_out: queue.linear.out
+scheduler:
+  poll_interval: 120
+  cron_rules: []
+triggers:
+  - sync_issues
+state:
+  auth:
+    base_url: "https://api.linear.app"
+    token: "${LINEAR_TOKEN}"
+  cursor:
+    last_sync_time: null
+    last_issue_cursor: null
+  cache: {}
+  metrics: {}
+health:
+  status: ok
+  last_heartbeat: null
+policies:
+  rate_limit:
+    max_per_minute: 30
+  retry:
+    max_attempts: 3
+    backoff_seconds: 5
+  circuit_breaker:
+    failure_threshold: 5
+    reset_timeout_seconds: 60
+  auth_scope:
+    teams: []
+guardrails:
+  allow_auto_create_blocker: false
+contracts:
+  input_schema: {}
+  output_schema: {}
+  error_schema: {}

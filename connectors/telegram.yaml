@@ -1,0 +1,41 @@
+id: telegram
+type: notification_channel
+version: "1.0.0"
+capabilities:
+  - notify
+  - escalation
+mailbox_in: queue.telegram.in
+mailbox_out: queue.telegram.out
+scheduler:
+  poll_interval: null
+  cron_rules: []
+triggers:
+  - notify
+  - escalation
+state:
+  auth:
+    bot_token: "${TELEGRAM_BOT_TOKEN}"
+  cursor: {}
+  cache:
+    chat_mapping: {}
+    templates: {}
+  metrics: {}
+health:
+  status: ok
+  last_heartbeat: null
+policies:
+  rate_limit:
+    max_per_minute: 30
+  retry:
+    max_attempts: 3
+    backoff_seconds: 3
+  circuit_breaker:
+    failure_threshold: 10
+    reset_timeout_seconds: 60
+  auth_scope: {}
+guardrails:
+  allow_group_notifications: true
+contracts:
+  input_schema: {}
+  output_schema: {}
+  error_schema: {}

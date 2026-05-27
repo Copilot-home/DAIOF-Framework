@@ -1,0 +1,49 @@
+id: github
+type: vcs_code_host
+version: "1.0.0"
+capabilities:
+  - scan_repo
+  - read_prs
+  - read_issues
+  - open_issue
+  - review_pr
+  - trigger_workflow
+mailbox_in: queue.github.in
+mailbox_out: queue.github.out
+scheduler:
+  poll_interval: 60
+  cron_rules: []
+triggers:
+  - scan_repo
+  - sync_events
+state:
+  auth:
+    base_url: "https://api.github.com"
+    token: "${GITHUB_TOKEN}"
+  cursor:
+    last_event_id: null
+    last_ci_status: {}
+  cache:
+    repo_list: []
+  metrics: {}
+health:
+  status: ok
+  last_heartbeat: null
+policies:
+  rate_limit:
+    max_per_minute: 30
+  retry:
+    max_attempts: 3
+    backoff_seconds: 3
+  circuit_breaker:
+    failure_threshold: 5
+    reset_timeout_seconds: 60
+  auth_scope:
+    - repo
+    - workflow
+guardrails:
+  allow_pr_comment: true
+contracts:
+  input_schema: {}
+  output_schema: {}
+  error_schema: {}
