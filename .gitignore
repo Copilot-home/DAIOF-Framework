@@ -1,0 +1,13 @@
+node_modules
+
+.gemini/
+gha-creds-*.json
+.ariana/
+.traces/
+.ariana_saved_traces/
+.vault_secret_key
+.env
+.env.*
+!.env.example
+*.log
+.vscode/mcp.json

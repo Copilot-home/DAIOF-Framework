@@ -10,6 +10,8 @@ import logging
 import asyncio
 import json
 import importlib
+import time
+import uuid
 from pathlib import Path
 from typing import Optional, Dict, Any
 
@@ -55,6 +57,7 @@ class HyperAIApplication:
         
         # Configuration from environment
         self.ollama_host = os.getenv("HYPERAI_LLM_HOST", "http://ollama-brain:11434")
+        self.default_model = os.getenv("HYPERAI_DEFAULT_MODEL", "qwen2.5:0.5b")
         self.inference_timeout = float(os.getenv("HYPERAI_INFERENCE_TIMEOUT", "300"))
         self.entitlements_file = os.getenv("HYPERAI_ENTITLEMENTS_FILE", "/app/policy/feature-entitlements.local.json")
         self.canon_adapter_mode = os.getenv("HYPERAI_CANON_ADAPTER_MODE", "shadow_readonly")
@@ -67,6 +70,7 @@ class HyperAIApplication:
         
         # Log configuration
         self.logger.info(f"Ollama LLM Host: {self.ollama_host}")
+        self.logger.info(f"Default LLM Model: {self.default_model}")
         self.logger.info(f"Inference Timeout: {self.inference_timeout}s")
         self.logger.info(f"Entitlements File: {self.entitlements_file}")
         self.logger.info(f"Canon Adapter Mode: {self.canon_adapter_mode}")
@@ -218,7 +222,7 @@ class HyperAIApplication:
             self.logger.error(f"Analysis failed: {e}", exc_info=True)
             raise
     
-    async def process_inference_request(self, query: str, model: str = "llama2") -> Dict[str, Any]:
+    async def process_inference_request(self, query: str, model: Optional[str] = None) -> Dict[str, Any]:
         """
         Process LLM inference request via Ollama.
         
@@ -231,12 +235,13 @@ class HyperAIApplication:
         """
         import aiohttp
         
-        self.logger.info(f"Processing inference: {model} | query_len={len(query)}")
+        selected_model = model or self.default_model
+        self.logger.info(f"Processing inference: {selected_model} | query_len={len(query)}")
         
         try:
             async with aiohttp.ClientSession() as session:
                 payload = {
-                    "model": model,
+                    "model": selected_model,
                     "prompt": query,
                     "stream": False
                 }
@@ -261,6 +266,188 @@ class HyperAIApplication:
         except Exception as e:
             self.logger.error(f"Inference failed: {e}", exc_info=True)
             return {"status": "error", "message": str(e)}
+
+    async def trigger_runtime(self, trigger: str, phase: str = "ASK_SYSTEM_STATE", model: Optional[str] = None) -> Dict[str, Any]:
+        """Closed-loop trigger surface with lineage and closure evidence."""
+        trace_id = f"hyperai-{uuid.uuid4().hex[:16]}"
+        selected_model = model or self.default_model
+        started = time.time()
+        health = await self.health_check()
+        models = await self._list_ollama_models()
+        model_names = [item.get("name") or item.get("model") for item in models.get("models", [])]
+
+        selected_tool = "runtime.audit_orchestrator" if phase == "AUDIT_ORCHESTRATOR" else ("ollama.generate" if selected_model in model_names else "runtime.health")
+        audit_report = self.audit_orchestrator_modules() if selected_tool == "runtime.audit_orchestrator" else None
+        inference = None
+        if selected_tool == "ollama.generate" and selected_model in model_names:
+            prompt = (
+                "HyperAI closed-loop runtime trigger. Return compact JSON only. "
+                f"phase={phase}; trace_id={trace_id}; trigger={trigger}. "
+                f"audit_report={json.dumps(audit_report, ensure_ascii=False)[:4000] if audit_report else '{}'}; "
+                "Evaluate goal_status, remaining_gap, next_action_or_complete. "
+                "Do not claim external actions; preserve lineage."
+            )
+            inference = await self.process_inference_request(prompt, selected_model)
+
+        model_bound = selected_model in model_names
+        inference_ok = bool(inference and inference.get("status") == "success")
+        audit_ok = audit_report is None or audit_report.get("import_errors") == []
+        goal_reached = health.get("components", {}).get("ollama") == "connected" and model_bound and audit_ok
+        trace_valid = bool(trace_id and selected_tool)
+        closure = bool(goal_reached and trace_valid and (selected_tool in {"runtime.health", "runtime.audit_orchestrator"} or inference_ok))
+        remaining_gap = []
+        if not model_bound:
+            remaining_gap.append(f"default_model_not_available:{selected_model}")
+        if health.get("components", {}).get("ollama") != "connected":
+            remaining_gap.append("ollama_not_connected")
+        if selected_tool == "ollama.generate" and not inference_ok:
+            remaining_gap.append("llm_inference_failed")
+        if audit_report and audit_report.get("import_errors"):
+            remaining_gap.append("module_import_errors")
+
+        response_text = None
+        if inference_ok:
+            response_text = (inference.get("response") or {}).get("response")
+            lowered = response_text.lower()
+            if "large gap" in lowered or '"remaining_gap": ""' not in lowered and "remaining_gap" in lowered and "complete" not in lowered:
+                remaining_gap.append("llm_reported_remaining_gap")
+
+        closure = bool(closure and not remaining_gap)
+
+        return {
+            "goal_status": "CLOSED" if closure else "NOT_CLOSED",
+            "selected_skill_id": "hyperai-runtime-orchestrator",
+            "selected_tool": selected_tool,
+            "trace_id": trace_id,
+            "phase": phase,
+            "trigger": trigger,
+            "module_execution_trace": {
+                "health": health,
+                "ollama_host": self.ollama_host,
+                "default_model": self.default_model,
+                "selected_model": selected_model,
+                "available_models": model_names,
+                "audit_report": audit_report,
+                "llm_response_sample": response_text[:800] if response_text else None,
+            },
+            "orphan_module_report": audit_report.get("orphan_module_report") if audit_report else {
+                "status": "not_scanned_in_llm_binding_trigger",
+                "next_trigger": "AUDIT_ORCHESTRATOR",
+            },
+            "memory_delta": {
+                "pattern": "llm_bound_runtime_trigger",
+                "trace_id": trace_id,
+                "duration_ms": int((time.time() - started) * 1000),
+            },
+            "evaluation_score": {
+                "goal_reached": goal_reached,
+                "lineage_preserved": trace_valid,
+                "trace_valid": trace_valid,
+                "risk": "low",
+            },
+            "remaining_gap": remaining_gap,
+            "next_action_or_complete": "complete" if closure else "NEXT_LOOP",
+        }
+
+    def audit_orchestrator_modules(self) -> Dict[str, Any]:
+        """Audit projected HyperAI modules without claiming missing projections as live."""
+        root = Path("/app/ai_saas_system")
+        if not root.exists():
+            root = Path("/Users/andy/HyperAI/ai_saas_system")
+        registry_path = root / "canon_registry.json"
+        entries = {}
+        if registry_path.exists():
+            try:
+                raw_entries = json.loads(registry_path.read_text(encoding="utf-8")).get("entries", {})
+                if isinstance(raw_entries, dict):
+                    entries = raw_entries
+                elif isinstance(raw_entries, list):
+                    entries = {
+                        str(
+                            item.get("module")
+                            or item.get("desired_module")
+                            or item.get("actual_physical_path")
+                            or item.get("id")
+                            or idx
+                        ): item
+                        for idx, item in enumerate(raw_entries)
+                        if isinstance(item, dict)
+                    }
+            except Exception:
+                entries = {}
+
+        module_root = root / "core" / "hyperAI"
+        physical = []
+        projection_missing = []
+        source_not_live = []
+        import_errors = []
+        registry_modules = set()
+        for key, item in entries.items():
+            if isinstance(item, dict):
+                actual_path = str(item.get("actual_physical_path") or "")
+                marker = "/core/hyperAI/"
+                if marker in actual_path and actual_path.endswith(".py"):
+                    registry_modules.add(actual_path.split(marker, 1)[1][:-3].replace("/", "."))
+                    continue
+                desired = str(item.get("desired_module") or "")
+                if desired:
+                    registry_modules.add(desired.replace("/", ".").removesuffix(".py"))
+                    continue
+            registry_modules.add(str(key).replace("/", ".").removesuffix(".py"))
+
+        for path in sorted(module_root.rglob("*.py")) if module_root.exists() else []:
+            if path.name == "__init__.py":
+                continue
+            rel = path.relative_to(module_root).with_suffix("")
+            module_name = ".".join(rel.parts)
+            physical.append(module_name)
+            try:
+                mod = importlib.import_module(f"core.hyperAI.{module_name}")
+                status_fn = getattr(mod, "status", None)
+                status = status_fn() if callable(status_fn) else {"module": module_name, "classification": "NO_STATUS_FUNC"}
+                classification = status.get("classification")
+                if classification == "PROJECTION_MISSING":
+                    projection_missing.append({"module": module_name, "status": status})
+                elif classification in {"SOURCE", "SOURCE_NOT_ACTIVE"}:
+                    source_not_live.append({"module": module_name, "status": status})
+            except Exception as exc:
+                import_errors.append({"module": module_name, "error": type(exc).__name__, "message": str(exc)})
+
+        physical_set = set(physical)
+        orphans = sorted(physical_set - registry_modules)
+        registry_missing_physical = sorted(registry_modules - physical_set)
+        return {
+            "core_modules": sorted(physical),
+            "generated_modules": [],
+            "deployed_modules": [],
+            "orphan_modules": orphans,
+            "missing_artifacts": registry_missing_physical,
+            "redis_unsynced_modules": [],
+            "import_errors": import_errors,
+            "projection_missing_count": len(projection_missing),
+            "source_not_live_count": len(source_not_live),
+            "orphan_module_report": {
+                "count": len(orphans),
+                "modules": orphans[:50],
+                "classification": "PHYSICAL_NOT_IN_CANON_REGISTRY",
+            },
+            "samples": {
+                "projection_missing": projection_missing[:12],
+                "source_not_live": source_not_live[:12],
+                "registry_missing_physical": registry_missing_physical[:20],
+            },
+        }
+
+    async def _list_ollama_models(self) -> Dict[str, Any]:
+        import aiohttp
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f"{self.ollama_host}/api/tags", timeout=aiohttp.ClientTimeout(total=5)) as resp:
+                    if resp.status == 200:
+                        return await resp.json()
+                    return {"models": [], "status": "error", "code": resp.status}
+        except Exception as exc:
+            return {"models": [], "status": "error", "message": str(exc)}
     
     def run_server(self, port: int = 8000):
         """Run FastAPI server."""
@@ -291,27 +478,29 @@ class HyperAIApplication:
                 raise HTTPException(status_code=400, detail=str(e))
         
         @app.post("/infer")
-        async def infer(query: str, model: str = "llama2"):
+        async def infer(query: str, model: Optional[str] = None):
             """LLM inference endpoint."""
             if not query:
                 raise HTTPException(status_code=400, detail="query required")
             
             result = await self.process_inference_request(query, model)
             return JSONResponse(result)
+
+        @app.post("/trigger")
+        async def trigger(data: Dict[str, Any]):
+            """Closed-loop HyperAI trigger endpoint."""
+            trigger_text = str(data.get("trigger", "")).strip()
+            if not trigger_text:
+                raise HTTPException(status_code=400, detail="trigger required")
+            phase = str(data.get("phase", "ASK_SYSTEM_STATE"))
+            model = data.get("model")
+            result = await self.trigger_runtime(trigger_text, phase, str(model) if model else None)
+            return JSONResponse(result)
         
         @app.get("/models")
         async def list_models():
             """List available models."""
-            import aiohttp
-            try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(f"{self.ollama_host}/api/tags") as resp:
-                        if resp.status == 200:
-                            data = await resp.json()
-                            return data
-                        return {"models": []}
-            except:
-                return {"models": [], "error": "Ollama unreachable"}
+            return await self._list_ollama_models()
 
         @app.get("/entitlements")
         async def entitlements():
