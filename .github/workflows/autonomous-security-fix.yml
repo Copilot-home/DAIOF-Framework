@@ -30,9 +30,7 @@ on:
 
 permissions:
   contents: write
-  issues: write
   pull-requests: write
-  security-events: write
 
 jobs:
   autonomous_security_fix:

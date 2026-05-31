@@ -24,9 +24,7 @@ on:
 
 permissions:
   contents: write
-  issues: write
   pull-requests: write
-  discussions: write
 
 jobs:
   autonomous_git_workflow:
@@ -35,7 +33,7 @@ jobs:
     
     steps:
       - name: 🧬 Clone Repository with Full History
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}

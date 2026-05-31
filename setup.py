@@ -74,7 +74,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "hyperai=src.hyperai:main",
+            "hyperai=hyperai:main",
         ],
     },
     include_package_data=True,

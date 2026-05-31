@@ -1,145 +1,66 @@
-# 🌟 Digital AI Organism Framework (DAIOF)
+# 🧬 Digital AI Organism Framework (DAIOF)
 
-> ## 🚀 **OFFICIALLY LAUNCHED - October 30, 2025!** 🎉
+> **OFFICIALLY LAUNCHED — October 30, 2025**
 
 ## Architecture Overview
 
-This project uses [autoplans.dev](https://autoplans.dev) for AI-powered project management and development automation.
+DAIOF applies biological principles to AI systems: organisms have genomes, metabolism, nervous systems and live inside ecosystems.
 
 ### Key Components
 
-Document your major system components and their interactions here:
-- Service boundaries and responsibilities
-- Data flow between components
-- Integration points and external dependencies
-- Critical architectural decisions and the reasoning behind them
+| Layer | Location | Responsibility |
+|---|---|---|
+| **Framework core** | `digital_ai_organism_framework.py` | `DigitalGenome`, `DigitalOrganism`, `DigitalEcosystem`, `SymphonyControlCenter` (monolith) |
+| **Package API** | `src/hyperai/` | Installable package re-exporting core classes with proper module boundaries |
+| **HAIOS Runtime** | `haios_runtime.py` | 7 Hard Invariants, AttestationLog (SHA-256 chain), safety floor enforcement |
+| **Orchestrator** | `unified_ai_orchestrator.py` | Heartbeat cycle (60 s) connecting all AI modules |
+| **LLM integration** | `ollama_config.py` | Ollama local LLM client with D&R 3-phase protocol |
+| **Autonomous agents** | `.github/scripts/` | GitHub API automation (issue triage, health, metrics, autonomous dev) |
+| **CI/CD** | `.github/workflows/ci.yml` | Pytest, flake8 lint, gene verification, codecov |
 
 ### Technology Stack
 
-List your core technologies, frameworks, and key dependencies:
-- Languages and runtimes
-- Frameworks and libraries
-- Database and data storage
-- External services and APIs
+- **Language**: Python 3.9+
+- **Dependencies**: `numpy`, `PyGithub`, `pyyaml`, `requests` (see `requirements.txt`)
+- **LLM**: Ollama local (`http://localhost:11434`) — no cloud LLM keys required
+- **Storage**: SQLite (`autonomous_todo.db`), JSONL audit logs
+- **CI**: GitHub Actions, Codecov
 
 ## Development Workflows
 
 ### Build & Run
 ```bash
-# Add your build commands here
-npm install
-npm run build
-npm run dev
+pip install -r requirements.txt      # runtime deps
+pip install -e ".[dev]"               # editable install + dev tools
+hyperai                               # CLI health check
+python quick_start.py                 # interactive demo
 ```
 
 ### Testing
 ```bash
-# Add your test commands here
-npm test
-npm run test:e2e
+pytest tests/ -v --cov=digital_ai_organism_framework
+python -m unittest tests/test_smoke.py
 ```
 
-### Debugging
-- Describe debugging setup and common debugging scenarios
-- Document environment variables and configuration
-- Note any debugging tools or extensions required
+### Key Design Patterns
 
-## Project-Specific Conventions
-
-### Code Style & Patterns
-- Document naming conventions that differ from defaults
-- Describe project-specific design patterns
-- Note any non-standard code organization
+- **4 Pillars** (`an_toan`, `duong_dai`, `tin_vao_so_lieu`, `han_che_rui_ro`): every action scored against Safety, Long-term, Data-driven, Risk-reduction.
+- **D&R Protocol** (Deconstruction → Focal Point → Re-architecture): applied in `SymphonyControlCenter.apply_dr_protocol()` and `OllamaClient.dandr_analysis()`.
+- **7 Hard Invariants**: attribution, safety floor ≥ 7, rollback, K-State = 1, 4 pillars composite ≥ 7.5, governance quorum, immutable audit.
+- **Biological metaphor**: `DigitalGenome` (traits + mutation), `DigitalMetabolism` (resource mgmt), `DigitalNervousSystem` (perception/decision).
 
 ### Git Workflow
-- Branch naming conventions
-- Commit message format
-- PR requirements and review process
 
-## Task Management with Autoplans
-
-This project uses **autoplans.dev Language Model Tools** for intelligent task management. AI agents can:
-
-### Available Autoplans Tools
-```typescript
-// Project Management
-autoplans_list_projects()           // List all projects
-autoplans_create_project({name, description})  // Create new project
-autoplans_get_project({projectId})  // Get project details
-
-// Task Management  
-autoplans_list_tasks({projectId})   // List tasks for a project
-autoplans_create_task({projectId, title, description, priority, type})
-autoplans_update_task({taskId, status, priority, ...})
-autoplans_delete_task({taskId})
-autoplans_get_task({taskId})
-
-// Bulk Operations
-autoplans_bulk_create_tasks({projectId, tasks: []})
-autoplans_bulk_update_tasks({projectId, taskIds: [], updates: {}})
-
-// Business Planning
-autoplans_get_business_plan({projectId})
-autoplans_create_business_plan({projectId, ...})
-autoplans_update_business_plan({projectId, ...})
-
-// Repository Sync
-autoplans_generate_copilot_config()         // Generate this file
-autoplans_initialize_autoplans_folder()     // Create .autoplans/ docs
-autoplans_sync_project_to_repo()            // Sync all files
-```
-
-### Task Management Guidelines
-
-**When working on this project:**
-1. **Before starting work**: Check `autoplans_list_tasks()` for assigned tasks
-2. **Creating tasks**: Use `autoplans_create_task()` with clear descriptions and proper type (coding/design/documentation/testing)
-3. **Updating progress**: Call `autoplans_update_task()` to update status (pending → in_progress → completed)
-4. **Planning features**: Break down large features into smaller tasks using `autoplans_bulk_create_tasks()`
-
-**Task Types:**
-- `coding` - Implementation work
-- `design` - Architecture, UI/UX design
-- `documentation` - Docs, comments, guides
-- `testing` - Unit tests, E2E tests, QA
-
-**Task Status:**
-- `pending` - Not started
-- `in_progress` - Currently working
-- `blocked` - Waiting on dependency
-- `completed` - Finished
-- `waiting_for_review` - Ready for PR review
-
-## Getting Help
-
-- Visit [autoplans.dev](https://autoplans.dev) for documentation
-- Use `@autoplans` in Copilot chat for project-specific help
-- Check `.autoplans/` folder for project documentation and task details
-- Review `.autoplans/tasks.md` for current task list
-
----
-
-*Generated by autoplans.dev - Update this file with project-specific patterns and conventions as they emerge*
+- Main branch: `main`
+- CI runs on push/PR to `main` and `develop`
+- Autonomous workflows are **workflow_dispatch only** (schedules commented out)
+- Commit format: emoji prefix + short description (e.g., `🧬 Add genome mutation`)
 
 ## Instructions for AI Agents
 
-**This section should be customized based on codebase analysis:**
-
-Analyze this codebase to discover:
-- The "big picture" architecture requiring multiple files to understand - major components, service boundaries, data flows, and the "why" behind structural decisions
-- Critical developer workflows (builds, tests, debugging) especially commands that aren't obvious from file inspection alone
-- Project-specific conventions and patterns that differ from common practices
-- Integration points, external dependencies, and cross-component communication patterns
-
-Source existing AI conventions from:
-`**/{.github/copilot-instructions.md,AGENT.md,AGENTS.md,CLAUDE.md,.cursorrules,.windsurfrules,.clinerules,.cursor/rules/**,.windsurf/rules/**,.clinerules/**,README.md}`
-
-When updating this file:
-- Merge intelligently - preserve valuable content while updating outdated sections
-- Write concise, actionable instructions (~20-50 lines) using markdown structure
-- Include specific examples from the codebase when describing patterns
-- Avoid generic advice - focus on THIS project's specific approaches
-- Document only discoverable patterns, not aspirational practices
-- Reference key files/directories that exemplify important patterns
-
-For more guidance: https://aka.ms/vscode-instructions-docs
+1. **Core logic** lives in `digital_ai_organism_framework.py` (large file); read `src/hyperai/__init__.py` for the public API surface.
+2. **Tests** go in `tests/`; run `pytest tests/ -v` before any change.
+3. **Do not enable** `enable_sensitive_data=True` in observability — it captures prompts.
+4. **Workflow permissions** follow least-privilege; only add permissions that are strictly needed.
+5. **`sovereign_runner.py`** is local-only macOS tooling — not for production or CI.
+6. Creator attribution (`alpha_prime_omega`, verification `4287`) is a project constant — do not alter.

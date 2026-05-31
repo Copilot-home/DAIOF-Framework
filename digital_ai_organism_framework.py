@@ -61,12 +61,12 @@ from enum import Enum
 try:
     from agent_framework.observability import setup_observability
     setup_observability(
-        otlp_endpoint="http://localhost:4317",  # AI Toolkit gRPC endpoint
-        enable_sensitive_data=True  # Enable capturing prompts and completions
+        otlp_endpoint=os.environ.get("OTLP_ENDPOINT", "http://localhost:4317"),
+        enable_sensitive_data=False  # SECURITY: Never capture prompts/completions
     )
     print("✅ Tracing setup completed for HYPERAI Framework")
 except ImportError:
-    print("⚠️ Agent framework observability not available, tracing disabled")
+    pass  # Tracing is optional — silently skip when unavailable
 
 class SymphonyState(Enum):
     """States of the system symphony (orchestration lifecycle).
@@ -325,13 +325,48 @@ class SymphonyControlCenter:
         self.meta_data.harmony_index = total_harmony / len(self.active_components)
         self.meta_data.performance_metrics["system_harmony"] = self.meta_data.harmony_index
     
-    def _validate_four_pillars(self, solution: Dict[str, Any]) -> Dict[str, bool]:
-        """Kiểm tra tuân thủ 4 trụ cột nền tảng"""
+    def _validate_four_pillars(self, solution: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Kiểm tra tuân thủ 4 trụ cột nền tảng.
+        Returns a dict with boolean compliance flags AND numeric scores (0.0–1.0).
+        """
+        components = self._extract_components(solution)
+        total = max(len(components), 1)
+
+        # Score each pillar based on keyword density (0.0–1.0)
+        safety_keywords = ["safe", "secure", "protect", "rollback", "backup", "validate"]
+        long_term_keywords = ["sustain", "future", "long", "evolve", "maintain", "durable"]
+        data_keywords = ["data", "metric", "measure", "analyze", "evidence", "benchmark"]
+        risk_keywords = ["risk", "mitigat", "shield", "guard", "recover", "fallback"]
+
+        def _score(keywords):
+            hits = sum(1 for c in components if any(k in str(c).lower() for k in keywords))
+            return round(min(hits / total, 1.0), 4)
+
+        safety_score = _score(safety_keywords)
+        long_term_score = _score(long_term_keywords)
+        data_score = _score(data_keywords)
+        risk_score = _score(risk_keywords)
+
+        # Composite: weighted average matching HardInvariants.PILLARS weights
+        composite = (
+            safety_score * 0.4
+            + long_term_score * 0.25
+            + data_score * 0.2
+            + risk_score * 0.15
+        )
+
         return {
-            "safety": "safe" in str(solution).lower(),
-            "long_term": any(term in str(solution).lower() for term in ["sustain", "future", "long"]),
-            "data_driven": any(term in str(solution).lower() for term in ["data", "metric", "measure"]),
-            "human_ai_risk_protection": any(term in str(solution).lower() for term in ["protect", "secure", "safe", "shield"])
+            "safety": safety_score > 0,
+            "safety_score": safety_score,
+            "long_term": long_term_score > 0,
+            "long_term_score": long_term_score,
+            "data_driven": data_score > 0,
+            "data_driven_score": data_score,
+            "human_ai_risk_protection": risk_score > 0,
+            "risk_score": risk_score,
+            "composite_score": round(composite, 4),
+            "composite_pass": composite >= 0.1,  # minimum bar for non-trivial input
         }
     
     def _extract_components(self, input_data: Any) -> List[str]:

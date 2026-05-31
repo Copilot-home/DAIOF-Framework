@@ -5,6 +5,14 @@ Local Orchestrator for HyperAI Autonomous Brains
 
 Developed by Antigravity for alpha_prime_omega
 Bypasses GitHub Actions Quota limitations via direct local execution.
+
+⚠️  LOCAL-ONLY TOOL — NOT FOR CI/CD OR PRODUCTION USE.
+    This daemon is designed to run on the developer's macOS workstation
+    (hard-coded paths under /Users/andy/). It orchestrates the same scripts
+    that .github/workflows/ runs, but locally, to avoid GitHub Actions
+    quota consumption during development.
+
+    Do NOT deploy this in Docker, Kubernetes, or any shared server.
 """
 
 import os

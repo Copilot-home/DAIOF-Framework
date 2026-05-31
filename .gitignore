@@ -162,6 +162,31 @@ simulation_results/
 *.pkl
 *.pickle
 
+# Database files (generated at runtime)
+autonomous_todo.db
+*.db
+
+# Node modules (install via npm install)
+node_modules/
+
+# Generated reports & runtime artifacts
+haios_audit.jsonl
+haios_minimal.log
+logs/
+metrics/
+*.jsonl
+
+# Runtime data exports
+unified_data_export.json
+data_analysis_results.json
+sample_data_analysis.json
+ecosystem_analysis_metadata.json
+vscode_optimization_report.json
+shortest_path_report.json
+symphony_ecosystem_simulation_report.json
+system_initialization_report.json
+queries.json
+responses.json
 
 #Ignore vscode AI rules
 .github/instructions/codacy.instructions.md
