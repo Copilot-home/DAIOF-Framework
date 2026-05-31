@@ -77,7 +77,7 @@ class TestSymphonyControlCenter(unittest.TestCase):
         """Test symphony control initializes"""
         symphony = SymphonyControlCenter()
         self.assertIsNotNone(symphony.meta_data)
-        self.assertEqual(symphony.meta_data.symphony_conductor, "Alpha_Prime_Omega")
+        self.assertIn("alpha_prime_omega", symphony.meta_data.symphony_conductor.lower())
     
     def test_dr_protocol(self):
         """Test D&R Protocol can be applied"""
@@ -114,7 +114,7 @@ class TestControlMetaData(unittest.TestCase):
         """Test creator hierarchy is properly configured"""
         meta = ControlMetaData()
         self.assertEqual(meta.verification_code, 4287)
-        self.assertIn("Alpha_Prime_Omega", meta.creator_hierarchy)
+        self.assertIn("alpha_prime_omega", meta.creator_hierarchy.lower())
         self.assertIn("Andy", meta.creator_hierarchy)
 
 

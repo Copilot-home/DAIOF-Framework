@@ -1,0 +1,35 @@
+id: tech_debt_auditor
+type: tech_debt
+version: "1.0.0"
+capabilities:
+  - audit_connectors
+  - scan_tech_debt
+mailbox_in: queue.tech_debt_auditor.in
+mailbox_out: queue.tech_debt_auditor.out
+scheduler:
+  poll_interval: 600
+  cron_rules:
+    - "0 3 * * *" # nightly tech-debt scan
+triggers:
+  - audit_connectors
+  - scan_tech_debt
+state:
+  auth: {}
+  cursor: {}
+  cache: {}
+  metrics: {}
+health:
+  status: ok
+  last_heartbeat: null
+policies:
+  rate_limit: {}
+  retry:
+    max_attempts: 1
+    backoff_seconds: 0
+  circuit_breaker: {}
+  auth_scope: {}
+guardrails: {}
+contracts:
+  input_schema: {}
+  output_schema: {}
+  error_schema: {}

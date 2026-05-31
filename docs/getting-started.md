@@ -132,6 +132,34 @@ for cycle in range(10):
 
 ---
 
+## Development & Testing
+
+If you want to contribute or run the test suite locally:
+
+```bash
+# Install development dependencies
+pip install pytest pytest-cov black flake8 mypy
+
+# Run the smoke tests
+python -m pytest tests/ -v
+
+# Check code style with Black
+black --check .
+
+# Format code automatically
+black .
+
+# Lint with flake8 (critical errors only)
+flake8 . --select=E9,F63,F7,F82 --show-source --statistics
+
+# Type-check with mypy (optional)
+mypy digital_ai_organism_framework.py
+```
+
+For complete contribution guidelines, see [CONTRIBUTING.md](../CONTRIBUTING.md).
+
+---
+
 ## Attribution
 
 **Framework Creator**: Nguyễn Đức Cường (alpha_prime_omega)  

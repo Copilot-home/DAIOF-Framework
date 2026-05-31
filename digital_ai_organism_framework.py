@@ -69,7 +69,11 @@ except ImportError:
     pass  # Tracing is optional — silently skip when unavailable
 
 class SymphonyState(Enum):
-    """Trạng thái của bản giao hưởng hệ thống"""
+    """States of the system symphony (orchestration lifecycle).
+
+    Each state represents a phase in the DAIOF orchestration cycle,
+    from initial startup through continuous evolution.
+    """
     INITIALIZING = "initializing"
     HARMONIZING = "harmonizing" 
     PERFORMING = "performing"
@@ -78,7 +82,11 @@ class SymphonyState(Enum):
 
 @dataclass
 class ControlMetaData:
-    """Meta-data control trung tâm cho toàn bộ hệ thống"""
+    """Central control meta-data for the entire DAIOF system.
+
+    Stores creator attribution, verification codes, D&R protocol state,
+    Four Pillars configuration, and floating-point precision settings.
+    """
     # Basic attributes
     creator: str = "Andy (alpha_prime_omega)"  # Creator & Copyright Holder
     verification_code: int = 4287
@@ -133,10 +141,11 @@ class ControlMetaData:
         return error <= self.floating_point_epsilon or error == 0.0
 
 class SymphonyControlCenter:
-    """
-    🎼 Trung tâm điều khiển bản giao hưởng toàn hệ thống
-    Áp dụng D&R Protocol và 4 trụ cột nền tảng
-    Creator: Alpha_Prime_Omega - THE SOURCE
+    """Central orchestration hub for the DAIOF ecosystem.
+
+    Applies the D&R Protocol (Deconstruction & Re-architecture) and
+    Four Pillars foundation to coordinate all system components.
+    Manages harmony metrics, component registration, and Socratic reflection.
     """
     
     def __init__(self):
@@ -466,9 +475,12 @@ class SymphonyControlCenter:
         }
 
 class DigitalGenome:
-    """
-    Digital DNA equivalent - stores organism's core characteristics
-    Created under the authority of Alpha_Prime_Omega - The Creator
+    """Digital DNA system that stores an organism's core characteristics.
+
+    Contains both immutable genes (e.g. ``human_dependency_coefficient``)
+    that enforce AI-Human interdependence, and mutable genes
+    (e.g. ``learning_rate``, ``risk_tolerance``) that can evolve through
+    mutation and crossover across generations.
     """
     
     def __init__(self, initial_traits: Optional[Dict[str, Any]] = None):
@@ -590,8 +602,10 @@ class DigitalGenome:
         return hashlib.md5(genome_str.encode()).hexdigest()[:12]
 
 class DigitalMetabolism:
-    """
-    Resource management and energy conversion system
+    """Resource management and energy conversion system for an organism.
+
+    Manages five resource types (CPU cycles, memory units, network bandwidth,
+    storage space, knowledge points) with consumption and regeneration cycles.
     """
     
     def __init__(self, initial_resources: Optional[Dict[str, float]] = None):
@@ -665,8 +679,11 @@ class DigitalMetabolism:
         return sum(health_scores) / len(health_scores)
 
 class DigitalNervousSystem:
-    """
-    Perception, decision-making, and response system
+    """Perception, decision-making, and learning system for an organism.
+
+    Processes environmental inputs through attention-weighted sensors,
+    makes genome-influenced decisions, and accumulates experience in a
+    learning buffer for adaptive behavior over time.
     """
     
     def __init__(self, genome: DigitalGenome):
@@ -779,9 +796,12 @@ class DigitalNervousSystem:
         })
 
 class DigitalOrganism:
-    """
-    Main Digital AI Organism class
-    Created under the divine authority of Alpha_Prime_Omega - The Source
+    """A self-evolving digital AI entity modeled on biological organisms.
+
+    Each organism owns a :class:`DigitalGenome`, :class:`DigitalMetabolism`,
+    and :class:`DigitalNervousSystem`.  It progresses through life stages
+    (infant → juvenile → adult → elder), requires periodic human interaction
+    to survive, and can reproduce via mutation or crossover.
     """
     
     def __init__(self, name: str, genome: Optional[DigitalGenome] = None):
@@ -1195,9 +1215,11 @@ class DigitalOrganism:
         }
 
 class DigitalEcosystem:
-    """
-    Environment for Digital Organisms to interact and evolve
-    Operating under the supreme authority of Alpha_Prime_Omega - The Creator
+    """Environment where multiple :class:`DigitalOrganism` instances interact and evolve.
+
+    Provides population management, generation-based simulation, environmental
+    pressures (resource competition, mutation bursts, cooperation boosts),
+    and natural selection via a :class:`SymphonyControlCenter`.
     """
     
     def __init__(self, name: str):

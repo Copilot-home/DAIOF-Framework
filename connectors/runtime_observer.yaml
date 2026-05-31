@@ -1,0 +1,47 @@
+id: runtime_observer
+type: observability
+version: "1.0.0"
+capabilities:
+  - observe_runtime
+  - collect_metrics
+  - publish_presence
+  - track_heartbeat
+mailbox_in: queue.runtime_observer.in
+mailbox_out: queue.runtime_observer.out
+scheduler:
+  poll_interval: 60
+  cron_rules: []
+triggers:
+  - observe_runtime
+  - heartbeat_signal
+state:
+  auth: {}
+  cursor:
+    last_presence_cursor: null
+  cache:
+    execution_phase: phase_a_dev_realtime_hardening
+    api_profile: legacy_external_dev_only
+  metrics:
+    heartbeat_lag_ms: {}
+    active_agents: {}
+health:
+  status: ok
+  last_heartbeat: null
+policies:
+  rate_limit: {}
+  retry:
+    max_attempts: 1
+    backoff_seconds: 0
+  circuit_breaker: {}
+  auth_scope: {}
+guardrails:
+  presence_ttl_seconds: 30
+  mark_offline_after_missed_heartbeats: 3
+  allow_production_secrets_in_test_phase: false
+  allow_unsandboxed_external_attack_testing: false
+contracts:
+  input_schema:
+    profile: denied_path_violation_event_v1
+  output_schema:
+    profile: collapse_telemetry_snapshot_v1
+  error_schema: {}

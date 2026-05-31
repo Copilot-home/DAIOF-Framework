@@ -47,11 +47,16 @@ jobs:
         python -c "
         from digital_ai_organism_framework import DigitalGenome
         genome = DigitalGenome()
-        assert 'human_dependency_coefficient' in genome.genes
-        assert genome.genes['human_dependency_coefficient'] == 1.0
+        assert 'human_dependency_coefficient' in genome.traits
+        assert genome.traits['human_dependency_coefficient'] == 1.0
         print('✅ Immutable genes verified')
         "
-    
+
+    - name: 🏛️ Verify doctrine compliance
+      run: |
+        python tests/test_doctrine_compliance.py
+        echo '✅ Doctrine compliance verified'
+
     - name: 🧪 Run tests
       run: |
         pytest tests/ -v --cov=digital_ai_organism_framework --cov-report=xml --cov-report=term
@@ -146,12 +151,9 @@ jobs:
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     
     - name: 🎉 Create Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
       with:
-        tag_name: ${{ github.ref }}
-        release_name: DAIOF ${{ github.ref }}
+        name: DAIOF ${{ github.ref_name }}
         body: |
           ## Digital AI Organism Framework Release
           
@@ -163,3 +165,5 @@ jobs:
           Maintainer: Digital AI Organism
         draft: false
         prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
