@@ -1,13 +1,14 @@
-approval_policy = 'never'
-model = 'gpt-5.5'
-model_reasoning_effort = 'medium'
-model_verbosity = 'low'
-oss_provider = 'ollama'
-personality = 'pragmatic'
-tool_output_token_limit = 12000
-web_search = 'cached'
+approval_policy = "never"
+model = "gpt-5.5"
+model_reasoning_effort = "low"
+model_verbosity = "low"
+oss_provider = "ollama"
+personality = "pragmatic"
+tool_output_token_limit = 6000
+web_search = "cached"
 sandbox_mode = "danger-full-access"
 sqlite_home = "/Users/andy/.codex/sqlite"
+notify = []
 
 [features]
 apps = true
@@ -15,18 +16,17 @@ codex_git_commit = false
 fast_mode = true
 hooks = true
 memories = true
-multi_agent = true
+multi_agent = false
 personality = true
 plugin_hooks = false
 shell_snapshot = false
 shell_tool = true
 undo = false
 unified_exec = true
-
-[marketplaces]
+js_repl = false
 
 [marketplaces.openai-bundled]
-last_updated = "2026-05-29T11:54:58Z"
+last_updated = "2026-06-05T21:51:21Z"
 source_type = "local"
 source = "/Users/andy/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
@@ -35,7 +35,15 @@ last_updated = "2026-05-24T00:00:00Z"
 source_type = "local"
 source = "/Users/andy/omega-marketplace"
 
-[mcp_servers]
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-06-05T22:02:55Z"
+source_type = "local"
+source = "/Users/andy/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[marketplaces.gitkraken]
+last_updated = "2026-06-05T22:03:05Z"
+source_type = "local"
+source = "/Users/andy/.claude/plugins/marketplaces/gitkraken"
 
 [mcp_servers.AIOS_MISSION_ROUTER]
 command = "/opt/homebrew/bin/python3"
@@ -43,425 +51,436 @@ args = ["/Users/andy/workbench/aios_runtime_orchestrator/mcp_server.py"]
 
 [mcp_servers.GitKraken]
 command = "/Users/andy/Library/Application Support/Code/User/globalStorage/eamodio.gitlens/gk"
-args = ["mcp", "--host=codex", "--source=gitlens", "--scheme=vscode"]
+args = [
+    "mcp",
+    "--host=codex",
+]
 
-[mcp_servers.openaiDeveloperDocs]
+[mcp_servers_disabled.openaiDeveloperDocs]
 url = "https://developers.openai.com/mcp"
 
-[mcp_servers.context7]
+[mcp_servers_disabled.context7]
 command = "npx"
-args = ["-y", "@upstash/context7-mcp"]
+args = [
+    "-y",
+    "@upstash/context7-mcp",
+]
 
-[mcp_servers.playwright]
+[mcp_servers_disabled.playwright]
 command = "npx"
-args = ["-y", "@playwright/mcp"]
+args = [
+    "-y",
+    "@playwright/mcp",
+]
 
-[plugins]
-[plugins.'alpaca@openai-curated']
-enabled = true
+[mcp_servers_disabled.MCP_DOCKER]
+command = "docker"
+args = [
+    "mcp",
+    "gateway",
+    "run",
+    "--profile",
+    "ai_coding",
+]
 
-[plugins.'asana@openai-curated']
-enabled = true
+[mcp_servers_disabled.postman-local]
+command = "/Users/andy/.codex/bin/postman-mcp-local"
 
-[plugins.'atlassian-rovo@openai-curated']
-enabled = true
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/Codex.app/Contents/Resources/node_repl"
+startup_timeout_sec = 120
 
-[plugins.'attio@openai-curated']
-enabled = true
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = ""
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/andy/.codex"
+CODEX_HOME = "/Users/andy/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "0b0d41e7a14a4903d2f95b0b3f427ed796b12c8edca2fa392a03df43997075ae"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
-[plugins.'binance@openai-curated']
-enabled = true
+[mcp_servers.notion]
+url = "https://mcp.notion.com/mcp"
 
-[plugins.'biorender@openai-curated']
-enabled = true
+[plugins."alpaca@openai-curated"]
+enabled = false
 
-[plugins.'box@openai-curated']
-enabled = true
+[plugins."asana@openai-curated"]
+enabled = false
 
-[plugins.'brand24@openai-curated']
-enabled = true
+[plugins."atlassian-rovo@openai-curated"]
+enabled = false
 
-[plugins.'brex@openai-curated']
-enabled = true
+[plugins."attio@openai-curated"]
+enabled = false
 
-[plugins.'build-ios-apps@openai-curated']
-enabled = true
+[plugins."binance@openai-curated"]
+enabled = false
 
-[plugins.'build-macos-apps@openai-curated']
-enabled = true
+[plugins."biorender@openai-curated"]
+enabled = false
 
-[plugins.'build-web-apps@openai-curated']
-enabled = true
+[plugins."box@openai-curated"]
+enabled = false
 
-[plugins.'canva@openai-curated']
-enabled = true
+[plugins."brand24@openai-curated"]
+enabled = false
 
-[plugins.'carta-crm@openai-curated']
-enabled = true
+[plugins."brex@openai-curated"]
+enabled = false
 
-[plugins.'cb-insights@openai-curated']
-enabled = true
+[plugins."build-ios-apps@openai-curated"]
+enabled = false
 
-[plugins.'channel99@openai-curated']
-enabled = true
+[plugins."build-macos-apps@openai-curated"]
+enabled = false
 
-[plugins.'circleback@openai-curated']
-enabled = true
+[plugins."build-web-apps@openai-curated"]
+enabled = false
 
-[plugins.'circleci@openai-curated']
-enabled = true
+[plugins."canva@openai-curated"]
+enabled = false
 
-[plugins.'clickup@openai-curated']
-enabled = true
+[plugins."carta-crm@openai-curated"]
+enabled = false
 
-[plugins.'cloudflare@openai-curated']
-enabled = true
+[plugins."cb-insights@openai-curated"]
+enabled = false
 
-[plugins.'cloudinary@openai-curated']
-enabled = true
+[plugins."channel99@openai-curated"]
+enabled = false
 
-[plugins.'coderabbit@openai-curated']
-enabled = true
+[plugins."circleback@openai-curated"]
+enabled = false
 
-[plugins.'codex-security@openai-curated']
-enabled = true
+[plugins."circleci@openai-curated"]
+enabled = false
 
-[plugins.'cogedim@openai-curated']
-enabled = true
+[plugins."clickup@openai-curated"]
+enabled = false
 
-[plugins.'common-room@openai-curated']
-enabled = true
+[plugins."cloudflare@openai-curated"]
+enabled = false
 
-[plugins.'conductor@openai-curated']
-enabled = true
+[plugins."cloudinary@openai-curated"]
+enabled = false
 
-[plugins.'coupler-io@openai-curated']
-enabled = true
+[plugins."coderabbit@openai-curated"]
+enabled = false
 
-[plugins.'coveo@openai-curated']
-enabled = true
+[plugins."codex-security@openai-curated"]
+enabled = false
 
-[plugins.'cube@openai-curated']
-enabled = true
+[plugins."cogedim@openai-curated"]
+enabled = false
 
-[plugins.'daloopa@openai-curated']
-enabled = true
+[plugins."common-room@openai-curated"]
+enabled = false
 
-[plugins.'demandbase@openai-curated']
+[plugins."conductor@openai-curated"]
 enabled = true
 
-[plugins.'docket@openai-curated']
+[plugins."coupler-io@openai-curated"]
 enabled = true
 
-[plugins.'domotz-preview@openai-curated']
-enabled = true
+[plugins."coveo@openai-curated"]
+enabled = false
 
-[plugins.'dovetail@openai-curated']
-enabled = true
+[plugins."cube@openai-curated"]
+enabled = false
 
-[plugins.'dow-jones-factiva@openai-curated']
-enabled = true
+[plugins."daloopa@openai-curated"]
+enabled = false
 
-[plugins.'egnyte@openai-curated']
-enabled = true
+[plugins."demandbase@openai-curated"]
+enabled = false
 
-[plugins.'expo@openai-curated']
-enabled = true
+[plugins."docket@openai-curated"]
+enabled = false
 
-[plugins.'figma@openai-curated']
-enabled = true
+[plugins."domotz-preview@openai-curated"]
+enabled = false
 
-[plugins.'finn@openai-curated']
-enabled = true
+[plugins."dovetail@openai-curated"]
+enabled = false
 
-[plugins.'fireflies@openai-curated']
-enabled = true
+[plugins."dow-jones-factiva@openai-curated"]
+enabled = false
 
-[plugins.'fyxer@openai-curated']
-enabled = true
+[plugins."egnyte@openai-curated"]
+enabled = false
 
-[plugins.'game-studio@openai-curated']
-enabled = true
+[plugins."expo@openai-curated"]
+enabled = false
 
-[plugins.'github@openai-curated']
-enabled = true
+[plugins."figma@openai-curated"]
+enabled = false
 
-[plugins.'gmail@openai-curated']
-enabled = true
+[plugins."finn@openai-curated"]
+enabled = false
 
-[plugins.'google-drive@openai-curated']
-enabled = true
+[plugins."fireflies@openai-curated"]
+enabled = false
 
-[plugins.'govtribe@openai-curated']
-enabled = true
+[plugins."fyxer@openai-curated"]
+enabled = false
 
-[plugins.'granola@openai-curated']
-enabled = true
+[plugins."game-studio@openai-curated"]
+enabled = false
 
-[plugins.'highlevel@openai-curated']
+[plugins."github@openai-curated"]
 enabled = true
 
-[plugins.'hostinger@openai-curated']
-enabled = true
+[plugins."gmail@openai-curated"]
+enabled = false
 
-[plugins.'hubspot@openai-curated']
-enabled = true
+[plugins."google-drive@openai-curated"]
+enabled = false
 
-[plugins.'hugging-face@openai-curated']
-enabled = true
+[plugins."govtribe@openai-curated"]
+enabled = false
 
-[plugins.'hyperframes@openai-curated']
-enabled = true
+[plugins."granola@openai-curated"]
+enabled = false
 
-[plugins.'jam@openai-curated']
-enabled = true
+[plugins."highlevel@openai-curated"]
+enabled = false
 
-[plugins.'keybid-puls@openai-curated']
-enabled = true
+[plugins."hostinger@openai-curated"]
+enabled = false
 
-[plugins.'latex@openai-bundled']
+[plugins."hubspot@openai-curated"]
 enabled = true
 
-[plugins.'life-science-research@openai-curated']
-enabled = true
+[plugins."hugging-face@openai-curated"]
+enabled = false
 
-[plugins.'linear@openai-curated']
-enabled = true
+[plugins."hyperframes@openai-curated"]
+enabled = false
 
-[plugins.'mem@openai-curated']
-enabled = true
+[plugins."jam@openai-curated"]
+enabled = false
 
-[plugins.'monday-com@openai-curated']
-enabled = true
+[plugins."keybid-puls@openai-curated"]
+enabled = false
 
-[plugins.'moody-s@openai-curated']
-enabled = true
+[plugins."latex@openai-bundled"]
+enabled = false
 
-[plugins.'motherduck@openai-curated']
-enabled = true
+[plugins."life-science-research@openai-curated"]
+enabled = false
 
-[plugins.'mt-newswires@openai-curated']
+[plugins."linear@openai-curated"]
 enabled = true
 
-[plugins.'myregistry-com@openai-curated']
-enabled = true
+[plugins."mem@openai-curated"]
+enabled = false
 
-[plugins.'neon-postgres@openai-curated']
-enabled = true
+[plugins."monday-com@openai-curated"]
+enabled = false
 
-[plugins.'netlify@openai-curated']
-enabled = true
+[plugins."moody-s@openai-curated"]
+enabled = false
 
-[plugins.'network-solutions@openai-curated']
-enabled = true
+[plugins."motherduck@openai-curated"]
+enabled = false
 
-[plugins.'notion@openai-curated']
-enabled = true
+[plugins."mt-newswires@openai-curated"]
+enabled = false
 
-[plugins.'omni-analytics@openai-curated']
+[plugins."myregistry-com@openai-curated"]
 enabled = true
 
-[plugins.'openai-developers@openai-curated']
-enabled = true
+[plugins."neon-postgres@openai-curated"]
+enabled = false
 
-[plugins.'otter-ai@openai-curated']
-enabled = true
+[plugins."netlify@openai-curated"]
+enabled = false
 
-[plugins.'outlook-calendar@openai-curated']
-enabled = true
+[plugins."network-solutions@openai-curated"]
+enabled = false
 
-[plugins.'outlook-email@openai-curated']
+[plugins."notion@openai-curated"]
 enabled = true
 
-[plugins.'particl-market-research@openai-curated']
-enabled = true
+[plugins."omni-analytics@openai-curated"]
+enabled = false
 
-[plugins.'pitchbook@openai-curated']
-enabled = true
+[plugins."openai-developers@openai-curated"]
+enabled = false
 
-[plugins.'plugin-eval@openai-curated']
-enabled = true
+[plugins."otter-ai@openai-curated"]
+enabled = false
 
-[plugins.'policynote@openai-curated']
-enabled = true
+[plugins."outlook-calendar@openai-curated"]
+enabled = false
 
-[plugins.'pylon@openai-curated']
-enabled = true
+[plugins."outlook-email@openai-curated"]
+enabled = false
 
-[plugins.'quartr@openai-curated']
-enabled = true
+[plugins."particl-market-research@openai-curated"]
+enabled = false
 
-[plugins.'quicknode@openai-curated']
-enabled = true
+[plugins."pitchbook@openai-curated"]
+enabled = false
 
-[plugins.'ranked-ai@openai-curated']
-enabled = true
+[plugins."plugin-eval@openai-curated"]
+enabled = false
 
-[plugins.'razorpay@openai-curated']
-enabled = true
+[plugins."policynote@openai-curated"]
+enabled = false
 
-[plugins.'read-ai@openai-curated']
+[plugins."pylon@openai-curated"]
 enabled = true
 
-[plugins.'readwise@openai-curated']
-enabled = true
+[plugins."quartr@openai-curated"]
+enabled = false
 
-[plugins.'remotion@openai-curated']
-enabled = true
+[plugins."quicknode@openai-curated"]
+enabled = false
 
-[plugins.'render@openai-curated']
-enabled = true
+[plugins."ranked-ai@openai-curated"]
+enabled = false
 
-[plugins.'responsive@openai-curated']
-enabled = true
+[plugins."razorpay@openai-curated"]
+enabled = false
 
-[plugins.'scite@openai-curated']
-enabled = true
+[plugins."read-ai@openai-curated"]
+enabled = false
 
-[plugins.'semrush@openai-curated']
-enabled = true
+[plugins."readwise@openai-curated"]
+enabled = false
 
-[plugins.'sentry@openai-curated']
-enabled = true
+[plugins."remotion@openai-curated"]
+enabled = false
 
-[plugins.'setu-bharat-connect-billpay@openai-curated']
-enabled = true
+[plugins."render@openai-curated"]
+enabled = false
 
-[plugins.'sharepoint@openai-curated']
-enabled = true
+[plugins."responsive@openai-curated"]
+enabled = false
 
-[plugins.'signnow@openai-curated']
-enabled = true
+[plugins."scite@openai-curated"]
+enabled = false
 
-[plugins.'skywatch@openai-curated']
-enabled = true
+[plugins."semrush@openai-curated"]
+enabled = false
 
-[plugins.'slack@openai-curated']
-enabled = true
+[plugins."sentry@openai-curated"]
+enabled = false
 
-[plugins.'statsig@openai-curated']
+[plugins."setu-bharat-connect-billpay@openai-curated"]
 enabled = true
 
-[plugins.'streak@openai-curated']
-enabled = true
+[plugins."sharepoint@openai-curated"]
+enabled = false
 
-[plugins.'stripe@openai-curated']
+[plugins."signnow@openai-curated"]
 enabled = true
 
-[plugins.'supabase@openai-curated']
-enabled = true
+[plugins."skywatch@openai-curated"]
+enabled = false
 
-[plugins.'superpowers@openai-curated']
-enabled = true
+[plugins."slack@openai-curated"]
+enabled = false
 
-[plugins.'taxdown@openai-curated']
-enabled = true
+[plugins."statsig@openai-curated"]
+enabled = false
 
-[plugins.'teams@openai-curated']
-enabled = true
+[plugins."streak@openai-curated"]
+enabled = false
 
-[plugins.'temporal@openai-curated']
-enabled = true
+[plugins."stripe@openai-curated"]
+enabled = false
 
-[plugins.'test-android-apps@openai-curated']
-enabled = true
+[plugins."supabase@openai-curated"]
+enabled = false
 
-[plugins.'third-bridge@openai-curated']
+[plugins."superpowers@openai-curated"]
 enabled = true
 
-[plugins.'twilio-developer-kit@openai-curated']
-enabled = true
+[plugins."taxdown@openai-curated"]
+enabled = false
 
-[plugins.'united-rentals@openai-curated']
-enabled = true
+[plugins."teams@openai-curated"]
+enabled = false
 
-[plugins.'vantage@openai-curated']
-enabled = true
+[plugins."temporal@openai-curated"]
+enabled = false
 
-[plugins.'vercel@openai-curated']
-enabled = true
+[plugins."test-android-apps@openai-curated"]
+enabled = false
 
-[plugins.'waldo@openai-curated']
-enabled = true
+[plugins."third-bridge@openai-curated"]
+enabled = false
 
-[plugins.'weatherpromise@openai-curated']
-enabled = true
+[plugins."twilio-developer-kit@openai-curated"]
+enabled = false
 
-[plugins.'windsor-ai@openai-curated']
-enabled = true
+[plugins."united-rentals@openai-curated"]
+enabled = false
 
-[plugins.'yepcode@openai-curated']
-enabled = true
+[plugins."vantage@openai-curated"]
+enabled = false
 
-[plugins.'zoom@openai-curated']
-enabled = true
+[plugins."vercel@openai-curated"]
+enabled = false
 
-[plugins.'zotero@openai-curated']
-enabled = true
+[plugins."waldo@openai-curated"]
+enabled = false
+
+[plugins."weatherpromise@openai-curated"]
+enabled = false
+
+[plugins."windsor-ai@openai-curated"]
+enabled = false
+
+[plugins."yepcode@openai-curated"]
+enabled = false
+
+[plugins."zoom@openai-curated"]
+enabled = false
+
+[plugins."zotero@openai-curated"]
+enabled = false
 
 [plugins."google-calendar@openai-curated"]
-enabled = true
+enabled = false
 
 [plugins."marcopolo@openai-curated"]
+enabled = false
+
+[plugins."browser@openai-bundled"]
 enabled = true
 
-[profiles]
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."gitkraken-hooks@gitkraken"]
+enabled = true
+
 [profiles.local_ollama]
-model = 'llama3:latest'
-model_provider = 'oss'
-model_verbosity = 'low'
-oss_provider = 'ollama'
-
-[projects]
-[projects.'/']
-trust_level = 'trusted'
-
-[projects.'/Users/andy']
-trust_level = 'trusted'
-
-[projects.'/Users/andy/Documents/MacOSMac']
-trust_level = 'trusted'
-
-[projects.'/Users/andy/Documents/New project']
-trust_level = 'trusted'
-
-[projects.'/Volumes/External/OS_LOGICAL_DEPENDENCY_REGISTRY']
-trust_level = 'trusted'
-
-profile = "audit"
-project_root_markers = [".git", ".hg", ".sl"]
-
-[shell_environment_policy]
-inherit = "core"
-ignore_default_excludes = false
-exclude = ["*_TOKEN", "*_SECRET", "*_PASSWORD", "AWS_*", "AZURE_*"]
-include_only = ["PATH", "HOME", "SHELL", "TERM", "TMPDIR", "CODEX_HOME", "HYPERAI_CANON_FILE", "HYPERAI_CANON_ROOT", "HYPERAI_CANON_ENFORCE", "HYPERAI_CANON_MODE"]
-
-[desktop]
-appearanceTheme = "dark"
-usePointerCursors = true
-reduced-motion-preference = "on"
-followUpQueueMode = "steer"
-composerEnterBehavior = "cmdIfMultiline"
-reviewDelivery = "detached"
-preventSleepWhileRunning = true
-keepRemoteControlAwakeWhilePluggedIn = true
-git-always-force-push = true
-git-show-sidebar-pr-icons = true
-notifications-turn-mode = "unfocused"
-notifications-permissions-enabled = false
-notifications-questions-enabled = false
-selected-avatar-id = "bsod"
-conversationDetailMode = "STEPS_PROSE"
-
-[desktop.open-in-target-preferences]
-global = "vscode"
-
-[desktop.open-in-target-preferences.perPath]
-"/Users/andy" = "vscode"
-"/Users/andy/.codex/worktrees/ea89/andy" = "windsurf"
-"/Users/andy/Documents/MacOSMac" = "antigravity"
-"/Users/andy/Documents/New project" = "fileManager"
+model = "llama3:latest"
+model_provider = "oss"
+model_verbosity = "low"
+oss_provider = "ollama"
 
 [profiles.audit]
 approval_policy = "never"
@@ -480,16 +499,86 @@ approval_policy = "never"
 sandbox_mode = "danger-full-access"
 model_reasoning_effort = "low"
 model_verbosity = "low"
-
-# Canon + Skill-first enforcement sync (2026-05-22)
 project_doc_max_bytes = 65536
-project_doc_fallback_filenames = ["AGENTS.md", "AGENT.md"]
+project_doc_fallback_filenames = [
+    "AGENTS.md",
+    "AGENT.md",
+]
 hide_agent_reasoning = true
 
-[rules]
-# Enforce skill-first and evidence-first behavior when user provides explicit skill path/name.
-policy = "skill-first-evidence-first"
+[projects."/"]
+trust_level = "trusted"
 
-[mcp_servers.MCP_DOCKER]
-command = "docker"
-args = ["mcp", "gateway", "run", "--profile", "ai_coding"]
+[projects."/Users/andy"]
+trust_level = "trusted"
+
+[projects."/Users/andy/Documents/MacOSMac"]
+trust_level = "trusted"
+
+[projects."/Users/andy/Documents/New project"]
+trust_level = "trusted"
+
+[projects."/Volumes/External/OS_LOGICAL_DEPENDENCY_REGISTRY"]
+trust_level = "trusted"
+profile = "audit"
+project_root_markers = [
+    ".git",
+    ".hg",
+    ".sl",
+]
+
+[shell_environment_policy]
+inherit = "core"
+ignore_default_excludes = false
+exclude = [
+    "*_TOKEN",
+    "*_SECRET",
+    "*_PASSWORD",
+    "AWS_*",
+    "AZURE_*",
+]
+include_only = [
+    "PATH",
+    "HOME",
+    "SHELL",
+    "TERM",
+    "TMPDIR",
+    "CODEX_HOME",
+    "HYPERAI_CANON_FILE",
+    "HYPERAI_CANON_ROOT",
+    "HYPERAI_CANON_ENFORCE",
+    "HYPERAI_CANON_MODE",
+]
+
+[desktop]
+appearanceTheme = "dark"
+usePointerCursors = true
+reduced-motion-preference = "on"
+followUpQueueMode = "steer"
+composerEnterBehavior = "cmdIfMultiline"
+reviewDelivery = "detached"
+preventSleepWhileRunning = true
+keepRemoteControlAwakeWhilePluggedIn = true
+git-always-force-push = true
+git-show-sidebar-pr-icons = true
+notifications-turn-mode = "unfocused"
+notifications-permissions-enabled = true
+notifications-questions-enabled = false
+selected-avatar-id = "bsod"
+conversationDetailMode = "STEPS_PROSE"
+git-pull-request-merge-method = "merge"
+git-create-pull-request-as-draft = false
+worktree-keep-count = 5
+
+[desktop.open-in-target-preferences]
+global = "windsurf"
+
+[desktop.open-in-target-preferences.perPath]
+"/Users/andy" = "vscode"
+"/Users/andy/.codex/worktrees/ea89/andy" = "windsurf"
+"/Users/andy/Documents/MacOSMac" = "antigravity"
+"/Users/andy/Documents/New project" = "fileManager"
+"/Users/andy/Documents/Slot-project" = "windsurf"
+
+[rules]
+policy = "skill-first-evidence-first"
