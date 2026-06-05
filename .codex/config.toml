@@ -10,6 +10,8 @@ sandbox_mode = "danger-full-access"
 sqlite_home = "/Users/andy/.codex/sqlite"
 notify = []
 
+notify = ["/Users/andy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[]"]
+
 [features]
 apps = true
 codex_git_commit = false
@@ -26,7 +28,7 @@ unified_exec = true
 js_repl = false
 
 [marketplaces.openai-bundled]
-last_updated = "2026-06-05T21:51:21Z"
+last_updated = "2026-06-05T23:53:31Z"
 source_type = "local"
 source = "/Users/andy/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
