@@ -8,9 +8,9 @@ tool_output_token_limit = 6000
 web_search = "cached"
 sandbox_mode = "danger-full-access"
 sqlite_home = "/Users/andy/.codex/sqlite"
-notify = []
 
-notify = ["/Users/andy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[]"]
+
+notify = ["/Users/andy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
 [features]
 apps = true
