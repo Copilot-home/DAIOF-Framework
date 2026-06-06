@@ -1,0 +1,17 @@
+{
+    "servers": [
+        {
+            "name": "github.com/postmanlabs/postman-mcp-server",
+            "type": "stdio",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@postman/postman-mcp-server",
+                "--minimal"
+            ],
+            "env": {
+                "POSTMAN_API_KEY": "${POSTMAN_API_KEY}"
+            }
+        }
+    ]
+}
