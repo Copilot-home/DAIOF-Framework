@@ -5,9 +5,9 @@ on:
     types: [opened, labeled]
   issue_comment:
     types: [created]
-  schedule:
+#   schedule:
     # Check stale issues every day at midnight
-    - cron: '0 0 * * *'
+#     - cron: '0 0 * * *'
 
 permissions:
   issues: write

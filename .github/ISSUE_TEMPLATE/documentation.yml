@@ -1,0 +1,130 @@
+name: 📖 Documentation Improvement
+description: Suggest improvements to DAIOF documentation
+title: "[DOCS] "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 📖 Thank you for improving DAIOF documentation!
+        
+        Good documentation is crucial for DAIOF's success. Your contribution helps others understand and use the framework effectively.
+
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Documentation Type
+      description: What type of documentation needs improvement?
+      options:
+        - API Documentation
+        - Tutorial/Guide
+        - Code Comments
+        - README
+        - Examples
+        - Conceptual Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue-description
+    attributes:
+      label: 📝 Issue Description
+      description: Describe what's wrong or missing in the current documentation
+      placeholder: |
+        Example: "The DigitalOrganism.evolve() method documentation doesn't explain the 'selection_pressure' parameter, making it difficult to understand how to control evolutionary direction..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How does this affect users?
+      options:
+        - Critical - Blocking users from using the feature
+        - Major - Confusing or misleading
+        - Minor - Nice to have improvement
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-documentation
+    attributes:
+      label: 📄 Current Documentation
+      description: Link to or quote the current documentation that needs improvement
+      placeholder: |
+        File: `docs/api/organism.md`
+        Section: "Evolution Methods"
+        
+        Current text:
+        ```
+        evolve(generations): Evolves the organism
+        ```
+
+  - type: textarea
+    id: proposed-improvement
+    attributes:
+      label: 💡 Proposed Improvement
+      description: What should the documentation say instead?
+      placeholder: |
+        ```
+        evolve(generations: int, selection_pressure: float = 0.5) -> EvolutionResult
+        
+        Evolves the organism over multiple generations.
+        
+        Parameters:
+            generations (int): Number of generations to evolve (must be positive)
+            selection_pressure (float): Controls evolutionary selection intensity (0.0-1.0)
+                - 0.0: Random selection (no pressure)
+                - 0.5: Balanced selection (default)
+                - 1.0: Only fittest survive (maximum pressure)
+        
+        Returns:
+            EvolutionResult: Contains fitness history and evolved genome
+        
+        Raises:
+            ValueError: If generations < 0 or selection_pressure not in [0, 1]
+        
+        Example:
+            >>> organism = DigitalOrganism()
+            >>> result = organism.evolve(generations=100, selection_pressure=0.7)
+            >>> print(result.final_fitness)
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected-users
+    attributes:
+      label: 👥 Who Is Affected?
+      description: Which users would benefit from this improvement?
+      placeholder: |
+        - New users trying to understand evolution
+        - Advanced users optimizing parameters
+        - Tutorial followers
+
+  - type: input
+    id: related-files
+    attributes:
+      label: 📂 Related Files/Links
+      description: Links to affected documentation files
+      placeholder: "docs/api/organism.md, examples/02_evolution.py"
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📚 Additional Context
+      description: Any other information about the documentation improvement
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: ✅ Pre-submission Checklist
+      options:
+        - label: I have searched existing documentation issues
+          required: true
+        - label: I have provided a clear description of the problem
+          required: true
+        - label: I have suggested a concrete improvement
+          required: true

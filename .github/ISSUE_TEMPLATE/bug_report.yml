@@ -1,0 +1,153 @@
+name: 🐛 Bug Report
+description: Report a bug to help us improve DAIOF
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🐛 Thank you for reporting a bug!
+        
+        Before submitting:
+        - Search existing issues to avoid duplicates
+        - Ensure you're using the latest version of DAIOF
+        - Include enough information for us to reproduce the issue
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: 🐛 Bug Description
+      description: A clear and concise description of what the bug is
+      placeholder: "When I call organism.evolve() with negative generations, the framework crashes instead of raising a validation error..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: 📋 Steps to Reproduce
+      description: Provide detailed steps to reproduce the behavior
+      placeholder: |
+        1. Install DAIOF v1.0.0
+        2. Create a DigitalOrganism
+        3. Call organism.evolve(generations=-5)
+        4. Observe the crash
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: ✅ Expected Behavior
+      description: What you expected to happen
+      placeholder: "Should raise ValueError with message: 'generations must be positive'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: ❌ Actual Behavior
+      description: What actually happened
+      placeholder: "Process crashes with unhandled exception"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      placeholder: "e.g., macOS 14.0, Ubuntu 22.04, Windows 11"
+    validations:
+      required: true
+
+  - type: input
+    id: python-version
+    attributes:
+      label: Python Version
+      placeholder: "e.g., 3.11.5 (run: python --version)"
+    validations:
+      required: true
+
+  - type: input
+    id: daiof-version
+    attributes:
+      label: DAIOF Version
+      placeholder: "e.g., 1.0.0 (run: pip show digital-ai-organism-framework)"
+    validations:
+      required: true
+
+  - type: input
+    id: numpy-version
+    attributes:
+      label: NumPy Version
+      placeholder: "e.g., 1.24.0 (run: pip show numpy)"
+
+  - type: textarea
+    id: code-sample
+    attributes:
+      label: 💻 Minimal Code to Reproduce
+      description: Provide the smallest code sample that reproduces the issue
+      placeholder: |
+        ```python
+        from digital_ai_organism_framework import DigitalOrganism
+
+        organism = DigitalOrganism()
+        organism.evolve(generations=-5)  # This causes the crash
+        ```
+      render: python
+    validations:
+      required: true
+
+  - type: textarea
+    id: error-message
+    attributes:
+      label: 🔴 Error Message
+      description: Paste the full error traceback
+      placeholder: |
+        ```
+        Traceback (most recent call last):
+          File "test.py", line 4, in <module>
+            organism.evolve(generations=-5)
+          File ".../digital_ai_organism_framework.py", line 234, in evolve
+            for gen in range(generations):
+        TypeError: 'int' object is not iterable
+        ```
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 📸 Screenshots
+      description: If applicable, add screenshots to help explain the problem
+
+  - type: textarea
+    id: possible-solution
+    attributes:
+      label: 🔍 Possible Solution
+      description: If you have ideas on how to fix this, please share
+      placeholder: |
+        Add validation in the evolve() method:
+        ```python
+        def evolve(self, generations):
+            if generations < 0:
+                raise ValueError("generations must be positive")
+        ```
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📚 Additional Context
+      description: Any other context about the problem
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: ✅ Pre-submission Checklist
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+        - label: I have provided all required information
+          required: true
+        - label: I have included a minimal code sample that reproduces the issue
+          required: true

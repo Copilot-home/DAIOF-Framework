@@ -1,9 +1,9 @@
 name: 📦 Auto Dependency Updates
 
 on:
-  schedule:
+#   schedule:
     # Check for dependency updates weekly on Monday
-    - cron: '0 0 * * 1'
+#     - cron: '0 0 * * 1'
   workflow_dispatch:
 
 permissions:

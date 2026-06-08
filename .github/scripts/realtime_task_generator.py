@@ -315,8 +315,9 @@ class RealtimeTaskGenerator:
             except Exception as e:
                 print(f"Error in rule {rule.__name__}: {e}")
         
-        # Deduplicate tasks
-        seen_titles = set()
+        # Deduplicate tasks against each other AND against the active queue
+        # This prevents spamming the queue with the same pending actions
+        seen_titles = {t.title for t in self.task_queue}
         unique_tasks = []
         for task in new_tasks:
             if task.title not in seen_titles:

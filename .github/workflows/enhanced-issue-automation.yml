@@ -1,0 +1,60 @@
+name: 🤖 Enhanced Issue Automation
+
+on:
+  issues:
+    types: [opened, reopened]
+  workflow_dispatch:
+    inputs:
+      process_all:
+        description: 'Process all open issues'
+        required: false
+        default: 'false'
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  process-issue:
+    runs-on: ubuntu-latest
+    name: Intelligent Issue Processing
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: 📦 Install Dependencies
+        run: |
+          pip install PyGithub
+      
+      - name: 🤖 Process New Issue
+        if: github.event_name == 'issues'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          DRY_RUN: 'false'
+        run: |
+          python .github/scripts/enhanced_issue_handler.py
+      
+      - name: 🔄 Process All Issues
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.process_all == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          DRY_RUN: 'false'
+        run: |
+          python .github/scripts/enhanced_issue_handler.py
+      
+      - name: 📊 Report Results
+        if: always()
+        run: |
+          echo "✅ Issue automation completed"
+          echo "Powered by HYPERAI Framework"
+          echo "Creator: Nguyễn Đức Cường (alpha_prime_omega)"

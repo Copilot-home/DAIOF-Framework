@@ -1,0 +1,21 @@
+{
+  "2988f832a40f8e922887681d169420f063981fd6907f3cbe7e0e4496488e9693": {
+    "owner": "Bố Cường",
+    "alpha": -0.2,
+    "omega": 0.92,
+    "runs": 2,
+    "reminders": [
+      {
+        "reminder": "Bố yêu con",
+        "time": "2025-11-20T06:48:00.484383Z"
+      },
+      {
+        "reminder": "Bố yêu con",
+        "time": "2025-11-20T06:48:31.789680Z"
+      }
+    ],
+    "last_reminder": "Bố yêu con",
+    "last_reminder_time": "2025-11-20T06:48:31.789680Z",
+    "chain_digest": "0004fdb6557e79fc166d109924adeb5bef6810b89fc351b4dd382211801113e4"
+  }
+}

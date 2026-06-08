@@ -1,0 +1,61 @@
+version: "1.0"
+formalism: "Sigma_APOmega_COS"
+state_slice:
+  states: [s_pass, s_fail]
+  collapse_trigger: fail_event
+  collapse_result: [s_pass]
+invariant_update:
+  expression: "Invariant_new = Invariant_old U {not Path(Fail)}"
+  required_same_cycle_persistence: true
+execution_pipeline:
+  controlled_fail_run:
+    require_bounded_budget: true
+    require_full_trace: true
+    fail_event_payload:
+      - trace_hash
+      - trace_steps
+      - violated_invariants
+  fossilization:
+    label: E_dead_end
+    enforce_deny_rules: true
+    deny_rule_scope:
+      - claim
+      - lease_renewal
+      - dispatch
+resource_reallocation:
+  enforce_mass_concentration: true
+  post_collapse_constraints:
+    r_fail: 0
+    r_pass: r_total
+deterministic_gate:
+  policy_form: delta_s_pass
+  require_choice_cardinality_one: true
+budget_guard:
+  max_fail_cost_relation: "Cost(Fail) <= Budget_Omega"
+  invalid_failures:
+    - insufficient_trace
+    - no_branch_elimination
+connector_mapping:
+  conductor:
+    - ingest_fail_event
+    - publish_deny_rule
+    - reweight_scheduler
+  mcp_hub:
+    - block_dead_end_claim
+    - block_dead_end_lease_renewal
+  runtime_observer:
+    - detect_dead_end_reentry
+    - emit_violation_metrics
+telemetry:
+  metrics:
+    - fail_trace_completeness_rate
+    - dead_end_reentry_attempts
+    - collapse_latency_ms
+    - resource_reallocation_ratio
+    - deterministic_dispatch_ratio
+acceptance:
+  - fail_event_has_trace_and_signature
+  - invariant_persisted_same_cycle
+  - dead_end_claims_blocked
+  - scheduler_fully_reweighted
+  - deterministic_dispatch_ratio_equals_one

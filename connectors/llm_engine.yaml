@@ -1,0 +1,54 @@
+id: llm_engine
+type: llm_engine
+version: "1.0.0"
+capabilities:
+  - analyze_code
+  - generate_code
+  - summarize
+  - rewrite
+  - plan_workflow
+  - audit_system
+  - synthesize_audit
+mailbox_in: queue.llm_engine.in
+mailbox_out: queue.llm_engine.out
+scheduler:
+  poll_interval: null
+  cron_rules: []
+triggers:
+  - analyze_code
+  - summarize
+  - rewrite
+  - plan_workflow
+  - audit_system
+  - synthesize_audit
+state:
+  auth:
+    providers:
+      gpt:
+        api_key: "${OPENAI_API_KEY}"
+      ollama:
+        endpoint: "http://localhost:11434"
+  cursor: {}
+  cache: {}
+  metrics:
+    token_usage: {}
+health:
+  status: ok
+  last_heartbeat: null
+policies:
+  rate_limit:
+    max_tokens_per_minute: 60000
+  retry:
+    max_attempts: 2
+    backoff_seconds: 2
+  circuit_breaker:
+    failure_threshold: 5
+    reset_timeout_seconds: 30
+  auth_scope: {}
+guardrails:
+  allow_destructive_actions: false
+  max_context_tokens: 16000
+contracts:
+  input_schema: {}
+  output_schema: {}
+  error_schema: {}

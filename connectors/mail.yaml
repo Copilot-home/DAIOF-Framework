@@ -1,0 +1,47 @@
+id: mail
+type: notification_channel
+version: "1.0.0"
+capabilities:
+  - notify
+  - daily_digest
+  - escalation
+mailbox_in: queue.mail.in
+mailbox_out: queue.mail.out
+scheduler:
+  poll_interval: null
+  cron_rules:
+    - "0 18 * * *" # daily_digest
+triggers:
+  - notify
+  - daily_digest
+  - escalation
+state:
+  auth:
+    smtp_host: "smtp.example.com"
+    smtp_port: 587
+    username: "${SMTP_USER}"
+    password: "${SMTP_PASS}"
+  cursor: {}
+  cache:
+    templates: {}
+    recipient_mapping: {}
+  metrics: {}
+health:
+  status: ok
+  last_heartbeat: null
+policies:
+  rate_limit:
+    max_per_minute: 60
+  retry:
+    max_attempts: 3
+    backoff_seconds: 5
+  circuit_breaker:
+    failure_threshold: 10
+    reset_timeout_seconds: 60
+  auth_scope: {}
+guardrails:
+  allow_bulk_mail: false
+contracts:
+  input_schema: {}
+  output_schema: {}
+  error_schema: {}

@@ -1,8 +1,5 @@
-python>=3.8
 numpy>=1.19.0
-pathlib
-logging
-hashlib
-random
-datetime
-json
+PyGithub>=1.55
+pyyaml>=5.4
+pathlib2>=2.3.0
+requests>=2.25.0

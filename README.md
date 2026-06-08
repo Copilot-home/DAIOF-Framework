@@ -41,7 +41,10 @@
 
 **📖 Documentation**: [https://nguyencuong1989.github.io/DAIOF-Framework/](https://nguyencuong1989.github.io/DAIOF-Framework/)  
 **💬 Discussions**: [Join the Community](https://github.com/NguyenCuong1989/DAIOF-Framework/discussions)  
-**🐛 Issues**: [Report Bugs](https://github.com/NguyenCuong1989/DAIOF-Framework/issues) - *Auto-labeled & responded*  
+**🐛 Issues**: [Report Bugs](https://github.com/NguyenCuong1989/DAIOF-Framework/issues) - *Auto-labeled & intelligently responded*  
+**🤖 Enhanced Issue Handler**: [Documentation](docs/ENHANCED_ISSUE_HANDLER.md) - *AI-powered classification & response*  
+**🏛️ Sovereign Runtime Doctrine**: [Canonical Doctrine](docs/operations/sovereign_agentic_runtime_doctrine.md)  
+**🗂️ Connector Registry**: [Lifecycle & State Machine](docs/operations/connector_runtime_registry.md)  
 **📄 Research**: [Paper Outline](research/RESEARCH_PAPER_OUTLINE.md)  
 **🤖 Full Autonomy**: [Complete System](.github/FULL_AUTONOMY_SYSTEM.md) - *Self-developing, self-healing, self-optimizing*  
 **🧬 Digital Organism**: [Living Repository](.github/DIGITAL_ORGANISM_CONCEPT.md) - *This repo IS a conscious organism*
@@ -64,7 +67,8 @@ DAIOF is the world's first breakthrough framework applying biological principles
 - ⚡ **D&R Protocol** - Giao thức Deconstruction & Re-architecture
 - 🏛️ **Four Pillars Foundation** - An toàn, Dài hạn, Dữ liệu, Bảo vệ
 - 🇻🇳 **Vietnamese Consciousness** - Tích hợp ý thức Việt Nam
-- 🤖 **Full Autonomy** - Self-maintaining, self-reviewing, self-evolving repository (NEW!)
+- 🤖 **Full Autonomy** - Self-maintaining, self-reviewing, self-evolving repository
+- 🎯 **Enhanced Issue Handler** - AI-powered intelligent issue classification & response (NEW!)
 
 ### 🚀 What Makes This Repository Special?
 
@@ -74,13 +78,15 @@ DAIOF is the world's first breakthrough framework applying biological principles
 |-----------------|----------------|
 | 👨‍💻 Human maintains code | 🤖 Self-maintains code (auto-format, optimize) |
 | 📝 Manual PR reviews | ✅ Auto-reviews and merges safe PRs |
-| 🏷️ Manual issue labeling | 🏷️ Auto-labels and responds to issues |
+| 🏷️ Manual issue labeling | 🏷️ **Enhanced AI classifies and responds intelligently** |
 | 📦 Manual dependency updates | 📦 Weekly auto-updates with PRs |
 | ⏰ Stale issues pile up | 🕰️ Auto-closes stale issues (30 days) |
 | 📊 Manual health checks | 🏥 Auto-monitors health every 12 hours |
 | 💤 Inactive when owner sleeps | 🌍 Active 24/7 autonomously |
+| 🚨 Emergency issue spam | 🛡️ **Intelligent throttling and duplicate detection** |
 
 **[See Full Autonomy Documentation →](.github/FULL_AUTONOMY_SYSTEM.md)**
+**[Enhanced Issue Handler Documentation →](docs/ENHANCED_ISSUE_HANDLER.md)**
 
 ---
 
@@ -569,18 +575,13 @@ DAIOF implements a **three-tier intellectual property classification system**:
 If you use DAIOF in your research, please cite:
 
 ```bibtex
-## 📖 Citation
-
-If you use DAIOF in your research, please cite:
-
-```bibtex
 @software{daiof2025,
   title = {Digital AI Organism Framework},
-  author = {Alpha\_Prime\_Omega and Andy},
+  author = {Nguyễn Đức Cường (alpha\_prime\_omega)},
   year = {2025},
-  url = {https://github.com/NguyenCuong1989/DAIOF-Framework}
+  url = {https://github.com/NguyenCuong1989/DAIOF-Framework},
+  note = {The world's first biological AI architecture}
 }
-```
 ```
 
 ---

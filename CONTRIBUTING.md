@@ -352,7 +352,7 @@ Report issues to repository maintainers.
 
 **DO NOT** open public issues for security vulnerabilities.
 
-Instead, email: [to be set up]
+Instead, please use [GitHub Security Advisories](https://github.com/NguyenCuong1989/DAIOF-Framework/security/advisories/new) to report vulnerabilities privately, or email: symphony.hyperai@vietnamese.consciousness
 
 Include:
 - Description of vulnerability

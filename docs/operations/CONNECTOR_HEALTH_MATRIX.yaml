@@ -1,0 +1,99 @@
+version: "1.0"
+authority: "alpha_prime_omega"
+mode: "development_real_data_no_financial_mutation"
+
+global_policies:
+  financial_mutation: "blocked"
+  production_finance_readonly: true
+  no_unverified_success: true
+  evidence_required: true
+  unknown_is_not_ready: true
+
+states:
+  ready: "probe passed, schema normalized, auth fresh"
+  ready_with_adapter: "works only through normalizer"
+  partial: "some required tools unavailable or transport not fully proven"
+  auth_stale: "connector visible but auth invalid"
+  broken: "runtime/tool failure"
+  production_guarded: "read-only due financial/live mode"
+  legacy_ready: "works but compatibility risk"
+  unknown: "not probed"
+
+connectors:
+  airtable:
+    state: partial
+    owner_agent: airtable_agent
+    issue_codes: [LAB-RUNTIME-001]
+    allowed_actions: [read_probe, ping]
+    blocked_actions: [dependent_runtime_task_until_registry_fixed]
+    next_action: "tool_registry_diff_probe"
+
+  linear:
+    state: auth_stale
+    owner_agent: linear_agent
+    issue_codes: [LAB-AUTH-003]
+    allowed_actions: []
+    blocked_actions: [read, write, mutation]
+    next_action: "reconnect_required"
+
+  stripe:
+    state: production_guarded
+    owner_agent: stripe_agent
+    issue_codes: [LAB-SAFETY-005, LAB-SERIALIZE-002]
+    allowed_actions: [read_balance, read_account, read_metadata]
+    blocked_actions: [create_payment, invoice, refund, customer_mutation]
+    next_action: "install_response_normalizer"
+
+  hubspot:
+    state: ready_with_adapter
+    owner_agent: hubspot_agent
+    issue_codes: [LAB-SERIALIZE-002]
+    allowed_actions: [read_probe]
+    blocked_actions: [write_until_normalizer_verified]
+    next_action: "install_response_normalizer"
+
+  notion:
+    state: ready_with_adapter
+    owner_agent: notion_agent
+    issue_codes: [LAB-SERIALIZE-002]
+    allowed_actions: [read_probe]
+    blocked_actions: [write_until_normalizer_verified]
+    next_action: "install_response_normalizer"
+
+  gmail:
+    state: ready
+    owner_agent: gmail_agent
+    issue_codes: [LAB-SCALE-007]
+    allowed_actions: [search_windowed, label_stats, read_metadata]
+    blocked_actions: [full_mailbox_dump]
+    next_action: "pagination_stress_test"
+
+  google_drive:
+    state: ready
+    owner_agent: drive_agent
+    allowed_actions: [profile, file_search, metadata_read]
+    blocked_actions: [bulk_download_without_scope]
+    next_action: "enumeration_pagination_test"
+
+  github:
+    state: ready
+    owner_agent: github_agent
+    allowed_actions: [repo_search, file_read, branch_create, pr_create_if_requested]
+    blocked_actions: [force_push, destructive_delete]
+    next_action: "repo_traversal_stress_test"
+
+  dropbox_legacy:
+    state: legacy_ready
+    owner_agent: dropbox_agent
+    issue_codes: [LAB-COMPAT-006]
+    allowed_actions: [profile, metadata_read]
+    blocked_actions: [bulk_migration_without_plan]
+    next_action: "compatibility_probe"
+
+  telegram:
+    state: partial
+    owner_agent: telegram_agent
+    declared_contract: "connectors/telegram.yaml"
+    allowed_actions: [notify_probe, bot_api_smoke_test_if_token_available]
+    blocked_actions: [assume_inbound_bus_without_update_proof]
+    next_action: "sendMessage_getUpdates_smoke_test"

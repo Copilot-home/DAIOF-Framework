@@ -1,0 +1,98 @@
+version: "1.0"
+model_rule: "smallest_unit_is_dependency_node"
+node_types:
+  - dep.library
+  - dep.service_api
+  - dep.container_base
+  - dep.connector
+  - dep.devtool
+  - dep.runtime_service
+nodes:
+  - id: dep.py.numpy
+    type: dep.library
+    source: requirements.txt
+  - id: dep.py.pygithub
+    type: dep.library
+    source: requirements.txt
+  - id: dep.py.pyyaml
+    type: dep.library
+    source: requirements.txt
+  - id: dep.py.requests
+    type: dep.library
+    source: requirements.txt
+  - id: dep.node.express
+    type: dep.library
+    source: package.json
+  - id: dep.node.playwright_test
+    type: dep.library
+    source: package.json
+  - id: dep.container.python_3_11_slim
+    type: dep.container_base
+    source: Dockerfile.hyperai
+  - id: dep.container.node_lts_alpine
+    type: dep.container_base
+    source: Dockerfile
+  - id: dep.api.github
+    type: dep.service_api
+    source: connectors/github.yaml
+  - id: dep.api.jira
+    type: dep.service_api
+    source: connectors/jira.yaml
+  - id: dep.api.asana
+    type: dep.service_api
+    source: connectors/asana.yaml
+  - id: dep.api.linear
+    type: dep.service_api
+    source: connectors/linear.yaml
+  - id: dep.api.ollama
+    type: dep.service_api
+    source: connectors/llm_engine.yaml
+  - id: dep.api.smtp
+    type: dep.service_api
+    source: connectors/mail.yaml
+  - id: dep.api.telegram
+    type: dep.service_api
+    source: connectors/telegram.yaml
+  - id: dep.connector.conductor
+    type: dep.connector
+    source: connectors/conductor.yaml
+  - id: dep.connector.mcp_hub
+    type: dep.connector
+    source: connectors/mcp_hub.yaml
+  - id: dep.connector.runtime_observer
+    type: dep.connector
+    source: connectors/runtime_observer.yaml
+  - id: dep.runtime.sse_gateway
+    type: dep.runtime_service
+    source: apps/sse-gateway/server.mjs
+  - id: dep.devtool.vscode_merged_extensions
+    type: dep.devtool
+    source: vscode-merged/extensions
+edges:
+  - from: dep.connector.conductor
+    to: dep.connector.mcp_hub
+    relation: orchestrates_via_claim_protocol
+  - from: dep.connector.conductor
+    to: dep.connector.runtime_observer
+    relation: uses_presence_signal
+  - from: dep.connector.mcp_hub
+    to: dep.connector.runtime_observer
+    relation: validates_readiness_before_lease
+  - from: dep.connector.conductor
+    to: dep.api.github
+    relation: downstream_integration
+  - from: dep.connector.conductor
+    to: dep.api.jira
+    relation: downstream_integration
+  - from: dep.connector.conductor
+    to: dep.api.asana
+    relation: downstream_integration
+  - from: dep.connector.conductor
+    to: dep.api.linear
+    relation: downstream_integration
+  - from: dep.runtime.sse_gateway
+    to: dep.node.express
+    relation: runtime_dependency
+  - from: dep.connector.conductor
+    to: dep.runtime.sse_gateway
+    relation: event_stream_bridge

@@ -1,0 +1,27 @@
+name: Build Alpha Omega PDF
+
+on:
+  push:
+    branches: ['main', 'master', 'stable']
+  pull_request:
+
+jobs:
+  build-latex-alpha:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install LaTeX packages
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-fonts-recommended texlive-lang-vietnamese latexmk
+      - name: Build PDF
+        working-directory: docs
+        run: |
+          set -e
+          latexmk -xelatex -pdf -quiet alpha_omega.tex
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: alpha_omega-pdf
+          path: docs/alpha_omega.pdf

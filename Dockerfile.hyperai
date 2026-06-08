@@ -1,0 +1,8 @@
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt || true
+RUN pip install PyYAML requests || true
+COPY . .
+ENV PYTHONPATH=/app
+CMD ["python3", "-c", "import time; print('HyperAI Node Active'); time.sleep(86400)"]

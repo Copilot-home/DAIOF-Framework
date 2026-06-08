@@ -1,0 +1,124 @@
+{
+  "metadata": {
+    "creator": "Nguyễn Đức Cường (alpha_prime_omega)",
+    "export_timestamp": "2025-11-18T00:36:14.778070",
+    "privacy_filter": "internal",
+    "data_points": 6,
+    "compliance_signature": "3736f103b6261710"
+  },
+  "data_points": [
+    {
+      "source": "Chrome Bookmarks (Mock)",
+      "source_type": "chrome",
+      "timestamp": "2025-11-18T00:36:14.775701",
+      "data_type": "bookmark",
+      "content": {
+        "title": "HYPERAI Framework",
+        "url": "https://github.com/NguyenCuong1989/DAIOF-Framework",
+        "path": "Mock Bookmarks Bar",
+        "date_added": 1638360000000000
+      },
+      "compliance_tags": [
+        "browsing_history",
+        "personal_data"
+      ],
+      "privacy_level": "internal"
+    },
+    {
+      "source": "Chrome Bookmarks (Mock)",
+      "source_type": "chrome",
+      "timestamp": "2025-11-18T00:36:14.775710",
+      "data_type": "bookmark",
+      "content": {
+        "title": "Python Documentation",
+        "url": "https://docs.python.org/3/",
+        "path": "Mock Bookmarks Bar",
+        "date_added": 1638360000000000
+      },
+      "compliance_tags": [
+        "browsing_history",
+        "personal_data"
+      ],
+      "privacy_level": "internal"
+    },
+    {
+      "source": "Chrome Bookmarks (Mock)",
+      "source_type": "chrome",
+      "timestamp": "2025-11-18T00:36:14.775714",
+      "data_type": "bookmark",
+      "content": {
+        "title": "GitHub",
+        "url": "https://github.com",
+        "path": "Mock Bookmarks Bar",
+        "date_added": 1638360000000000
+      },
+      "compliance_tags": [
+        "browsing_history",
+        "personal_data"
+      ],
+      "privacy_level": "internal"
+    },
+    {
+      "source": "GitHub Extension (Mock)",
+      "source_type": "github",
+      "timestamp": "2025-11-18T00:36:14.777009",
+      "data_type": "repository_info",
+      "content": {
+        "type": "repository_info",
+        "repo_name": "DAIOF-Framework",
+        "owner": "NguyenCuong1989",
+        "description": "Digital AI Organism Framework",
+        "language": "Python",
+        "stars": 42,
+        "forks": 7
+      },
+      "compliance_tags": [
+        "version_control",
+        "collaboration",
+        "external_api"
+      ],
+      "privacy_level": "internal"
+    },
+    {
+      "source": "GitHub Extension (Mock)",
+      "source_type": "github",
+      "timestamp": "2025-11-18T00:36:14.777016",
+      "data_type": "issue",
+      "content": {
+        "type": "issue",
+        "number": 1,
+        "title": "Implement unified data integration",
+        "state": "open",
+        "labels": [
+          "enhancement",
+          "high-priority"
+        ]
+      },
+      "compliance_tags": [
+        "version_control",
+        "collaboration",
+        "external_api"
+      ],
+      "privacy_level": "internal"
+    },
+    {
+      "source": "GitHub Extension (Mock)",
+      "source_type": "github",
+      "timestamp": "2025-11-18T00:36:14.777020",
+      "data_type": "pull_request",
+      "content": {
+        "type": "pull_request",
+        "number": 1,
+        "title": "Add tracing support",
+        "state": "merged",
+        "merged_at": "2025-11-17T23:00:00Z"
+      },
+      "compliance_tags": [
+        "version_control",
+        "collaboration",
+        "external_api"
+      ],
+      "privacy_level": "internal"
+    }
+  ]
+}

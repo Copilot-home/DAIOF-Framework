@@ -1,6 +1,10 @@
 
 # 🏗️ DAIOF Framework Architecture
 
+> **Canonical Documentation**: This architecture is governed by the [Sovereign Agentic Runtime Doctrine](./SOVEREIGN_AGENTIC_RUNTIME_DOCTRINE.md) v1.0.0
+>
+> **Attribution**: alpha_prime_omega (Nguyễn Đức Cường) | **Verification**: 4287
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                         🌟 DAIOF FRAMEWORK ARCHITECTURE                      │
@@ -239,5 +243,51 @@
 3. **Game AI** - Adaptive NPCs, procedural behavior generation
 4. **Research** - Artificial life, consciousness studies, emergence
 5. **Education** - Teaching evolution, complex systems, AI concepts
+
+---
+
+## 📚 Canonical Documentation Reference
+
+This architecture operates under the **Sovereign Agentic Runtime** governance model. For comprehensive specifications, see:
+
+### Core Doctrine
+- **[Sovereign Agentic Runtime Doctrine](./SOVEREIGN_AGENTIC_RUNTIME_DOCTRINE.md)** - Constitutional foundation and platform-grade capabilities
+  - Sovereignty and ownership principles
+  - Four Pillars: An toàn, Đường dài, Tin vào số liệu, Hạn chế rủi ro
+  - Open-source implementation boundaries
+  - Safety guarantees and auditability
+
+### Operational Specifications
+- **[Connector Lifecycle](./CONNECTOR_LIFECYCLE.md)** - External tool integration states and transitions
+  - 7 lifecycle states: DISCOVERED → AUTHORIZED → ACTIVE → DEGRADED/EXPIRED/BLOCKED → RETIRED
+  - Probe specifications (identity, read, write, permission scope)
+  - Recovery actions and failure modes
+
+- **[Metadata Schema](./METADATA_SCHEMA.md)** - Source-of-truth tracking and synchronization
+  - Required metadata fields for all components
+  - Sovereignty enforcement (alpha_prime_omega, verification code 4287)
+  - Temporal tracking and versioning
+
+- **[Runtime State Machine](./RUNTIME_STATE_MACHINE.md)** - Comprehensive state transitions
+  - Symphony states (INITIALIZING → HARMONIZING → PERFORMING → OPTIMIZING → EVOLVING)
+  - Organism lifecycle (BIRTH → INFANT → JUVENILE → ADULT → ELDER → DEATH)
+  - Health states (HEALTHY → DEGRADED → CRITICAL → DEAD)
+
+- **[Execution Evidence Registry](./EXECUTION_EVIDENCE_REGISTRY.md)** - Evidence mirroring protocol
+  - Task execution evidence from Asana/Linear
+  - Visual topology evidence from Figma
+  - Data substrate evidence from Airtable
+  - Repository-canonical drift resilience
+
+### Operational Planes (Current Status as of 2026-05-14)
+- ✅ **GitHub**: ACTIVE - Canonical source-of-truth
+- ✅ **Figma**: ACTIVE - Visual topology substrate
+- ✅ **Asana**: ACTIVE - Execution backlog substrate
+- ⚠️ **Linear**: DEGRADED - 401 session expired, requires re-authentication
+- ❓ **Airtable**: DISCOVERED - Requires authorization
+
+---
+
+**Repository as Operating Constitution**: This repository is not merely a code store—it is the canonical operating constitution for the Digital AI Organism Framework. All operational evidence is mirrored here to maintain inspectability, auditability, and recoverability.
 
 

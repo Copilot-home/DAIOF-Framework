@@ -1,0 +1,9 @@
+[submodule "trust_of_copilot"]
+	path = trust_of_copilot
+	url = https://github.com/NguyenCuong1989/trust_of_copilot
+[submodule "vscode"]
+	path = vscode
+	url = https://github.com/NguyenCuong1989/vscode
+[submodule "vscode-python-environments"]
+	path = vscode-python-environments
+	url = https://github.com/NguyenCuong1989/vscode-python-environments

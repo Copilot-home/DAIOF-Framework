@@ -7,9 +7,9 @@ on:
     types: [opened, closed]
   discussion:
     types: [created, answered]
-  schedule:
+#   schedule:
     # Daily community engagement at 9 AM UTC
-    - cron: '0 9 * * *'
+#     - cron: '0 9 * * *'
   workflow_dispatch:
 
 permissions:

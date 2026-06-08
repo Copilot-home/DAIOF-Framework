@@ -1,0 +1,57 @@
+id: mcp_hub
+type: mcp_hub
+version: "1.0.0"
+capabilities:
+  - register_tool
+  - call_tool
+  - list_tools
+  - subscribe_agent
+  - claim_task
+  - release_task
+mailbox_in: queue.mcp_hub.in
+mailbox_out: queue.mcp_hub.out
+scheduler:
+  poll_interval: null
+  cron_rules: []
+triggers:
+  - call_tool
+  - register_tool
+  - subscribe_agent
+  - claim_task
+  - release_task
+state:
+  auth: {}
+  cursor: {}
+  cache:
+    registry: {}
+    tool_health: {}
+    subscriptions: {}
+    task_claims: {}
+    execution_phase: phase_a_dev_realtime_hardening
+    api_profile: legacy_external_dev_only
+  metrics: {}
+health:
+  status: ok
+  last_heartbeat: null
+policies:
+  rate_limit:
+    max_per_minute: 60
+  retry:
+    max_attempts: 3
+    backoff_seconds: 3
+  circuit_breaker:
+    failure_threshold: 5
+    reset_timeout_seconds: 30
+  auth_scope: {}
+guardrails:
+  publish_only_validated_tools: true
+  require_lease_for_claims: true
+  max_claim_lease_seconds: 120
+  allow_production_secrets_in_test_phase: false
+  allow_unsandboxed_external_attack_testing: false
+contracts:
+  input_schema:
+    profile: dead_end_claim_filter_v1
+  output_schema:
+    profile: claim_rejection_reason_v1
+  error_schema: {}

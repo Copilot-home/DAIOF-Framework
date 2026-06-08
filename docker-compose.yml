@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # Main HYPERAI Orchestrator
+  hyperai-orchestrator:
+    build: .
+    container_name: hyperai-orchestrator
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - GITHUB_REPOSITORY=NguyenCuong1989/DAIOF-Framework
+    volumes:
+      - .:/app
+      - logs:/app/logs
+      - con_memory:/con-memory
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import haios_core; print('OK')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    command: ["python3", "unified_ai_orchestrator.py"]
+
+  # HAIOS Runtime Monitor
+  haios-monitor:
+    build: .
+    container_name: haios-monitor
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    volumes:
+      - .:/app
+    restart: unless-stopped
+    depends_on:
+      hyperai-orchestrator:
+        condition: service_healthy
+    command: ["python3", "haios_monitor.py"]
+
+  # Digital Organism Ecosystem
+  digital-ecosystem:
+    build: .
+    container_name: digital-ecosystem
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    volumes:
+      - .:/app
+    restart: unless-stopped
+    depends_on:
+      hyperai-orchestrator:
+        condition: service_healthy
+    command: ["python3", "digital_ecosystem.py"]
+
+  # Evaluation Runner
+  evaluation-runner:
+    build: .
+    container_name: evaluation-runner
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    volumes:
+      - .:/app
+    restart: unless-stopped
+    depends_on:
+      hyperai-orchestrator:
+        condition: service_healthy
+    command: ["python3", "evaluation_service.py"]
+
+volumes:
+  logs:
+  con_memory:
+
+networks:
+  default:
+    name: hyperai-network
+    driver: bridge

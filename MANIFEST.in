@@ -1,0 +1,36 @@
+# MANIFEST.in - Package manifest for HYPERAI Framework
+# Include important non-Python files in the distribution
+
+include README.md
+include LICENSE
+include requirements.txt
+include CHANGELOG.md
+include CODE_OF_CONDUCT.md
+include CONTRIBUTING.md
+include SECURITY.md
+
+# Include documentation
+recursive-include docs *.md *.rst *.txt
+recursive-include examples *.py *.md
+
+# Include GitHub workflows (for reference)
+recursive-include .github *.yml *.md
+
+# Include consciousness files
+recursive-include .consciousness *.md *.yml *.json
+
+# Exclude build artifacts
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude __pycache__
+global-exclude *.so
+global-exclude .DS_Store
+global-exclude *.log
+
+# Exclude development files
+exclude .gitignore
+exclude .gitattributes
+exclude *.egg-info
+recursive-exclude tests *
+recursive-exclude .git *
+recursive-exclude node_modules *

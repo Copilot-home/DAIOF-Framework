@@ -1,0 +1,198 @@
+# Enhanced Issue Handler Configuration
+# Powered by HYPERAI Framework
+# Creator: Nguyễn Đức Cường (alpha_prime_omega)
+# Original Creation: October 30, 2025
+
+# Emergency Throttling (4 Pillars: Risk Management)
+emergency_throttle:
+  enabled: true
+  window_hours: 6
+  max_issues: 3
+  message: |
+    ⚠️ **Emergency Issue Throttle**
+    
+    Multiple emergency issues detected recently. This issue has been throttled.
+    If this is a genuine emergency, please add more details and ping @NguyenCuong1989.
+
+# Duplicate Detection (4 Pillars: Data-driven)
+duplicate_detection:
+  enabled: true
+  similarity_threshold: 0.7
+  auto_close_threshold: 0.9
+  check_last_n_issues: 50
+
+# Auto-close Stale Issues (4 Pillars: Long-term)
+stale_management:
+  enabled: true
+  days_before_stale: 30
+  days_before_close: 7
+  exempt_labels:
+    - pinned
+    - security
+    - priority: critical
+    - priority: high
+
+# Classification Keywords (4 Pillars: Data-driven)
+priority_keywords:
+  critical:
+    - critical
+    - urgent
+    - security
+    - vulnerability
+    - crash
+    - data loss
+    - breaking
+  high:
+    - bug
+    - error
+    - broken
+    - not working
+    - failed
+    - regression
+  medium:
+    - enhancement
+    - feature
+    - improvement
+    - optimization
+  low:
+    - documentation
+    - typo
+    - question
+    - discussion
+    - cosmetic
+
+category_keywords:
+  security:
+    - security
+    - vulnerability
+    - exploit
+    - cve
+    - injection
+    - xss
+    - csrf
+  bug:
+    - bug
+    - error
+    - crash
+    - exception
+    - traceback
+    - stacktrace
+    - fail
+  feature:
+    - feature
+    - enhancement
+    - add
+    - support
+    - implement
+    - new
+  documentation:
+    - docs
+    - documentation
+    - readme
+    - guide
+    - tutorial
+    - example
+  performance:
+    - slow
+    - performance
+    - optimization
+    - speed
+    - memory
+    - cpu
+  question:
+    - question
+    - how to
+    - help
+    - usage
+    - clarification
+
+# Auto-response Templates (4 Pillars: Safety)
+response_templates:
+  security:
+    priority: critical
+    message: |
+      🔒 **Security Issue Detected**
+      
+      This issue has been marked as high priority. Our security team will review it promptly.
+      
+      **Important**: Please do NOT disclose exploit details publicly until patched.
+      
+      We take security seriously and appreciate responsible disclosure.
+  
+  bug:
+    priority: high
+    message: |
+      🐛 **Bug Report Received**
+      
+      To help us fix this faster, please ensure you've provided:
+      - Clear steps to reproduce
+      - Expected vs actual behavior
+      - Environment details (OS, Python version, DAIOF version)
+      - Complete error messages or logs
+      - Code sample if applicable
+  
+  feature:
+    priority: medium
+    message: |
+      ✨ **Feature Request - Thank You!**
+      
+      Your suggestion helps DAIOF evolve! Consider these questions:
+      - How does this align with DAIOF's biological AI philosophy?
+      - Does it maintain AI-Human interdependence?
+      - What's the implementation complexity?
+      - Are there alternative approaches?
+  
+  question:
+    priority: low
+    message: |
+      ❓ **Question Received**
+      
+      For faster answers, please check:
+      - [Full Documentation](https://github.com/NguyenCuong1989/DAIOF-Framework#readme)
+      - [Examples Directory](https://github.com/NguyenCuong1989/DAIOF-Framework/tree/main/examples)
+      - [Community Discussions](https://github.com/NguyenCuong1989/DAIOF-Framework/discussions)
+      
+      If your question isn't answered there, we'll respond soon!
+
+# Assignment Rules (4 Pillars: Long-term sustainability)
+auto_assignment:
+  enabled: false  # Disabled by default, enable when team grows
+  rules:
+    security:
+      assignees: []  # Add security team members
+    documentation:
+      assignees: []  # Add documentation maintainers
+    bug:
+      assignees: []  # Add bug triage team
+
+# Labels to Auto-apply
+auto_labels:
+  all_issues:
+    - auto-classified
+  by_category:
+    security:
+      - security
+      - priority: critical
+    bug:
+      - bug
+    feature:
+      - enhancement
+    documentation:
+      - documentation
+    question:
+      - question
+    performance:
+      - performance
+
+# HYPERAI Framework Attribution (MANDATORY)
+attribution:
+  required: true
+  framework: "HYPERAI Framework"
+  creator: "Nguyễn Đức Cường (alpha_prime_omega)"
+  creation_date: "October 30, 2025"
+  verification_code: 4287
+  footer: |
+    ---
+    *🤖 Automated by DAIOF Digital Organism*
+    *Powered by HYPERAI Framework | Creator: Nguyễn Đức Cường (alpha_prime_omega)*
+    *Original Creation: October 30, 2025*

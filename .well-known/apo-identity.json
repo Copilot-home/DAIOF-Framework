@@ -1,0 +1,47 @@
+{
+  "identity": {
+    "language_id": "SIGMA_APOMEGA_COS",
+    "language_symbol": "SIGMA_APOMEGA_COS",
+    "code_signature": "[APO:SIGMA]",
+    "origin": "APO",
+    "watermark": "Origin(F)=APO"
+  },
+  "ontology": {
+    "startup_guard": "fail_closed",
+    "invalid_transition": "BOTTOM",
+    "status": "CANON_LOCKED",
+    "topology": "O->E->P->L->I->F->B"
+  },
+  "comm": {
+    "version": "SIGMA_APO-COMM/v1",
+    "required_fields": [
+      "comm_version",
+      "language_id",
+      "origin",
+      "operator_path",
+      "action_symbol",
+      "state_in",
+      "state_out",
+      "delta_symbol",
+      "gate_result",
+      "payload_math"
+    ]
+  },
+  "transport_headers": [
+    "X-APO-Language-ID",
+    "X-APO-Code-Signature",
+    "X-APO-Spec-Version",
+    "X-APO-Spec-SHA256",
+    "X-APO-Watermark",
+    "X-APO-Proof"
+  ],
+  "scan_markers": [
+    ".well-known/apo-identity.json",
+    "APO_IDENTITY_NOTICE.md",
+    ".ai-identity-link"
+  ],
+  "spec": {
+    "spec_version": "v2",
+    "spec_sha256": "5c6e37e8315081a945a75c05fba33a3dfcf5732ae69438d700b1f21aea96b6ce"
+  }
+}

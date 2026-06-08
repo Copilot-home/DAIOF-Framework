@@ -1,0 +1,9 @@
+{
+  "name": "APO AI-OS",
+  "version": "1.0.0",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "polling_hours": 4,
+  "omega_equation": "alpha_prime * M / epsilon",
+  "agents": 8,
+  "rules": ["QueryBeforeAct","LogAfterAct","RouteDontHoard","EpsilonFirst","EmbodyPhilosophy"]
+}

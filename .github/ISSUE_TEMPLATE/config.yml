@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/NguyenCuong1989/DAIOF-Framework/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📖 Documentation
+    url: https://nguyencuong1989.github.io/DAIOF-Framework/
+    about: Browse the complete DAIOF documentation
+  - name: 🤝 Contributing Guide
+    url: https://github.com/NguyenCuong1989/DAIOF-Framework/blob/main/CONTRIBUTING.md
+    about: Learn how to contribute to DAIOF
+  - name: 📋 IP Classification
+    url: https://github.com/NguyenCuong1989/DAIOF-Framework/blob/main/INTELLECTUAL_PROPERTY_CLASSIFICATION.md
+    about: Understand DAIOF's IP guidelines before contributing

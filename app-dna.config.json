@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "modelFile": "app-dna.json",
+  "settings": {
+    "codeGeneration": {
+      "outputPath": "./fabrication_results"
+    },
+    "editor": {
+      "showAdvancedProperties": true,
+      "expandNodesOnLoad": false
+    }
+  }
+}

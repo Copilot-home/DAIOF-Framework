@@ -1,0 +1,114 @@
+name: ❓ Question
+description: Ask a question about DAIOF
+title: "[QUESTION] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ❓ Ask Your Question
+        
+        **Note:** For discussions and community help, consider using [GitHub Discussions](https://github.com/NguyenCuong1989/DAIOF-Framework/discussions) instead.
+        
+        Use this template for specific questions that need developer attention.
+
+  - type: dropdown
+    id: question-category
+    attributes:
+      label: Question Category
+      description: What is your question about?
+      options:
+        - Installation & Setup
+        - Usage & API
+        - Architecture & Design
+        - Philosophy & Concepts
+        - Performance & Optimization
+        - Contributing & Development
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: ❓ Your Question
+      description: Ask your question clearly and specifically
+      placeholder: |
+        Example: "How do I implement custom selection strategies for organism evolution? I want to evolve organisms based on energy efficiency rather than pure fitness scores..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 🔍 Context
+      description: Provide context about what you're trying to achieve
+      placeholder: |
+        I'm building a simulation where organisms must balance performance with resource consumption. The default fitness-based selection doesn't account for energy costs...
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempted-solutions
+    attributes:
+      label: 🛠️ What Have You Tried?
+      description: Describe what you've already attempted
+      placeholder: |
+        I tried:
+        1. Overriding the fitness function
+        2. Looking at the SymphonyController documentation
+        3. Checking examples/02_evolution_race.py
+        
+        But I couldn't find information on custom selection strategies...
+
+  - type: textarea
+    id: code-sample
+    attributes:
+      label: 💻 Code Sample (if applicable)
+      description: Share relevant code you're working with
+      placeholder: |
+        ```python
+        class EnergyEfficientOrganism(DigitalOrganism):
+            def __init__(self):
+                super().__init__()
+                self.energy_consumed = 0
+            
+            def calculate_efficiency(self):
+                return self.fitness / max(self.energy_consumed, 1)
+        ```
+      render: python
+
+  - type: input
+    id: daiof-version
+    attributes:
+      label: DAIOF Version
+      placeholder: "e.g., 1.0.0"
+
+  - type: textarea
+    id: documentation-checked
+    attributes:
+      label: 📖 Documentation Checked
+      description: Which documentation have you already reviewed?
+      placeholder: |
+        - [x] README.md
+        - [x] API Documentation
+        - [ ] Examples
+        - [ ] Research papers
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: 📚 Additional Information
+      description: Any other information that might help answer your question
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: ✅ Pre-submission Checklist
+      options:
+        - label: I have searched existing issues and discussions
+          required: true
+        - label: I have checked the documentation
+          required: true
+        - label: This question requires developer attention (not suitable for Discussions)
+          required: true
