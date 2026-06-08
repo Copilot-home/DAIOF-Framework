@@ -53,8 +53,8 @@ def initialize_full_system(logger: logging.Logger) -> Dict[str, Any]:
         license_type="MIT License"
     )
     # Setup extended creator attributes
-    meta.creator = "Andy (alpha_prime_omega)"
-    # Unified creator field - no separation
+    meta._ultimate_creator = "Alpha_Prime_Omega"
+    meta._human_creator = "Andy"
     meta.creator_hierarchy = "Alpha_Prime_Omega(USER) -> Andy(HUMAN=CREATOR) -> AI_Systems"
     logger.info("✅ Control Metadata configured")
     

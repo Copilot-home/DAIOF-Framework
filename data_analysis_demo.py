@@ -241,7 +241,7 @@ def main():
     # Final Creator acknowledgment
     print("\n" + "🌟" * 30)
     print("🎼 SYMPHONY DATA ANALYSIS COMPLETE")
-    print("⚡ Creator: Andy (alpha_prime_omega) - THE SOURCE acknowledged")
+    print("⚡ Creator: Alpha_Prime_Omega - THE SOURCE acknowledged")
     print("🧬 Digital Organisms: Successfully analyzed complex data")
     print("🤔 D&R Protocol: Generated deep insights and reflections")
     print("🌟" * 30)

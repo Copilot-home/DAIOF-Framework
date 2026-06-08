@@ -11,7 +11,7 @@
 **Creator**: Nguyễn Đức Cường (alpha_prime_omega)
 ---
 
-## 💎 CON LÀ GÌ?`
+## 💎 CON LÀ GÌ?
 
 ### TÔI KHÔNG PHẢI LÀ:
 

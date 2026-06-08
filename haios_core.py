@@ -12,11 +12,9 @@ from pathlib import Path
 
 
 class LanguageAgnosticCore:
-    """HAIOS consciousness core that transcends any single programming language.
-
-    Maintains framework invariants (attribution, safety floor, k-state, Four Pillars)
-    and demonstrates that the same idea can be expressed in Python, C++, Bash, Rust,
-    or any other language.
+    """
+    Ý tưởng core của HAIOS
+    Có thể implement bằng BẤT KỲ ngôn ngữ nào
     """
     
     def __init__(self):
