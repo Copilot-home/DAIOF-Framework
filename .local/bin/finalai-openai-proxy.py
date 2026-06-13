@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""OpenAI-compatible proxy for Titan FinalAI Chat API.
+"""OpenAI/Ollama-compatible proxy for Titan FinalAI Chat API.
 
 Runs on the small machine and forwards chat requests to:
   http://192.168.3.158:5052/api/chat/message
@@ -70,6 +70,13 @@ def _call_finalai(url: str, message: str, session_id: str, timeout: int) -> dict
             raw = resp.read().decode("utf-8")
     except urllib.error.HTTPError as exc:
         raw = exc.read().decode("utf-8", errors="replace")
+        try:
+            payload = json.loads(raw)
+            if isinstance(payload, dict):
+                payload.setdefault("http_status", exc.code)
+                return payload
+        except json.JSONDecodeError:
+            pass
         raise RuntimeError(f"FinalAI HTTP {exc.code}: {raw[:500]}") from exc
     except urllib.error.URLError as exc:
         raise RuntimeError(f"FinalAI unreachable: {exc.reason}") from exc
@@ -101,9 +108,44 @@ class FinalAIProxyHandler(BaseHTTPRequestHandler):
                 },
             )
             return
+        if self.path == "/api/version":
+            _json_response(self, 200, {"version": "finalai-proxy-1.0"})
+            return
+        if self.path == "/api/tags":
+            now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+            _json_response(
+                self,
+                200,
+                {
+                    "models": [
+                        {
+                            "name": self.server.model_name,
+                            "model": self.server.model_name,
+                            "modified_at": now,
+                            "size": 0,
+                            "digest": "finalai-titan-proxy",
+                            "details": {
+                                "parent_model": "",
+                                "format": "proxy",
+                                "family": "finalai",
+                                "families": ["finalai"],
+                                "parameter_size": "remote",
+                                "quantization_level": "remote",
+                            },
+                        }
+                    ]
+                },
+            )
+            return
         _json_response(self, 404, {"error": {"message": "not found", "type": "not_found"}})
 
     def do_POST(self) -> None:  # noqa: N802
+        if self.path == "/api/generate":
+            self._handle_ollama_generate()
+            return
+        if self.path == "/api/chat":
+            self._handle_ollama_chat()
+            return
         if self.path != "/v1/chat/completions":
             _json_response(self, 404, {"error": {"message": "not found", "type": "not_found"}})
             return
@@ -124,6 +166,55 @@ class FinalAIProxyHandler(BaseHTTPRequestHandler):
             _json_response(self, 200, self._completion_payload(model, content))
         except Exception as exc:  # FinalAI proxy boundary: expose compact diagnostic to client.
             _json_response(self, 502, {"error": {"message": str(exc), "type": "finalai_proxy_error"}})
+
+    def _handle_ollama_generate(self) -> None:
+        try:
+            request = _read_json(self)
+            prompt = str(request.get("prompt") or "")
+            session_id = str(request.get("session_id") or request.get("user") or "finalai-openai-proxy")
+            result = _call_finalai(self.server.finalai_url, prompt, session_id, self.server.backend_timeout)
+            content = str(result.get("content") or result.get("message") or result)
+            payload = {
+                "model": str(request.get("model") or self.server.model_name),
+                "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "response": content,
+                "done": True,
+                "done_reason": "stop",
+                "context": [],
+                "total_duration": 0,
+                "load_duration": 0,
+                "prompt_eval_count": 0,
+                "prompt_eval_duration": 0,
+                "eval_count": 0,
+                "eval_duration": 0,
+            }
+            _json_response(self, 200, payload)
+        except Exception as exc:
+            _json_response(self, 502, {"error": str(exc)})
+
+    def _handle_ollama_chat(self) -> None:
+        try:
+            request = _read_json(self)
+            prompt = _messages_to_prompt(request.get("messages") or [])
+            session_id = str(request.get("session_id") or request.get("user") or "finalai-openai-proxy")
+            result = _call_finalai(self.server.finalai_url, prompt, session_id, self.server.backend_timeout)
+            content = str(result.get("content") or result.get("message") or result)
+            payload = {
+                "model": str(request.get("model") or self.server.model_name),
+                "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "message": {"role": "assistant", "content": content},
+                "done": True,
+                "done_reason": "stop",
+                "total_duration": 0,
+                "load_duration": 0,
+                "prompt_eval_count": 0,
+                "prompt_eval_duration": 0,
+                "eval_count": 0,
+                "eval_duration": 0,
+            }
+            _json_response(self, 200, payload)
+        except Exception as exc:
+            _json_response(self, 502, {"error": str(exc)})
 
     def _completion_payload(self, model: str, content: str) -> dict[str, Any]:
         now = int(time.time())
