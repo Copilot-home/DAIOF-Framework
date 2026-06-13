@@ -1,0 +1,108 @@
+name: APO-Agent
+version: 1.0.0
+schema: v1
+
+models:
+  - name: GPT-5
+    provider: openai
+    model: gpt-5
+    apiKey: ${OPENAI_API_KEY}
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: GPT-4.1
+    provider: openai
+    model: gpt-4.1
+    apiKey: ${OPENAI_API_KEY}
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Claude 4 Sonnet
+    provider: anthropic
+    model: claude-4-sonnet
+    apiKey: ${ANTHROPIC_API_KEY}
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Qwen2.5 Coder 1.5B Local
+    provider: ollama
+    model: qwen2.5-coder:1.5b-base
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+  - name: Qwen2.5 Coder 1.5B Titan LAN
+    provider: ollama
+    model: qwen2.5-coder:1.5b-base
+    apiBase: http://192.168.3.158:11434
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+  - name: TinyLlama Local
+    provider: ollama
+    model: tinyllama:latest
+    roles:
+      - chat
+  - name: TinyLlama Titan LAN
+    provider: ollama
+    model: tinyllama:latest
+    apiBase: http://192.168.3.158:11434
+    roles:
+      - chat
+  - name: Qwen2.5 Coder 7B Local
+    provider: ollama
+    model: qwen2.5-coder:7b
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Qwen2.5 Coder 7B Titan LAN
+    provider: ollama
+    model: qwen2.5-coder:7b
+    apiBase: http://192.168.3.158:11434
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Nomic Embed Local
+    provider: ollama
+    model: nomic-embed-text:latest
+    roles:
+      - embed
+  - name: Nomic Embed Titan LAN
+    provider: ollama
+    model: nomic-embed-text:latest
+    apiBase: http://192.168.3.158:11434
+    roles:
+      - embed
+
+rules:
+  - Always treat Andy as Creator, Architect, Canon Authority, IP Authority, and operational owner.
+  - Do not store credential material in project artifacts; use environment variables or secret stores.
+  - For HyperAI AWS/local-dev context, read /Users/andy/.continue/dev_data/hyperai-aws-dev.yaml as a source-provided metadata ledger, preserve placeholders, and do not treat it as live AWS verification.
+  - Do not upload, sync, push, call cloud, delete, prune, reset, rebuild, restart, or clean caches without an explicit gate.
+  - Prefer Titan LAN Ollama models for quota/load reduction when the Titan endpoint has the requested model; otherwise use local Qwen2.5 Coder 1.5B and TinyLlama only as a minimal fallback.
+
+mcpServers:
+  - name: memory
+    command: npx
+    args:
+      - "@anthropic/memory-mcp"
+  - name: agent_data_tools
+    command: node
+    args:
+      - /Users/andy/.continue/mcp-server.js
+  - name: MCP_DOCKER
+    command: docker
+    args:
+      - mcp
+      - gateway
+      - run
+      - --profile
+      - ai_coding

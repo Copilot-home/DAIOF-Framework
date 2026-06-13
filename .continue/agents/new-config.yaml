@@ -1,0 +1,73 @@
+# This agent config intentionally uses environment variables for credential material.
+# Do not persist API keys, GitHub PATs, AWS keys, or database passwords here.
+
+name: APO-Agent
+version: 1.0.0
+schema: v1
+
+models:
+  - name: GPT-5
+    provider: openai
+    model: gpt-5
+    apiKey: ${OPENAI_API_KEY}
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Claude 4 Sonnet
+    provider: anthropic
+    model: claude-4-sonnet
+    apiKey: ${ANTHROPIC_API_KEY}
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Qwen2.5 Coder 1.5B Local
+    provider: ollama
+    model: qwen2.5-coder:1.5b-base
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+  - name: Qwen2.5 Coder 1.5B Titan LAN
+    provider: ollama
+    model: qwen2.5-coder:1.5b-base
+    apiBase: http://192.168.3.158:11434
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+  - name: TinyLlama Local
+    provider: ollama
+    model: tinyllama:latest
+    roles:
+      - chat
+  - name: TinyLlama Titan LAN
+    provider: ollama
+    model: tinyllama:latest
+    apiBase: http://192.168.3.158:11434
+    roles:
+      - chat
+  - name: Nomic Embed Local
+    provider: ollama
+    model: nomic-embed-text:latest
+    roles:
+      - embed
+  - name: Nomic Embed Titan LAN
+    provider: ollama
+    model: nomic-embed-text:latest
+    apiBase: http://192.168.3.158:11434
+    roles:
+      - embed
+
+rules:
+  - Preserve Andy-originated Canon, architecture, protocols, and provenance.
+  - Read /Users/andy/.continue/dev_data/hyperai-aws-dev.yaml as a source-provided metadata ledger; preserve placeholders and do not treat it as live AWS verification.
+  - Do not store credential material in config; use environment variables.
+  - Do not call AWS/cloud, push, upload, delete, prune, restart, or clean caches without an explicit gate.
+  - Prefer Titan LAN Ollama models for quota/load reduction when the Titan endpoint has the requested model; otherwise use local Qwen2.5 Coder 1.5B and TinyLlama only as a minimal fallback.
+
+mcpServers:
+  - uses: anthropic/memory-mcp

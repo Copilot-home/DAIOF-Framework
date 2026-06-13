@@ -1,0 +1,77 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama": {
+      "name": "Ollama (local)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "tinyllama:latest": {
+          "_launch": true,
+          "name": "TinyLlama local (low resource)"
+        },
+        "qwen2.5-coder:1.5b-base": {
+          "_launch": true,
+          "name": "Qwen2.5 Coder 1.5B local"
+        },
+        "qwen-test:latest": {
+          "_launch": true,
+          "name": "Qwen test local"
+        },
+        "qwen3:8b": {
+          "_launch": true,
+          "name": "Qwen3 8B local"
+        },
+        "qwen2.5-coder:7b": {
+          "_launch": true,
+          "name": "Qwen2.5 Coder 7B local"
+        },
+        "llama3.1:8b": {
+          "_launch": true,
+          "name": "Llama 3.1 8B local"
+        }
+      }
+    },
+    "ollama-titan": {
+      "name": "Ollama (Titan LAN)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://192.168.3.158:11434/v1"
+      },
+      "models": {
+        "qwen2.5-coder:1.5b-base": {
+          "_launch": true,
+          "name": "Qwen2.5 Coder 1.5B Titan LAN"
+        },
+        "tinyllama:latest": {
+          "_launch": true,
+          "name": "TinyLlama Titan LAN"
+        },
+        "qwen2.5-coder:7b": {
+          "_launch": true,
+          "name": "Qwen2.5 Coder 7B Titan LAN"
+        },
+        "nomic-embed-text:latest": {
+          "_launch": true,
+          "name": "Nomic Embed Titan LAN"
+        }
+      }
+    }
+  },
+  "mcp": {
+    "MCP_DOCKER": {
+      "type": "local",
+      "command": [
+        "docker",
+        "mcp",
+        "gateway",
+        "run",
+        "--profile",
+        "ai_coding"
+      ],
+      "enabled": false
+    }
+  }
+}

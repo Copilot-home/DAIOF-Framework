@@ -1,0 +1,196 @@
+# HyperAI AWS/local development metadata ledger.
+# Credential-free by design: passwords, API keys, PATs, and AWS secret keys stay
+# in environment variables or a dedicated secret store.
+
+metadata:
+  system: HyperAI
+  owner: Andy
+  purpose: local_dev_context
+  source_material:
+    kind: architect_provided_attachment
+    path: /Users/andy/.codex/attachments/ba5c1eea-f109-45a2-879d-966e89863a59/pasted-text.txt
+  verification_level: source_provided_not_live_aws_verified
+  cloud_gate_required: true
+  notes:
+    - Do not call AWS/cloud from this file without explicit gate.
+    - Treat values as Canon/local-dev anchors until a live probe updates evidence.
+    - Preserve placeholders; do not replace them with credential material.
+
+aws:
+  region: ap-southeast-2
+  account_id: "333096466992"
+
+database:
+  rds_mysql:
+    host: hyperai-database.c982yqkwe0xm.ap-southeast-2.rds.amazonaws.com
+    port: 3306
+    database: hyperai
+    database_source_note: "attachment says: hyperai or the database name you create"
+    username: admin
+    engine: MySQL
+    engine_version: "8.4.8"
+    password_env: DB_PASSWORD
+    connection_string_template: mysql://admin:${DB_PASSWORD}@hyperai-database.c982yqkwe0xm.ap-southeast-2.rds.amazonaws.com:3306/hyperai
+    verification_level: source_provided_not_connection_tested
+
+dynamodb:
+  user_data_table:
+    table_name: HyperAI-UserData
+    key_schema:
+      - attribute_name: UserId
+        key_type: HASH
+    attribute_definitions:
+      - attribute_name: UserId
+        attribute_type: S
+    billing_mode: PAY_PER_REQUEST
+    region: ap-southeast-2
+    verification_level: source_provided_not_live_aws_verified
+
+lambda:
+  functions:
+    - name: hyperai-web-app
+      runtime: python3.9
+      handler: hyperai-lambda.lambda_handler
+      memory_mb: 128
+      timeout_seconds: 3
+      architecture: x86_64
+      environment_templates:
+        DATABASE_URL: mysql://admin:${DB_PASSWORD}@hyperai-database.c982yqkwe0xm.ap-southeast-2.rds.amazonaws.com:3306/hyperai
+        DYNAMODB_TABLE: HyperAI-UserData
+        S3_BUCKET: hyperai-core-storage-1777227994
+      verification_level: source_provided_not_live_aws_verified
+    - name: hyperai-api-handler
+      inherits_config_from: hyperai-web-app
+      role_name: lambda-execution-role
+      role_arn: arn:aws:iam::333096466992:role/lambda-execution-role
+      verification_level: source_provided_not_live_aws_verified
+
+api_gateway:
+  rest_api:
+    api_id: s6nnmrj8qg
+    base_url: https://s6nnmrj8qg.execute-api.ap-southeast-2.amazonaws.com
+    endpoint_type: EDGE
+    stage:
+      local_env_value: prod
+      source_note: "attachment says: default or prod"
+    example_endpoints:
+      - method: GET
+        path: /health
+      - method: POST
+        path: /api/users
+      - method: GET
+        path: /api/users/{id}
+    verification_level: source_provided_not_live_aws_verified
+
+storage:
+  s3:
+    bucket: hyperai-core-storage-1777227994
+    region: ap-southeast-2
+    url: https://hyperai-core-storage-1777227994.s3.ap-southeast-2.amazonaws.com
+    verification_level: source_provided_not_live_aws_verified
+
+compute:
+  ec2_instances:
+    - id: i-0647e7e6f66e07c88
+      public_ip: 13.238.253.8
+      private_ip: 172.31.47.211
+      instance_type: t4g.small
+      architecture: arm64
+      vcpu: 2
+      memory_gb: 2
+      verification_level: source_provided_not_live_aws_verified
+    - id: i-0b06537e43314b033
+      public_ip: 3.27.220.92
+      private_ip: 172.31.36.1
+      instance_type: t4g.small
+      architecture: arm64
+      vcpu: 2
+      memory_gb: 2
+      verification_level: source_provided_not_live_aws_verified
+
+messaging:
+  sqs:
+    queue_name: hyperai-message-queue
+    queue_url: https://sqs.ap-southeast-2.amazonaws.com/333096466992/hyperai-message-queue
+    verification_level: source_provided_not_live_aws_verified
+  sns:
+    topic_name: HyperAI-Notifications
+    topic_arn: arn:aws:sns:ap-southeast-2:333096466992:HyperAI-Notifications
+    verification_level: source_provided_not_live_aws_verified
+
+network:
+  vpc:
+    id: vpc-0dfccaa952eef649e
+    cidr: 172.31.0.0/16
+  subnets:
+    - id: subnet-071e6615fd0c08173
+      availability_zone: ap-southeast-2b
+      cidr: 172.31.32.0/20
+    - id: subnet-070b36fb314837ce9
+      availability_zone: ap-southeast-2c
+      cidr: 172.31.16.0/20
+    - id: subnet-039ca24b6d1d1f633
+      availability_zone: ap-southeast-2a
+      cidr: 172.31.0.0/20
+  security_groups:
+    - id: sg-0e35fcf0233b1888f
+      source_note: default
+  verification_level: source_provided_not_live_aws_verified
+
+local_env:
+  required:
+    AWS_REGION: ap-southeast-2
+    AWS_ACCOUNT_ID: "333096466992"
+    DB_HOST: hyperai-database.c982yqkwe0xm.ap-southeast-2.rds.amazonaws.com
+    DB_PORT: "3306"
+    DB_USER: admin
+    DB_PASSWORD: ${DB_PASSWORD}
+    DB_NAME: hyperai
+    DYNAMODB_TABLE: HyperAI-UserData
+    DYNAMODB_REGION: ap-southeast-2
+    S3_BUCKET: hyperai-core-storage-1777227994
+    S3_REGION: ap-southeast-2
+    API_GATEWAY_URL: https://s6nnmrj8qg.execute-api.ap-southeast-2.amazonaws.com
+    API_STAGE: prod
+    SQS_QUEUE_URL: https://sqs.ap-southeast-2.amazonaws.com/333096466992/hyperai-message-queue
+    SNS_TOPIC_ARN: arn:aws:sns:ap-southeast-2:333096466992:HyperAI-Notifications
+
+local_docker:
+  compose_version: "3.8"
+  services:
+    mysql:
+      image: mysql:8.4
+      ports:
+        - "3306:3306"
+      environment_templates:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: hyperai
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    dynamodb-local:
+      image: amazon/dynamodb-local
+      ports:
+        - "8000:8000"
+      command:
+        - -jar
+        - DynamoDBLocal.jar
+        - -sharedDb
+        - -inMemory
+    app:
+      build: .
+      ports:
+        - "8080:8080"
+      environment:
+        DB_HOST: mysql
+        DYNAMODB_ENDPOINT: http://dynamodb-local:8000
+
+credential_handling:
+  store_in_config: false
+  source_of_truth: environment_or_secret_store
+  placeholder_values:
+    - PASSWORD
+    - YOUR_PASSWORD
+    - ${DB_PASSWORD}
+    - ${MYSQL_ROOT_PASSWORD}
+    - ${MYSQL_PASSWORD}
+  local_attachment_material_is_not_reclassified: true
