@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.hyperai.finalai-openai-proxy</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/andy/.local/bin/finalai-openai-proxy.py</string>
+    <string>--host</string>
+    <string>127.0.0.1</string>
+    <string>--port</string>
+    <string>50520</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>FINALAI_BACKEND_URL</key>
+    <string>http://192.168.3.158:5052/api/chat/message</string>
+    <key>FINALAI_PROXY_MODEL</key>
+    <string>finalai-titan</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/andy/.local/share/finalai/finalai-openai-proxy.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/andy/.local/share/finalai/finalai-openai-proxy.err.log</string>
+</dict>
+</plist>

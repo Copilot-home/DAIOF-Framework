@@ -58,6 +58,19 @@
           "name": "Nomic Embed Titan LAN"
         }
       }
+    },
+    "finalai-titan": {
+      "name": "FinalAI (Titan proxy)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:50520/v1"
+      },
+      "models": {
+        "finalai-titan": {
+          "_launch": true,
+          "name": "Titan FinalAI Proxy"
+        }
+      }
     }
   },
   "mcp": {

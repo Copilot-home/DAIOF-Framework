@@ -22,6 +22,13 @@ models:
       - chat
       - edit
       - apply
+  - name: Titan FinalAI Proxy
+    provider: openai
+    model: finalai-titan
+    apiKey: finalai-local
+    apiBase: http://127.0.0.1:50520/v1
+    roles:
+      - chat
   - name: Qwen2.5 Coder 1.5B Local
     provider: ollama
     model: qwen2.5-coder:1.5b-base
@@ -67,6 +74,7 @@ rules:
   - Read /Users/andy/.continue/dev_data/hyperai-aws-dev.yaml as a source-provided metadata ledger; preserve placeholders and do not treat it as live AWS verification.
   - Do not store credential material in config; use environment variables.
   - Do not call AWS/cloud, push, upload, delete, prune, restart, or clean caches without an explicit gate.
+  - Use Titan FinalAI Proxy for black-box Titan compute when raw Titan Ollama has an empty model store.
   - Prefer Titan LAN Ollama models for quota/load reduction when the Titan endpoint has the requested model; otherwise use local Qwen2.5 Coder 1.5B and TinyLlama only as a minimal fallback.
 
 mcpServers:
