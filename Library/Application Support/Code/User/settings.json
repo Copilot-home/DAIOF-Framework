@@ -1,5 +1,5 @@
 {
-    "gitlens.ai.model": "ollama:finalai-titan",
+    "gitlens.ai.model": "mistral:codestral-latest",
     "gitlens.ai.vscode.model": "ollama/Titan FinalAI Proxy/finalai-titan",
     "gitlens.currentLine.uncommittedChangesFormat": "✏️ ${ago}",
     "containers.containers.label": "ContainerId",
@@ -41,7 +41,43 @@
     "chat.mcp.serverSampling": {
         "Global in Code: microsoft/devbox-mcp-server": {
             "allowedModels": [
-                "copilot/auto"
+                "copilot/auto",
+                "azure/Azure/",
+                "copilotcli/auto",
+                "claude-code/claude-haiku-4.5",
+                "copilot/claude-haiku-4.5",
+                "copilotcli/claude-haiku-4.5",
+                "claude-code/claude-sonnet-4.5",
+                "copilot/claude-sonnet-4.5",
+                "copilotcli/claude-sonnet-4.5",
+                "claude-code/claude-sonnet-4.6",
+                "copilot/claude-sonnet-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "ollama/Ollama/dandr:latest",
+                "copilot/gemini-2.5-pro",
+                "copilot/gemini-3-flash-preview",
+                "copilotcli/gemini-3.1-pro-preview",
+                "copilot/gemini-3.1-pro-preview",
+                "copilot/gemini-3.5-flash",
+                "copilotcli/gemini-3.5-flash",
+                "copilot/gpt-5-mini",
+                "copilotcli/gpt-5-mini",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilotcli/gpt-5.4",
+                "copilot/gpt-5.4-mini",
+                "copilotcli/gpt-5.4-mini",
+                "ollama/Ollama/llama3.1:8b",
+                "copilot/mai-code-1-flash-picker",
+                "ollama/Ollama/minimax-m2.7:cloud",
+                "ollama/Ollama/nomic-embed-text:latest",
+                "ollama/Ollama/qwen-test:latest",
+                "ollama/Ollama/qwen2.5-coder:1.5b-base",
+                "ollama/Ollama/qwen2.5-coder:7b",
+                "ollama/Ollama/qwen3:8b",
+                "copilot/oswe-vscode-prime",
+                "ollama/Ollama/tinyllama:latest"
             ]
         },
         "Cursor (Global): smart-promptor-mcp": {
@@ -157,6 +193,91 @@
                 "openai/Titan FinalAI OpenAI/finalai-titan",
                 "copilot/oswe-vscode-prime"
             ]
+        },
+        "Azure MCP Server Provider: Azure MCP": {
+            "allowedModels": [
+                "azure/Azure/",
+                "copilot/auto",
+                "copilotcli/auto",
+                "copilot/claude-haiku-4.5",
+                "copilotcli/claude-haiku-4.5",
+                "claude-code/claude-haiku-4.5",
+                "copilot/claude-sonnet-4.5",
+                "copilotcli/claude-sonnet-4.5",
+                "claude-code/claude-sonnet-4.5",
+                "copilot/claude-sonnet-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "claude-code/claude-sonnet-4.6",
+                "ollama/Ollama/dandr:latest",
+                "copilot/gemini-2.5-pro",
+                "copilot/gemini-3-flash-preview",
+                "copilotcli/gemini-3.1-pro-preview",
+                "copilot/gemini-3.1-pro-preview",
+                "copilot/gemini-3.5-flash",
+                "copilotcli/gemini-3.5-flash",
+                "copilot/gpt-5-mini",
+                "copilotcli/gpt-5-mini",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.4",
+                "copilotcli/gpt-5.4",
+                "copilot/gpt-5.4-mini",
+                "copilotcli/gpt-5.4-mini",
+                "ollama/Ollama/llama3.1:8b",
+                "copilot/mai-code-1-flash-picker",
+                "ollama/Ollama/minimax-m2.7:cloud",
+                "ollama/Ollama/minimax-m3:cloud",
+                "ollama/Ollama/nomic-embed-text:latest",
+                "ollama/Ollama/qwen-test:latest",
+                "ollama/Ollama/qwen2.5-coder:1.5b-base",
+                "ollama/Ollama/qwen2.5-coder:7b",
+                "ollama/Ollama/qwen2.5:1.5b",
+                "ollama/Ollama/qwen3:8b",
+                "copilot/oswe-vscode-prime",
+                "ollama/Ollama/tinyllama:latest"
+            ]
+        },
+        "Foundry Toolkit MCP Servers: Foundry MCP": {
+            "allowedModels": [
+                "azure/Azure/",
+                "copilotcli/auto",
+                "copilot/auto",
+                "claude-code/claude-haiku-4.5",
+                "copilotcli/claude-haiku-4.5",
+                "copilot/claude-haiku-4.5",
+                "claude-code/claude-sonnet-4.5",
+                "copilotcli/claude-sonnet-4.5",
+                "copilot/claude-sonnet-4.5",
+                "claude-code/claude-sonnet-4.6",
+                "copilotcli/claude-sonnet-4.6",
+                "copilot/claude-sonnet-4.6",
+                "ollama/Ollama/dandr:latest",
+                "copilot/gemini-2.5-pro",
+                "copilot/gemini-3-flash-preview",
+                "copilotcli/gemini-3.1-pro-preview",
+                "copilot/gemini-3.1-pro-preview",
+                "copilotcli/gemini-3.5-flash",
+                "copilot/gemini-3.5-flash",
+                "copilotcli/gpt-5-mini",
+                "copilot/gpt-5-mini",
+                "copilotcli/gpt-5.3-codex",
+                "copilot/gpt-5.3-codex",
+                "copilotcli/gpt-5.4",
+                "copilot/gpt-5.4",
+                "copilotcli/gpt-5.4-mini",
+                "copilot/gpt-5.4-mini",
+                "ollama/Ollama/llama3.1:8b",
+                "copilot/mai-code-1-flash-picker",
+                "ollama/Ollama/minimax-m2.7:cloud",
+                "ollama/Ollama/nomic-embed-text:latest",
+                "ollama/Ollama/qwen-test:latest",
+                "ollama/Ollama/qwen2.5-coder:1.5b-base",
+                "ollama/Ollama/qwen2.5-coder:7b",
+                "ollama/Ollama/qwen2.5:1.5b",
+                "ollama/Ollama/qwen3:8b",
+                "copilot/oswe-vscode-prime",
+                "ollama/Ollama/tinyllama:latest"
+            ]
         }
     },
     "chromiumide.metrics.showMessage": false,
@@ -190,12 +311,11 @@
         "/Users/cuongnguyen/Workspace/Projects",
         "/Users/cuongnguyen/Workspace/System"
     ],
-    "extensions.autoUpdate": false,
+    "extensions.autoUpdate": "off",
     "vs-kubernetes": {
         "vscode-kubernetes.helm-path-mac": "/Users/andy/.vs-kubernetes/tools/helm/darwin-arm64/helm",
         "vscode-kubernetes.minikube-path-mac": "/Users/andy/.vs-kubernetes/tools/minikube/darwin-arm64/minikube"
     },
-    "chat.disableAIFeatures": true,
     "mcp-debugger.autoStart": true,
     "mcp-debugger.logLevel": "info",
     "mcp.servers.ts-mcp-debugger": {
@@ -206,7 +326,9 @@
         ]
     },
     "terminal.integrated.env.osx": {
-        "PATH": "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+        "PATH": "/usr/local/share/dotnet:/Users/andy/.dotnet:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+        "DOTNET_ROOT": "/usr/local/share/dotnet",
+        "DOTNET_ROOT_ARM64": "/usr/local/share/dotnet"
     },
     "parallels-desktop.devops-service.path": "/Users/cuongnguyen/.parallels-desktop-vscode/tools/prldevops",
     "haselerdev.aiquickfix.apiKey": "",
@@ -248,6 +370,10 @@
         },
         {
             "name": "JavaSE-25",
+            "path": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home"
+        },
+        {
+            "name": "JavaSE-26",
             "path": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk/java/latest",
             "default": true
         }
@@ -275,7 +401,7 @@
         "activeDirectoryResourceId": "",
         "activeDirectoryEndpointUrl": ""
     },
-    "editor.defaultFormatter": "Codeium.codeium",
+    "editor.defaultFormatter": "YouMayCallMeV.vscode-java-saber",
     "editor.wordWrap": "on",
     "unhook.analytics.enabled": true,
     "supermaven.allowGitignore": true,
@@ -292,7 +418,7 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "files.autoSave": "onFocusChange",
+    "files.autoSave": "afterDelay",
     "workbench.editorLargeFileConfirmation": 102455,
     "chatgpt.composerEnterBehavior": "cmdIfMultiline",
     "chatgpt.followUpQueueMode": "steer",
@@ -307,7 +433,8 @@
     "editor.mouseWheelZoom": true,
     "faah.enabled": true,
     "files.readonlyInclude": {
-        "**/fabric-snapshots/**": true
+        "**/fabric-snapshots/**": true,
+        "/var/folders/6t/gg0v6x8j5cgbds_klhpdwnvw0000gn/T/aitk-prompts/**": true
     },
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
@@ -319,7 +446,11 @@
             ".continue/**/*.yaml"
         ],
         "https://raw.githubusercontent.com/aerleon/aerleon/main/schemas/aerleon-definitions.schema.json": "file:///Users/andy/tr-gi-p-merge-ready/.continue/mcpServers/new-mcp-server.yaml",
-        "https://www.schemastore.org/factorial-drupal-breakpoints-css-0.2.0.json": "file:///Users/andy/.continue/config.yaml"
+        "https://www.schemastore.org/factorial-drupal-breakpoints-css-0.2.0.json": "file:///Users/andy/.continue/config.yaml",
+        "file:///Users/andy/.blackbox-editor/extensions/continue.continue-1.3.28-darwin-arm64/config-yaml-schema.json": [
+            ".continue/**/*.yaml"
+        ],
+        "openapi:v3": "file:///Users/andy/.nvm/.git/openapi%3A%20%273.0.yml"
     },
     "supermaven.otherWarning": false,
     "githubPullRequests.pullBranch": "never",
@@ -796,7 +927,7 @@
     "java.edit.validateAllOpenBuffersOnChanges": true,
     "maven.terminal.useJavaHome": true,
     "js/ts.inlayHints.variableTypes.enabled": true,
-    "terminal.integrated.defaultProfile.osx": "bash",
+    "terminal.integrated.defaultProfile.osx": "JavaSE-25 LTS",
     "js/ts.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
     "js/ts.format.insertSpaceBeforeFunctionParenthesis": true,
     "js/ts.format.placeOpenBraceOnNewLineForControlBlocks": true,
@@ -848,7 +979,193 @@
     "codium.agenticAiCliCommands": [],
     "githubPullRequests.pullRequestDescription": "commit",
     "jdk.telemetry.enabled": true,
-    "claudeCode.useTerminal": true,
     "aws.cloudformation.telemetry.enabled": true,
-    "debug.breakpointsView.presentation": "tree"
+    "debug.breakpointsView.presentation": "tree",
+    "yaml.customTags": [
+        "!And",
+        "!And sequence",
+        "!If",
+        "!If sequence",
+        "!Not",
+        "!Not sequence",
+        "!Equals",
+        "!Equals sequence",
+        "!Or",
+        "!Or sequence",
+        "!FindInMap",
+        "!FindInMap sequence",
+        "!Base64",
+        "!Join",
+        "!Join sequence",
+        "!Cidr",
+        "!Ref",
+        "!Sub",
+        "!Sub sequence",
+        "!GetAtt",
+        "!GetAZs",
+        "!ImportValue",
+        "!ImportValue sequence",
+        "!Select",
+        "!Select sequence",
+        "!Split",
+        "!Split sequence"
+    ],
+    "vscode-edge-devtools.browserFlavor": "Stable",
+    "vscode-edge-devtools.showWorkers": true,
+    "vscode-edge-devtools.useHttps": true,
+    "vscode-edge-devtools.webhintInstallNotification": true,
+    "google.cloud.project": "antigravity-apo-4287",
+    "jupyter.runStartupCommands": [
+        "import bigframes",
+        "%load_ext bigframes",
+        "bigframes.options.bigquery.project = \"antigravity-apo-4287\"",
+        "bigframes.options.bigquery.application_name = \"datacloud.visual studio code\""
+    ],
+    "google.datacloud.executeCellToolForNotebookMCP": true,
+    "editor.minimap.enabled": false,
+    "editor.rulers": [
+        {
+            "column": 80,
+            "color": "#00FF0010"
+        },
+        {
+            "column": 100,
+            "color": "#BDB76B15"
+        },
+        {
+            "column": 120,
+            "color": "#FA807219"
+        }
+    ],
+    "editor.unicodeHighlight.includeComments": true,
+    "emmet.variables": {
+        "lang": "vi"
+    },
+    "thunder-client.requestLayout": "Top/Bottom",
+    "cSpell.diagnosticLevel": "Hint",
+    "trailing-spaces.backgroundColor": "rgba(255,0,0,0.1)",
+    "trailing-spaces.includeEmptyLines": false,
+    "terminal.integrated.tabs.hideCondition": "never",
+    "terminal.integrated.enablePersistentSessions": false,
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.detectJdksAtStart": false,
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.debug.settings.hotCodeReplace": "auto",
+    "java.dependency.packagePresentation": "hierarchical",
+    "java.maxConcurrentBuilds": 10,
+    "java.sources.organizeImports.staticStarThreshold": 1,
+    "terminal.integrated.profiles.osx": {
+        "zsh": {
+            "path": "zsh",
+            "env": {
+                "JAVA_HOME": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
+                "ZDOTDIR": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk"
+            }
+        },
+        "JavaSE-17 LTS": {
+            "overrideName": true,
+            "env": {
+                "ZDOTDIR": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk",
+                "JAVA_HOME": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk/java/17"
+            },
+            "path": "zsh"
+        },
+        "JavaSE-21 LTS": {
+            "overrideName": true,
+            "env": {
+                "ZDOTDIR": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk",
+                "JAVA_HOME": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk/java/21"
+            },
+            "path": "zsh"
+        },
+        "JavaSE-25 LTS": {
+            "overrideName": true,
+            "env": {
+                "ZDOTDIR": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk",
+                "JAVA_HOME": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home"
+            },
+            "path": "zsh"
+        },
+        "JavaSE-26": {
+            "overrideName": true,
+            "env": {
+                "ZDOTDIR": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk",
+                "JAVA_HOME": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk/java/latest"
+            },
+            "path": "zsh"
+        }
+    },
+    "maven.terminal.customEnv": [
+        {
+            "environmentVariable": "JAVA_HOME",
+            "value": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home"
+        },
+        {
+            "environmentVariable": "ZDOTDIR",
+            "value": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk"
+        }
+    ],
+    "java.import.gradle.java.home": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
+    "C_Cpp.default.dotConfig": "${default}",
+    "dotnet.defaultSolution": "${default}",
+    "dotnet.inlayHints.enableInlayHintsForIndexerParameters": true,
+    "dotnet.inlayHints.enableInlayHintsForLiteralParameters": true,
+    "dotnet.inlayHints.enableInlayHintsForObjectCreationParameters": true,
+    "dotnet.inlayHints.enableInlayHintsForOtherParameters": true,
+    "dotnet.inlayHints.enableInlayHintsForParameters": true,
+    "dotnet.inlayHints.suppressInlayHintsForParametersThatDifferOnlyBySuffix": true,
+    "dotnet.inlayHints.suppressInlayHintsForParametersThatMatchArgumentName": true,
+    "dotnet.inlayHints.suppressInlayHintsForParametersThatMatchMethodIntent": true,
+    "dotnet.navigation.navigateToDecompiledSources": true,
+    "dotnet.formatting.organizeImportsOnFormat": true,
+    "dotnet.unitTests.runSettingsPath": "${default}",
+    "dotnet.preferCSharpExtension": true,
+    "dotnet.projects.binaryLogPath": "${default}",
+    "dotnet.server.crashDumpPath": "${default}",
+    "dotnet.server.path": "${default}",
+    "dotnet.server.sourceGeneratorExecution": "Automatic",
+    "dotnet.server.suppressLspErrorToasts": true,
+    "dotnet.server.suppressMiscellaneousFilesToasts": true,
+    "dotnet.server.waitForDebugger": true,
+    "dotnet.server.useOmnisharp": true,
+    "csharp.suppressDotnetInstallWarning": true,
+    "csharp.suppressDotnetRestoreNotification": true,
+    "omnisharp.dotnetPath": "/home/Andy/mycustomdotnetdirectory",
+    "dotfiles.installCommand": "${default}",
+    "dotfiles.repository": "${default}",
+    "elixirLS.dotFormatter": "${default}",
+    "FSharp.dotnetRoot": "${default}",
+    "FSharp.TestExplorer.UseLegacyDotnetCliIntegration": true,
+    "todo-tree.general.debug": true,
+    "todo-tree.general.showActivityBarBadge": true,
+    "todo-tree.general.showIconsInsteadOfTagsInStatusBar": true,
+    "todo-tree.general.statusBarClickBehaviour": "cycle",
+    "todo-tree.general.statusBar": "total",
+    "todo-tree.highlights.useColourScheme": true,
+    "todo-tree.filtering.ignoreGitSubmodules": true,
+    "todo-tree.filtering.includeHiddenFiles": true,
+    "todo-tree.tree.disableCompactFolders": true,
+    "todo-tree.filtering.useBuiltInExcludes": "file and search excludes",
+    "todo-tree.tree.expanded": true,
+    "todo-tree.tree.filterCaseSensitive": true,
+    "todo-tree.tree.flat": true,
+    "todo-tree.tree.groupedBySubTag": true,
+    "todo-tree.tree.groupedByTag": true,
+    "todo-tree.tree.hideIconsWhenGroupedByTag": true,
+    "todo-tree.tree.hideTreeWhenEmpty": true,
+    "todo-tree.tree.showCountsInTree": true,
+    "todo-tree.tree.sortTagsOnlyViewAlphabetically": true,
+    "todo-tree.tree.tagsOnly": true,
+    "todo-tree.tree.buttons.groupBySubTag": true,
+    "todo-tree.regex.enableMultiLine": true,
+    "csharp.debug.symbolOptions.cachePath": "${default}",
+    "omnisharp.sdkPath": "useModernNet",
+    "FSharp.fcs.transparentCompiler.enabled": true,
+    "Fsharp.fsac.gc.noAffinitize": true,
+    "FSharp.fsac.gc.useDatas": true,
+    "dotnet.server.environmentVariables": {
+        "DOTNET_GCName": "libclrgc.dylib"
+    },
+    "google.cloud.billingQuotaProject": "sixth-foundry-481520-f4",
+    "xml.server.preferBinary": true
 }
