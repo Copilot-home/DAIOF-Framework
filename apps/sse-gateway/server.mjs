@@ -7,17 +7,6 @@ import { buildPromptFromDeconstruction, buildPromptSchema } from "./prompt-build
 const PORT = Number(process.env.PORT) || 5000;
 const MAX_JSON_BODY_BYTES = Number(process.env.MAX_JSON_BODY_BYTES) || 64 * 1024;
 
-const PORT = Number(process.env.PORT) || 5000;
-
-import express from "express";
-
-const app = express();
-const PORT = Number(process.env.PORT) || 5000;
-
-app.get("/", (_req, res) => {
-  res.json({ ok: true, service: "sse-gateway" });
-});
-
 function detectIntent(q = "") {
   const s = String(q).toLowerCase();
 
@@ -39,6 +28,14 @@ function writeSseEvent(res, event, data) {
 function writeJson(res, status, payload) {
   res.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
   res.end(JSON.stringify(payload));
+}
+
+function parseRequestUrl(req) {
+  try {
+    return new URL(req.url || "/", `http://${req.headers.host || "localhost"}`);
+  } catch {
+    return null;
+  }
 }
 
 function readJsonBody(req) {
@@ -73,7 +70,11 @@ export function createGatewayServer(options = {}) {
   const auth = options.authService || createAuthService(options.auth || {});
 
   return http.createServer(async (req, res) => {
-    const url = new URL(req.url || "/", `http://${req.headers.host || "localhost"}`);
+    const url = parseRequestUrl(req);
+    if (!url) {
+      writeJson(res, 400, { ok: false, error: "Invalid request URL" });
+      return;
+    }
 
     if (req.method === "GET" && url.pathname === "/") {
       writeJson(res, 200, { ok: true, service: "sse-gateway" });
@@ -106,7 +107,6 @@ export function createGatewayServer(options = {}) {
       }
       return;
     }
-
 
     if (req.method === "POST" && url.pathname === "/prompt/rearchitect") {
       try {
@@ -163,85 +163,3 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
     console.log(`SSE server running on ${PORT}`);
   });
 }
-const server = http.createServer((req, res) => {
-  const url = new URL(req.url || "/", `http://${req.headers.host || "localhost"}`);
-
-  if (req.method === "GET" && url.pathname === "/") {
-    res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
-    res.end(JSON.stringify({ ok: true, service: "sse-gateway" }));
-    return;
-  }
-
-  if (req.method === "GET" && url.pathname === "/sse") {
-    const q = String(url.searchParams.get("q") || "");
-    const [intent, tools] = detectIntent(q);
-
-    res.writeHead(200, {
-      "Content-Type": "text/event-stream; charset=utf-8",
-      "Cache-Control": "no-cache",
-      Connection: "keep-alive",
-    });
-
-    writeSseEvent(res, "status", { status: "processing" });
-
-    const resultTimer = setTimeout(() => {
-      writeSseEvent(res, "result", { query: q, intent, tools });
-    }, 300);
-
-    const heartbeat = setInterval(() => {
-      res.write(": keep-alive\n\n");
-    }, 15000);
-
-    req.on("close", () => {
-      clearTimeout(resultTimer);
-      clearInterval(heartbeat);
-      res.end();
-    });
-    return;
-  }
-
-  res.writeHead(404, { "Content-Type": "application/json; charset=utf-8" });
-  res.end(JSON.stringify({ ok: false, error: "Not found" }));
-});
-
-server.listen(PORT, "0.0.0.0", () => {
-app.get("/sse", (req, res) => {
-  const q = String(req.query.q || "");
-  const [intent, tools] = detectIntent(q);
-
-  res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
-  res.setHeader("Cache-Control", "no-cache");
-  res.setHeader("Connection", "keep-alive");
-
-  if (typeof res.flushHeaders === "function") {
-    res.flushHeaders();
-  }
-
-  res.write("event: status\n");
-  res.write(`data: ${JSON.stringify({ status: "processing" })}\n\n`);
-
-  const resultTimer = setTimeout(() => {
-    res.write("event: result\n");
-    res.write(
-      `data: ${JSON.stringify({
-        query: q,
-        intent,
-        tools,
-      })}\n\n`,
-    );
-  }, 300);
-
-  const heartbeat = setInterval(() => {
-    res.write(": keep-alive\n\n");
-  }, 15000);
-
-  req.on("close", () => {
-    clearTimeout(resultTimer);
-    clearInterval(heartbeat);
-    res.end();
-  });
-});
-
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`SSE server running on ${PORT}`);
-});

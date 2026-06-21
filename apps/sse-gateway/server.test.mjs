@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import net from "node:net";
 import test from "node:test";
 import { createGatewayServer } from "./server.mjs";
 
@@ -13,6 +14,34 @@ async function withServer(run) {
     await new Promise((resolve) => server.close(resolve));
   }
 }
+
+
+test("malformed Host headers return 400 without crashing", async () => {
+  const server = createGatewayServer({ auth: { authSecret: "test-secret", tokenTtlSeconds: 60 } });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const { port } = server.address();
+
+  try {
+    const response = await new Promise((resolve, reject) => {
+      const socket = net.createConnection({ host: "127.0.0.1", port }, () => {
+        socket.write("GET /sse?q=email HTTP/1.1\r\nHost: bad host\r\nConnection: close\r\n\r\n");
+      });
+
+      let output = "";
+      socket.setEncoding("utf8");
+      socket.on("data", (chunk) => {
+        output += chunk;
+      });
+      socket.on("end", () => resolve(output));
+      socket.on("error", reject);
+    });
+
+    assert.match(response, /^HTTP\/1\.1 400 Bad Request/);
+    assert.match(response, /Invalid request URL/);
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+  }
+});
 
 test("auth exchange returns a gateway token", async () => {
   await withServer(async (baseUrl) => {
