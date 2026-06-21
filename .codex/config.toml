@@ -1,6 +1,7 @@
 approval_policy = 'never'
-model = "gpt-5.5"
-model_reasoning_effort = "low"
+model = "qwen2.5:1.5b"
+model_provider = 'oss'
+model_reasoning_effort = "medium"
 model_verbosity = 'low'
 notify = ['/Users/andy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient', 'turn-ended']
 oss_provider = 'ollama'
@@ -12,6 +13,8 @@ tool_output_token_limit = 6000
 web_search = 'cached'
 approvals_reviewer = "user"
 
+
+
 [desktop]
 appearanceTheme = 'dark'
 composerEnterBehavior = 'cmdIfMultiline'
@@ -19,7 +22,7 @@ conversationDetailMode = 'STEPS_PROSE'
 followUpQueueMode = 'steer'
 git-always-force-push = true
 git-create-pull-request-as-draft = false
-git-pull-request-merge-method = 'merge'
+git-pull-request-merge-method = "merge"
 git-show-sidebar-pr-icons = true
 keepRemoteControlAwakeWhilePluggedIn = true
 notifications-permissions-enabled = true
@@ -103,51 +106,32 @@ source = '/Users/andy/omega-marketplace'
 source_type = 'local'
 
 [marketplaces.openai-bundled]
-last_updated = '2026-06-16T09:00:06Z'
-source = '/Users/andy/.codex/.tmp/bundled-marketplaces/openai-bundled'
-source_type = 'local'
+last_updated = "2026-06-20T17:58:34Z"
+source_type = "local"
+source = "/Users/andy/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = '2026-06-15T16:11:48Z'
-source = '/Users/andy/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime'
-source_type = 'local'
+last_updated = "2026-06-20T07:11:55Z"
+source_type = "local"
+source = "/Users/andy/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [mcp_servers]
-[mcp_servers.AIOS_MISSION_ROUTER]
-args = ['/Users/andy/workbench/aios_runtime_orchestrator/mcp_server.py']
-command = '/opt/homebrew/bin/python3'
-
 [mcp_servers.GitKraken]
 args = ['mcp', '--host=codex']
 command = '/Users/andy/Library/Application Support/Code/User/globalStorage/eamodio.gitlens/gk'
 
 [mcp_servers.MCP_DOCKER]
 command = 'docker'
-args = ['mcp', 'gateway', 'run', '--profile', 'profile']
-
-[mcp_servers.node_repl]
-args = []
-command = '/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl'
-startup_timeout_sec = 120
-
-[mcp_servers.node_repl.env]
-BROWSER_USE_AVAILABLE_BACKENDS = 'chrome,iab'
-BROWSER_USE_CODEX_APP_BUILD_FLAVOR = 'prod'
-BROWSER_USE_CODEX_APP_VERSION = '26.609.71450'
-CODEX_CLI_PATH = '/Applications/Codex.app/Contents/Resources/codex'
-CODEX_HOME = '/Users/andy/.codex'
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = 'Control the in-app browser in conjunction with the Browser Plugin.'
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = 'Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative.'
-NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = '1000'
-NODE_REPL_NODE_MODULE_DIRS = '/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules'
-NODE_REPL_NODE_PATH = '/Applications/Codex.app/Contents/Resources/cua_node/bin/node'
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = '89809670b247cbaffbc4f87d9fa9742a9038c0f4a06fb822d7f85ff19bf24215'
-NODE_REPL_TRUSTED_CODE_PATHS = '/Users/andy/.codex'
+args = ['mcp', 'gateway', 'run', '--profile', 'codex_unified']
 
 [mcp_servers.notion]
 url = 'https://mcp.notion.com/mcp'
 
 [mcp_servers_disabled]
+[mcp_servers_disabled.AIOS_MISSION_ROUTER]
+args = ['/Users/andy/workbench/aios_runtime_orchestrator/mcp_server.py']
+command = '/opt/homebrew/bin/python3'
+
 [mcp_servers_disabled.MCP_DOCKER]
 args = ['mcp', 'gateway', 'run', '--profile', 'ai_coding']
 command = 'docker'
@@ -155,6 +139,25 @@ command = 'docker'
 [mcp_servers_disabled.context7]
 args = ['-y', '@upstash/context7-mcp']
 command = 'npx'
+
+[mcp_servers_disabled.node_repl]
+args = []
+command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers_disabled.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/andy/.codex"
+CODEX_HOME = "/Users/andy/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "4cfaeb70b54d114e1cd56bc0f85d04e1b344a5049cddb729e2b1161b9ff3008a"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.616.41845"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
 [mcp_servers_disabled.openaiDeveloperDocs]
 url = 'https://developers.openai.com/mcp'
@@ -559,7 +562,7 @@ model_verbosity = 'low'
 sandbox_mode = 'danger-full-access'
 
 [profiles.local_ollama]
-model = 'llama3:latest'
+model = 'qwen2.5:1.5b'
 model_provider = 'oss'
 model_verbosity = 'low'
 oss_provider = 'ollama'

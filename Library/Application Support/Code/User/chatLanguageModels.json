@@ -5,43 +5,6 @@
 		"url": "http://localhost:11434"
 	},
 	{
-		"name": "Titan FinalAI Proxy",
-		"vendor": "ollama",
-		"url": "http://127.0.0.1:50520"
-	},
-	{
-		"name": "Titan FinalAI OpenAI",
-		"vendor": "openai",
-		"apiKey": "finalai-local",
-		"url": "http://127.0.0.1:50520/v1",
-		"models": [
-			{
-				"id": "finalai-titan",
-				"name": "Titan FinalAI Proxy",
-				"url": "http://127.0.0.1:50520/v1",
-				"toolCalling": false,
-				"vision": false,
-				"maxInputTokens": 128000,
-				"maxOutputTokens": 16000
-			}
-		]
-	},
-	{
-		"name": "Azure",
-		"vendor": "azure",
-		"models": [
-			{
-				"id": "",
-				"name": "",
-				"url": "",
-				"toolCalling": true,
-				"vision": true,
-				"maxInputTokens": 128000,
-				"maxOutputTokens": 16000
-			}
-		]
-	},
-	{
 		"name": "xAI",
 		"vendor": "xai",
 		"apiKey": "${input:chat.lm.secret.164724f4}"

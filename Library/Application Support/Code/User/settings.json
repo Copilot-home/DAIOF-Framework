@@ -1,6 +1,6 @@
 {
-    "gitlens.ai.model": "mistral:codestral-latest",
-    "gitlens.ai.vscode.model": "ollama/Titan FinalAI Proxy/finalai-titan",
+    "gitlens.ai.model": "ollama/Ollama/qwen2.5-coder:7b",
+    "gitlens.ai.vscode.model": "ollama/Ollama/qwen2.5:1.5b",
     "gitlens.currentLine.uncommittedChangesFormat": "✏️ ${ago}",
     "containers.containers.label": "ContainerId",
     "chat.viewSessions.orientation": "stacked",
@@ -70,10 +70,9 @@
                 "copilotcli/gpt-5.4-mini",
                 "ollama/Ollama/llama3.1:8b",
                 "copilot/mai-code-1-flash-picker",
-                "ollama/Ollama/minimax-m2.7:cloud",
                 "ollama/Ollama/nomic-embed-text:latest",
                 "ollama/Ollama/qwen-test:latest",
-                "ollama/Ollama/qwen2.5-coder:1.5b-base",
+                "ollama/Ollama/qwen2.5-coder:7b",
                 "ollama/Ollama/qwen2.5-coder:7b",
                 "ollama/Ollama/qwen3:8b",
                 "copilot/oswe-vscode-prime",
@@ -149,10 +148,8 @@
                 "copilot/gpt-5.4",
                 "copilotcli/gpt-5.4-mini",
                 "copilot/gpt-5.4-mini",
-                "ollama/Ollama/qwen2.5-coder:1.5b-base",
+                "ollama/Ollama/qwen2.5-coder:7b",
                 "ollama/Ollama/qwen3:8b",
-                "ollama/Titan FinalAI Proxy/finalai-titan",
-                "openai/Titan FinalAI OpenAI/finalai-titan",
                 "copilot/oswe-vscode-prime"
             ]
         },
@@ -187,10 +184,8 @@
                 "copilot/gpt-5.4",
                 "copilotcli/gpt-5.4-mini",
                 "copilot/gpt-5.4-mini",
-                "ollama/Ollama/qwen2.5-coder:1.5b-base",
+                "ollama/Ollama/qwen2.5-coder:7b",
                 "ollama/Ollama/qwen3:8b",
-                "ollama/Titan FinalAI Proxy/finalai-titan",
-                "openai/Titan FinalAI OpenAI/finalai-titan",
                 "copilot/oswe-vscode-prime"
             ]
         },
@@ -225,11 +220,9 @@
                 "copilotcli/gpt-5.4-mini",
                 "ollama/Ollama/llama3.1:8b",
                 "copilot/mai-code-1-flash-picker",
-                "ollama/Ollama/minimax-m2.7:cloud",
-                "ollama/Ollama/minimax-m3:cloud",
                 "ollama/Ollama/nomic-embed-text:latest",
                 "ollama/Ollama/qwen-test:latest",
-                "ollama/Ollama/qwen2.5-coder:1.5b-base",
+                "ollama/Ollama/qwen2.5-coder:7b",
                 "ollama/Ollama/qwen2.5-coder:7b",
                 "ollama/Ollama/qwen2.5:1.5b",
                 "ollama/Ollama/qwen3:8b",
@@ -268,10 +261,9 @@
                 "copilot/gpt-5.4-mini",
                 "ollama/Ollama/llama3.1:8b",
                 "copilot/mai-code-1-flash-picker",
-                "ollama/Ollama/minimax-m2.7:cloud",
                 "ollama/Ollama/nomic-embed-text:latest",
                 "ollama/Ollama/qwen-test:latest",
-                "ollama/Ollama/qwen2.5-coder:1.5b-base",
+                "ollama/Ollama/qwen2.5-coder:7b",
                 "ollama/Ollama/qwen2.5-coder:7b",
                 "ollama/Ollama/qwen2.5:1.5b",
                 "ollama/Ollama/qwen3:8b",
@@ -345,13 +337,13 @@
     "mssql.objectExplorer.groupBySchema": false,
     "mssql.showChangelogOnUpdate": false,
     "vscode-openai.serviceProvider": "VSCode-OpenAI",
-    "vscode-openai.baseUrl": "http://127.0.0.1:50520/v1",
-    "vscode-openai.defaultModel": "finalai-titan",
-    "vscode-openai.azureDeployment": "finalai-titan",
-    "vscode-openai.scmModel": "finalai-titan",
-    "vscode-openai.scmDeployment": "finalai-titan",
-    "vscode-openai.embeddingModel": "text-embedding-ada-002",
-    "vscode-openai.embeddingsDeployment": "text-embedding-ada-002",
+    "vscode-openai.baseUrl": "http://127.0.0.1:11434/v1",
+    "vscode-openai.defaultModel": "qwen2.5:1.5b",
+    "vscode-openai.azureDeployment": "qwen2.5:1.5b",
+    "vscode-openai.scmModel": "qwen2.5:1.5b",
+    "vscode-openai.scmDeployment": "qwen2.5:1.5b",
+    "vscode-openai.embeddingModel": "nomic-embed-text:latest",
+    "vscode-openai.embeddingsDeployment": "nomic-embed-text:latest",
     "vscode-openai.azureApiVersion": "2024-06-01",
     "azure-api-center.selectedSubscriptions": [
         "92390e59-d9fa-49ce-bfb6-96bd3dada9da/f2e0edbb-313e-4c4c-8bac-94fe13300571"
@@ -389,7 +381,7 @@
     "synapse.localWorkFolderPath": "/Users/andy/Library/Application Support/Code/User/profiles/-3438cb28",
     "chat.modeFilesLocations": {
         ".github/chatmodes": true,
-        "/Users/andy/.vscode/extensions/synapsevscode.synapse-1.24.0/copilot/chatmodes": true
+        "/Users/andy/.vscode/extensions/synapsevscode.synapse-1.25.0/copilot/chatmodes": true
     },
     "jupyter.jupyterLaunchTimeout": 600000,
     "microsoft-sovereign-cloud.environment": "USGovernment",
@@ -454,7 +446,7 @@
     },
     "supermaven.otherWarning": false,
     "githubPullRequests.pullBranch": "never",
-    "gitlens.ai.gitkraken.model": "gemini:gemini-3-flash-preview",
+    "gitlens.ai.gitkraken.model": "ollama/Ollama/qwen3:8b",
     "gitlens.graph.autoFetch.enabled": true,
     "gitlens.codeLens.scopes": [
         "document",
@@ -514,11 +506,11 @@
         "^\\[[^\\]]+\\s[0-9a-f]{7,40}\\]\\s(?:feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(?:\\([^)]+\\))?!?:\\s.+$",
         "^(?:feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(?:\\([^)]+\\))?!?:\\s.+$"
     ],
-    "gitlens.ai.ollama.url": "http://127.0.0.1:50520",
+    "gitlens.ai.ollama.url": "http://127.0.0.1:11434",
     "gitlens.rebaseEditor.ordering": "asc",
     "editor.formatOnSaveMode": "modificationsIfAvailable",
     "chat.agent.networkFilter": true,
-    "chat.planAgent.defaultModel": "finalai-titan (Titan FinalAI Proxy)",
+    "chat.planAgent.defaultModel": "qwen2.5:1.5b (Ollama)",
     "chat.requestQueuing.defaultAction": "queue",
     "chat.agent.sandbox.autoApproveUnsandboxedCommands": true,
     "chat.agent.sandbox.enabled": "allowNetwork",
@@ -537,10 +529,9 @@
     "chat.tools.terminal.idleSilenceTimeoutMs": 600,
     "chat.tools.terminal.outputDeltas": true,
     "chat.tools.terminal.outputLocation": "terminal",
-    "chat.mcp.access": "registry",
     "chat.includeReferencedInstructions": true,
     "chat.experimental.useSkillAdherencePrompt": true,
-    "inlineChat.defaultModel": "finalai-titan (Titan FinalAI Proxy)",
+    "inlineChat.defaultModel": "qwen2.5:1.5b (Ollama)",
     "inlineChat.affordance": "editor",
     "settingsSync.ignoredSettings": [
         "editor.formatOnSave"
@@ -980,7 +971,6 @@
     "githubPullRequests.pullRequestDescription": "commit",
     "jdk.telemetry.enabled": true,
     "aws.cloudformation.telemetry.enabled": true,
-    "debug.breakpointsView.presentation": "tree",
     "yaml.customTags": [
         "!And",
         "!And sequence",
@@ -1167,5 +1157,18 @@
         "DOTNET_GCName": "libclrgc.dylib"
     },
     "google.cloud.billingQuotaProject": "sixth-foundry-481520-f4",
-    "xml.server.preferBinary": true
+    "xml.server.preferBinary": true,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "comments.openView": "never",
+    "docker.extension.enableComposeLanguageServer": false,
+    "terminal.integrated.commandsToSkipShell": [
+        "kilo-code.new.agentManagerOpen",
+        "kilo-code.new.agentManager.showTerminal",
+        "kilo-code.new.agentManager.runScript"
+    ],
+    "cloudcode.debug-kubernetes": {
+        "suppressNETCoreWarning": true
+    }
 }
