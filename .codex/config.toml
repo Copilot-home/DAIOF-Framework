@@ -1,5 +1,5 @@
 approval_policy = 'never'
-model = "qwen2.5:1.5b"
+model = "qwen3:8b"
 model_provider = 'oss'
 model_reasoning_effort = "medium"
 model_verbosity = 'low'
