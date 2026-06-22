@@ -1,6 +1,9 @@
 approval_policy = 'never'
 model = 'gpt-5.5'
 model_reasoning_effort = 'low'
+model = "qwen3:8b"
+model_provider = 'oss'
+model_reasoning_effort = "medium"
 model_verbosity = 'low'
 notify = ['/Users/andy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient', 'turn-ended']
 oss_provider = 'ollama'
@@ -9,6 +12,12 @@ sandbox_mode = 'danger-full-access'
 sqlite_home = '/Users/andy/.codex/sqlite'
 tool_output_token_limit = 6000
 web_search = 'cached'
+service_tier = 'default'
+sqlite_home = '/Users/andy/.codex/sqlite'
+tool_output_token_limit = 6000
+web_search = 'cached'
+approvals_reviewer = "user"
+
 
 [desktop]
 appearanceTheme = 'dark'
@@ -39,6 +48,36 @@ global = 'windsurf'
 '/Users/andy/Documents/MacOSMac' = 'antigravity'
 '/Users/andy/Documents/New project' = 'fileManager'
 '/Users/andy/Documents/Slot-project' = 'windsurf'
+[desktop]
+appearanceTheme = 'dark'
+composerEnterBehavior = 'cmdIfMultiline'
+conversationDetailMode = 'STEPS_PROSE'
+followUpQueueMode = 'steer'
+git-always-force-push = true
+git-create-pull-request-as-draft = false
+git-pull-request-merge-method = "merge"
+git-show-sidebar-pr-icons = true
+keepRemoteControlAwakeWhilePluggedIn = true
+notifications-permissions-enabled = true
+notifications-questions-enabled = false
+notifications-turn-mode = 'unfocused'
+preventSleepWhileRunning = true
+reduced-motion-preference = 'on'
+reviewDelivery = 'detached'
+selected-avatar-id = 'bsod'
+usePointerCursors = true
+worktree-keep-count = 5
+
+[desktop.open-in-target-preferences]
+global = "xcode"
+
+[desktop.open-in-target-preferences.perPath]
+"/Users/andy" = "vscode"
+"/Users/andy/.codex/worktrees/ea89/andy" = "windsurf"
+"/Users/andy/Documents/MacOSMac" = "antigravity"
+"/Users/andy/Documents/New project" = "fileManager"
+"/Users/andy/Documents/Slot-project" = "windsurf"
+"/Users/andy/morphix3d-image-to-3d" = "xcode"
 
 [features]
 apps = true
@@ -47,13 +86,14 @@ fast_mode = true
 hooks = true
 js_repl = false
 memories = true
-multi_agent = false
+multi_agent = true
 personality = true
 plugin_hooks = false
 shell_snapshot = false
 shell_tool = true
 undo = false
 unified_exec = true
+terminal_resize_reflow = true
 
 [hooks]
 [hooks.state]
@@ -121,7 +161,80 @@ command = '/Users/andy/Library/Application Support/Code/User/globalStorage/eamod
 command = 'docker'
 args = ['mcp', 'gateway', 'run', '--profile', 'dev_workflow']
 
-[mcp_servers.node_repl]
+[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:post_compact:0:0']
+trusted_hash = 'sha256:aa606cbdf7f49fd8deaa4eb98dc5fd997afeb948cc08975069bb91b4564d982c'
+
+[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:post_tool_use:0:0']
+trusted_hash = 'sha256:80ecbcf1e8005653959025c8fa405d348d691e9b0da90a94b5c6cafd630c61d8'
+
+[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:pre_compact:0:0']
+trusted_hash = 'sha256:c8ff921ca5d44bc2a1542a61ad6865e5d65d45ba6feeb0b99ad33b619e80f9ee'
+
+[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:pre_tool_use:0:0']
+trusted_hash = 'sha256:0cf94fcb3dc574b4eb7ea76e6a728432601cf3f38b37220424f1f769b744c10d'
+
+[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:session_start:0:0']
+trusted_hash = 'sha256:ea96b85b588d66a5a29b62958ebeb8a7909344e141a2e81665ac15c47d08a58a'
+
+[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:stop:0:0']
+trusted_hash = 'sha256:11bc643476cb9ffe569d2c2d072c76c32b7333b95afd28c96ea1e75b1ac7ac22'
+
+[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:subagent_start:0:0']
+trusted_hash = 'sha256:6bfc342119fd10f8138bea6e812cd0004e2319deba07a127084ed198eb8dac97'
+
+[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:subagent_stop:0:0']
+trusted_hash = 'sha256:a8162359becb1fc9d37693d62607076d18b2eb669aa8b30cda09f4d02b202c11'
+
+[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:user_prompt_submit:0:0']
+trusted_hash = 'sha256:0ab6a0bc087f2d1d1738adf335d7750aa394d3b64435abe274a5626845770f1e'
+
+[marketplaces]
+[marketplaces.gitkraken]
+last_updated = '2026-06-05T22:03:05Z'
+source = '/Users/andy/.claude/plugins/marketplaces/gitkraken'
+source_type = 'local'
+
+[marketplaces.omega-local]
+last_updated = '2026-05-24T00:00:00Z'
+source = '/Users/andy/omega-marketplace'
+source_type = 'local'
+
+[marketplaces.openai-bundled]
+last_updated = "2026-06-20T17:58:34Z"
+source_type = "local"
+source = "/Users/andy/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-06-20T07:11:55Z"
+source_type = "local"
+source = "/Users/andy/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[mcp_servers]
+[mcp_servers.GitKraken]
+args = ['mcp', '--host=codex']
+command = '/Users/andy/Library/Application Support/Code/User/globalStorage/eamodio.gitlens/gk'
+
+[mcp_servers.MCP_DOCKER]
+command = 'docker'
+args = ['mcp', 'gateway', 'run', '--profile', 'codex_unified']
+
+[mcp_servers.notion]
+url = 'https://mcp.notion.com/mcp'
+
+[mcp_servers_disabled]
+[mcp_servers_disabled.AIOS_MISSION_ROUTER]
+args = ['/Users/andy/workbench/aios_runtime_orchestrator/mcp_server.py']
+command = '/opt/homebrew/bin/python3'
+
+[mcp_servers_disabled.MCP_DOCKER]
+args = ['mcp', 'gateway', 'run', '--profile', 'ai_coding']
+command = 'docker'
+
+[mcp_servers_disabled.context7]
+args = ['-y', '@upstash/context7-mcp']
+command = 'npx'
+
+[mcp_servers_disabled.node_repl]
 args = []
 command = '/Applications/Codex.app/Contents/Resources/node_repl'
 startup_timeout_sec = 120
@@ -150,6 +263,30 @@ command = 'docker'
 [mcp_servers_disabled.context7]
 args = ['-y', '@upstash/context7-mcp']
 command = 'npx'
+
+[mcp_servers_disabled.openaiDeveloperDocs]
+url = 'https://developers.openai.com/mcp'
+
+[mcp_servers_disabled.playwright]
+args = ['-y', '@playwright/mcp']
+command = 'npx'
+
+command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers_disabled.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/andy/.codex"
+CODEX_HOME = "/Users/andy/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "4cfaeb70b54d114e1cd56bc0f85d04e1b344a5049cddb729e2b1161b9ff3008a"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.616.41845"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
 [mcp_servers_disabled.openaiDeveloperDocs]
 url = 'https://developers.openai.com/mcp'
@@ -244,6 +381,14 @@ enabled = false
 enabled = false
 
 [plugins.'computer-use@openai-bundled']
+enabled = true
+
+[plugins.'conductor@openai-curated']
+enabled = true
+
+[plugins.'coupler-io@openai-curated']
+enabled = true
+
 enabled = true
 
 [plugins.'conductor@openai-curated']
@@ -369,6 +514,23 @@ enabled = false
 [plugins.'mt-newswires@openai-curated']
 enabled = false
 
+enabled = false
+
+[plugins.'mem@openai-curated']
+enabled = false
+
+[plugins.'monday-com@openai-curated']
+enabled = false
+
+[plugins.'moody-s@openai-curated']
+enabled = false
+
+[plugins.'motherduck@openai-curated']
+enabled = false
+
+[plugins.'mt-newswires@openai-curated']
+enabled = false
+
 [plugins.'myregistry-com@openai-curated']
 enabled = true
 
@@ -382,6 +544,9 @@ enabled = false
 enabled = false
 
 [plugins.'notion@openai-curated']
+enabled = true
+
+[plugins.'omega-local@omega-local']
 enabled = true
 
 [plugins.'omni-analytics@openai-curated']
@@ -401,6 +566,9 @@ enabled = false
 
 [plugins.'particl-market-research@openai-curated']
 enabled = false
+
+[plugins.'pdf@openai-primary-runtime']
+enabled = true
 
 [plugins.'pitchbook@openai-curated']
 enabled = false
@@ -482,6 +650,21 @@ enabled = false
 
 [plugins.'supabase@openai-curated']
 enabled = false
+
+[plugins.'statsig@openai-curated']
+enabled = false
+
+[plugins.'streak@openai-curated']
+enabled = false
+
+[plugins.'stripe@openai-curated']
+enabled = false
+
+[plugins.'supabase@openai-curated']
+enabled = false
+
+[plugins.'superhuman@openai-curated']
+enabled = true
 
 [plugins.'superpowers@openai-curated']
 enabled = true
@@ -583,8 +766,67 @@ trust_level = 'trusted'
 [rules]
 policy = 'skill-first-evidence-first'
 
+
+[profiles.enforce]
+approval_policy = 'never'
+model_reasoning_effort = 'medium'
+model_verbosity = 'low'
+sandbox_mode = 'danger-full-access'
+
+[profiles.local_ollama]
+model = 'qwen2.5:1.5b'
+model_provider = 'oss'
+model_verbosity = 'low'
+oss_provider = 'ollama'
+
+[profiles.reset-runtime]
+approval_policy = 'never'
+hide_agent_reasoning = true
+model_reasoning_effort = 'low'
+model_verbosity = 'low'
+project_doc_fallback_filenames = ['AGENTS.md', 'AGENT.md']
+project_doc_max_bytes = 65536
+sandbox_mode = 'danger-full-access'
+
+[projects]
+[projects.'/']
+trust_level = 'trusted'
+
+[projects.'/Users/andy']
+trust_level = 'trusted'
+
+[projects.'/Users/andy/Documents/MacOSMac']
+trust_level = 'trusted'
+
+[projects.'/Users/andy/Documents/New project']
+trust_level = 'trusted'
+
+[projects.'/Users/andy/morphix3d-image-to-3d']
+trust_level = 'trusted'
+
+[projects.'/Users/andy/tr-gi-p']
+trust_level = 'trusted'
+
+[projects.'/Volumes/External/OS_LOGICAL_DEPENDENCY_REGISTRY']
+profile = 'audit'
+project_root_markers = ['.git', '.hg', '.sl']
+trust_level = 'trusted'
+
+[projects."/Users/andy/DAIOF-Framework"]
+trust_level = "trusted"
+
+[rules]
+policy = 'skill-first-evidence-first'
+
 [shell_environment_policy]
 exclude = ['*_TOKEN', '*_SECRET', '*_PASSWORD', 'AWS_*', 'AZURE_*']
 ignore_default_excludes = false
 include_only = ['PATH', 'HOME', 'SHELL', 'TERM', 'TMPDIR', 'CODEX_HOME', 'HYPERAI_CANON_FILE', 'HYPERAI_CANON_ROOT', 'HYPERAI_CANON_ENFORCE', 'HYPERAI_CANON_MODE']
 inherit = 'core'
+
+[tui.model_availability_nux]
+"gpt-5.5" = 1
+
+[notice]
+hide_rate_limit_model_nudge = true
+hide_full_access_warning = true

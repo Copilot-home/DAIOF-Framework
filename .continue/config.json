@@ -1,0 +1,31 @@
+{
+  "models": [
+    {
+      "title": "Titan FinalAI Proxy",
+      "provider": "openai",
+      "model": "finalai-titan",
+      "apiBase": "http://127.0.0.1:50520/v1",
+      "apiKey": "finalai-local"
+    },
+    {
+      "title": "Llama 3.1 8B",
+      "provider": "ollama",
+      "model": "llama3.1:8b"
+    },
+    {
+      "title": "Qwen 3",
+      "provider": "ollama",
+      "model": "qwen3:8b"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Qwen2.5-Coder 1.5B",
+    "provider": "ollama",
+    "model": "qwen2.5-coder:1.5b-base"
+  },
+  "embeddingsProvider": {
+    "provider": "ollama",
+    "model": "nomic-embed-text:latest"
+  },
+  "allowAnonymousTelemetry": false
+}

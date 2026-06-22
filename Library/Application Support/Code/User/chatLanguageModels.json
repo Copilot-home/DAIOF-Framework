@@ -1,0 +1,79 @@
+[
+	{
+		"name": "Ollama",
+		"vendor": "ollama",
+		"url": "http://localhost:11434"
+	},
+	{
+		"name": "xAI",
+		"vendor": "xai",
+		"apiKey": "${input:chat.lm.secret.164724f4}"
+	},
+	{
+		"name": "OpenAI",
+		"vendor": "openai",
+		"apiKey": "${input:chat.lm.secret.175d9e6c}"
+	},
+	{
+		"name": "OpenAI 2",
+		"vendor": "openai",
+		"apiKey": "${input:chat.lm.secret.-595346e2}"
+	},
+	{
+		"name": "OpenAI 3",
+		"vendor": "openai",
+		"apiKey": "${input:chat.lm.secret.511bedfc}"
+	},
+	{
+		"name": "OpenAI 4",
+		"vendor": "openai",
+		"apiKey": "${input:chat.lm.secret.6ea96b92}"
+	},
+	{
+		"name": "Google",
+		"vendor": "gemini",
+		"apiKey": "${input:chat.lm.secret.-7767644c}"
+	},
+	{
+		"name": "Google 2",
+		"vendor": "gemini",
+		"apiKey": "${input:chat.lm.secret.-66e031b3}"
+	},
+	{
+		"name": "Anthropic",
+		"vendor": "anthropic",
+		"apiKey": "${input:chat.lm.secret.21ad7454}"
+	},
+	{
+		"name": "OpenAI 5",
+		"vendor": "openai",
+		"apiKey": "${input:chat.lm.secret.-4679e995}"
+	},
+	{
+		"name": "Copilot CLI",
+		"vendor": "copilotcli",
+		"settings": {
+			"gpt-5.4": {
+				"reasoningEffort": "high"
+			},
+			"claude-sonnet-4.6": {
+				"reasoningEffort": "none"
+			},
+			"gpt-5.4-mini": {
+				"reasoningEffort": "none"
+			},
+			"gpt-5.3-codex": {
+				"reasoningEffort": "none"
+			}
+		}
+	},
+	{
+		"name": "Claude Code",
+		"vendor": "claude-code",
+		"settings": {
+			"claude-sonnet-4.6": {
+				"reasoningEffort": "low"
+			}
+		}
+	}
+]
