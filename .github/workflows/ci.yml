@@ -61,7 +61,7 @@ jobs:
 
     - name: 🧪 Run tests
       run: |
-        pytest tests/ -v --cov=digital_ai_organism_framework --cov-report=xml --cov-report=term
+        PYTHONPATH="$PWD" pytest tests/ -v --cov=digital_ai_organism_framework --cov-report=xml --cov-report=term
     
   validate:
     name: Validate Framework
