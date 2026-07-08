@@ -8,7 +8,7 @@
   "metrics": {
     "deploy_workflow_count": 4,
     "explicit_permission_coverage": 0.8148,
-    "pinned_action_rate": 1.0,
+    "pinned_action_rate": 0.0,
     "workflow_drift_rate": 0.0
   },
   "schema_version": "1.0.0",
@@ -133,12 +133,14 @@
       "unpinned_actions": []
     },
     {
-      "action_references": 0,
+      "action_references": 1,
       "deploy_capable": false,
       "explicit_permissions": true,
       "jobs": [
         {
-          "actions": [],
+          "actions": [
+            "actions/checkout@v4"
+          ],
           "environment": null,
           "id": "governance-review",
           "needs": [],
@@ -153,11 +155,13 @@
         "pull-requests": "write"
       },
       "pinned_action_references": 0,
-      "sha256": "b9cc6f654db7d71edddde7798e18355a7a7eed90e2cf7025442f01c9db65030c",
+      "sha256": "cdfc5873feae8447c6a850cfe6e6d55dda5e3aa1f867f1fbd3d32bb34f1ce0e1",
       "triggers": [
         "pull_request"
       ],
-      "unpinned_actions": []
+      "unpinned_actions": [
+        "actions/checkout@v4"
+      ]
     },
     {
       "action_references": 0,
@@ -239,7 +243,7 @@
       "unpinned_actions": []
     },
     {
-      "action_references": 0,
+      "action_references": 3,
       "deploy_capable": true,
       "explicit_permissions": true,
       "jobs": [
@@ -256,21 +260,27 @@
           }
         },
         {
-          "actions": [],
+          "actions": [
+            "actions/checkout@v4"
+          ],
           "environment": null,
           "id": "security",
           "needs": [],
           "permissions": null
         },
         {
-          "actions": [],
+          "actions": [
+            "actions/checkout@v4"
+          ],
           "environment": null,
           "id": "test",
           "needs": [],
           "permissions": null
         },
         {
-          "actions": [],
+          "actions": [
+            "actions/checkout@v4"
+          ],
           "environment": null,
           "id": "validate",
           "needs": [],
@@ -283,12 +293,16 @@
         "contents": "read"
       },
       "pinned_action_references": 0,
-      "sha256": "5aa556d086d158d020c8eeac953936fc57520ec311254051e245f74b5468443e",
+      "sha256": "dc4ae4e11b02365e99764252616d97c6ebc58cc4b8862a0a5364df7d8986e0f5",
       "triggers": [
         "pull_request",
         "push"
       ],
-      "unpinned_actions": []
+      "unpinned_actions": [
+        "actions/checkout@v4",
+        "actions/checkout@v4",
+        "actions/checkout@v4"
+      ]
     },
     {
       "action_references": 0,
@@ -416,12 +430,14 @@
       "unpinned_actions": []
     },
     {
-      "action_references": 0,
+      "action_references": 1,
       "deploy_capable": false,
       "explicit_permissions": true,
       "jobs": [
         {
-          "actions": [],
+          "actions": [
+            "actions/checkout@v4"
+          ],
           "environment": null,
           "id": "governance",
           "needs": [],
@@ -434,13 +450,15 @@
         "contents": "read"
       },
       "pinned_action_references": 0,
-      "sha256": "7690650f0e60e001ff72d1138d9650aab694832e8d122af134faf38fb84c9e66",
+      "sha256": "611af5ccffb97457a231171cb83ba1294b3a3154b70f03b8fc62a3ec15c95c09",
       "triggers": [
         "pull_request",
         "push",
         "workflow_dispatch"
       ],
-      "unpinned_actions": []
+      "unpinned_actions": [
+        "actions/checkout@v4"
+      ]
     },
     {
       "action_references": 0,
@@ -521,12 +539,14 @@
       "unpinned_actions": []
     },
     {
-      "action_references": 0,
+      "action_references": 1,
       "deploy_capable": false,
       "explicit_permissions": false,
       "jobs": [
         {
-          "actions": [],
+          "actions": [
+            "actions/checkout@v4"
+          ],
           "environment": null,
           "id": "build-latex-alpha",
           "needs": [],
@@ -537,12 +557,14 @@
       "path": ".github/workflows/latex-build.yml",
       "permissions": null,
       "pinned_action_references": 0,
-      "sha256": "7352d8f162855886ab117be4537f65d519db72d0963e03eb226638a64afc21ae",
+      "sha256": "f30dc5eec3e81a58d2270eafd20bfd01f0caa26e2aea3eb51c1680fe206d63a9",
       "triggers": [
         "pull_request",
         "push"
       ],
-      "unpinned_actions": []
+      "unpinned_actions": [
+        "actions/checkout@v4"
+      ]
     },
     {
       "action_references": 0,
@@ -646,12 +668,14 @@
       "unpinned_actions": []
     },
     {
-      "action_references": 0,
+      "action_references": 1,
       "deploy_capable": false,
       "explicit_permissions": false,
       "jobs": [
         {
-          "actions": [],
+          "actions": [
+            "actions/checkout@v4"
+          ],
           "environment": null,
           "id": "build",
           "needs": [],
@@ -662,12 +686,14 @@
       "path": ".github/workflows/python-package.yml",
       "permissions": null,
       "pinned_action_references": 0,
-      "sha256": "ba7e50362945be20adbe377a3bffaf5a129a2a814f68db87451373f2d51ca709",
+      "sha256": "0f22db1619812d5abe4f06e711f769dc4c47d75574f9cb841a9ecb1b3c2882a9",
       "triggers": [
         "pull_request",
         "push"
       ],
-      "unpinned_actions": []
+      "unpinned_actions": [
+        "actions/checkout@v4"
+      ]
     },
     {
       "action_references": 0,

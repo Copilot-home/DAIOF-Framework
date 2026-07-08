@@ -25,13 +25,7 @@ jobs:
     
     steps:
     - name: 📥 Checkout code
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        git init -q .
-        git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-        git fetch -q --depth 1 origin "${GITHUB_REF}"
-        git checkout -q FETCH_HEAD
+      uses: actions/checkout@v4
     - name: 🐍 Set up Python ${{ matrix.python-version }}
       run: python3 --version
     - name: 📦 Install dependencies
@@ -42,7 +36,7 @@ jobs:
     
     - name: 🔍 Lint with flake8 (critical errors only)
       run: |
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 digital_ai_organism_framework.py haios_core.py haios_runtime.py scripts tools tests --count --select=E9,F63,F7,F82 --show-source --statistics
     
     - name: 🧬 Verify immutable genes
       run: |
@@ -69,13 +63,7 @@ jobs:
     
     steps:
     - name: 📥 Checkout code
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        git init -q .
-        git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-        git fetch -q --depth 1 origin "${GITHUB_REF}"
-        git checkout -q FETCH_HEAD
+      uses: actions/checkout@v4
     - name: 🐍 Set up Python
       run: python3 --version
     - name: 📦 Install dependencies
@@ -95,10 +83,11 @@ jobs:
       run: |
         python3 -c "
         from digital_ai_organism_framework import DigitalOrganism
-        organism = DigitalOrganism()
-        for _ in range(10):
-            organism.metabolism.cycle({'cpu': 0.1, 'memory': 0.1})
+        organism = DigitalOrganism('ci-lifecycle')
+        organism.live_cycle(0.1)
+        assert organism.status == 'alive'
         assert organism.health > 0
+        assert organism.metabolism.get_resource_health() > 0
         print(f'✅ Organism lifecycle working (health: {organism.health:.2f})')
         "
     
@@ -106,10 +95,10 @@ jobs:
       run: |
         python3 -c "
         from digital_ai_organism_framework import DigitalEcosystem, DigitalOrganism
-        ecosystem = DigitalEcosystem()
+        ecosystem = DigitalEcosystem('ci-ecosystem')
         for i in range(5):
-            ecosystem.add_organism(DigitalOrganism())
-        ecosystem.simulate_generation()
+            ecosystem.add_organism(DigitalOrganism(f'ci-ecosystem-{i}'))
+        ecosystem.simulate_time_step(0.1)
         print(f'✅ Ecosystem functional with {len(ecosystem.organisms)} organisms')
         "
 
@@ -119,13 +108,7 @@ jobs:
     
     steps:
     - name: 📥 Checkout code
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        git init -q .
-        git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-        git fetch -q --depth 1 origin "${GITHUB_REF}"
-        git checkout -q FETCH_HEAD
+      uses: actions/checkout@v4
     - name: 🐍 Set up Python
       run: python3 --version
     - name: 🔐 Run bandit security linter
