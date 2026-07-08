@@ -9,7 +9,11 @@
   },
   "scripts": {
     "test": "node --test apps/sse-gateway/*.test.mjs",
-    "sse:gateway": "node apps/sse-gateway/server.mjs"
+    "sse:gateway": "node apps/sse-gateway/server.mjs",
+    "local:cicd:status": "python scripts/local_cicd.py status",
+    "local:cicd:verify": "python scripts/local_cicd.py verify",
+    "local:cicd:autocommit": "python scripts/local_cicd.py autocommit",
+    "local:cicd:automerge": "python scripts/local_cicd.py automerge"
   },
   "repository": {
     "type": "git",
