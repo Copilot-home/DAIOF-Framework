@@ -25,7 +25,13 @@ jobs:
     
     steps:
     - name: 📥 Checkout code
-      uses: actions/checkout@v4
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        git init -q .
+        git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        git fetch -q --depth 1 origin "${GITHUB_REF}"
+        git checkout -q FETCH_HEAD
     - name: 🐍 Set up Python ${{ matrix.python-version }}
       run: python3 --version
     - name: 📦 Install dependencies
@@ -63,7 +69,13 @@ jobs:
     
     steps:
     - name: 📥 Checkout code
-      uses: actions/checkout@v4
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        git init -q .
+        git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        git fetch -q --depth 1 origin "${GITHUB_REF}"
+        git checkout -q FETCH_HEAD
     - name: 🐍 Set up Python
       run: python3 --version
     - name: 📦 Install dependencies
@@ -108,7 +120,13 @@ jobs:
     
     steps:
     - name: 📥 Checkout code
-      uses: actions/checkout@v4
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        git init -q .
+        git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        git fetch -q --depth 1 origin "${GITHUB_REF}"
+        git checkout -q FETCH_HEAD
     - name: 🐍 Set up Python
       run: python3 --version
     - name: 🔐 Run bandit security linter
