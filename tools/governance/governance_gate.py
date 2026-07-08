@@ -55,7 +55,10 @@ def dump_json(path: Path, payload: dict[str, Any]) -> None:
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    # GitHub runners and Windows worktrees can materialize YAML with different
+    # line endings. Governance hashes must describe content, not checkout OS.
+    normalized = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
 
 
 def normalize_list(value: Any) -> list[str]:
