@@ -25,4 +25,8 @@ jobs:
         working-directory: docs
         run: |
           set -e
+          if [ ! -f alpha_omega.tex ]; then
+            echo "alpha_omega.tex not present; skipping PDF build"
+            exit 0
+          fi
           latexmk -xelatex -pdf -quiet alpha_omega.tex

@@ -537,7 +537,7 @@
       "path": ".github/workflows/latex-build.yml",
       "permissions": null,
       "pinned_action_references": 0,
-      "sha256": "0a079a1b98bbb80f949bec1dd959c8823d32768b6700211c55f1dbc8c4374737",
+      "sha256": "c9a81a08194b5e526f1ffba08c23b32f8388763a1e558b0721d2d257162fd3f0",
       "triggers": [
         "pull_request",
         "push"
