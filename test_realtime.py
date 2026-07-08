@@ -11,8 +11,13 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+if "pytest" in sys.modules:
+    import pytest
+
+    pytest.skip("interactive real-time git demo is not a pytest test", allow_module_level=True)
+
 # Change to DAIOF directory
-os.chdir('/Users/andy/DAIOF-Framework')
+os.chdir(Path(__file__).resolve().parent)
 
 print("🧬 DAIOF Real-Time Task Generator - Quick Test")
 print("="*70)
