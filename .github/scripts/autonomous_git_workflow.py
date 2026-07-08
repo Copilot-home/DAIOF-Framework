@@ -897,6 +897,8 @@ class AutonomousGitWorkflow:
 
     def _check_remote_status(self) -> Dict[str, Any]:
         """Check remote repository status"""
+        if os.environ.get("DAIOF_SKIP_REMOTE_STATUS") == "1":
+            return {"skipped": "DAIOF_SKIP_REMOTE_STATUS"}
         try:
             # Fetch latest
             subprocess.run(

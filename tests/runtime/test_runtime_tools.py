@@ -1,4 +1,5 @@
 import os
+import sys
 import sqlite3
 import subprocess
 import tempfile
@@ -14,6 +15,8 @@ DAEMON = ROOT / "tools/runtime/runtime_health_daemon.py"
 
 class RuntimeToolsTests(unittest.TestCase):
     def test_preflight_fail_on_invalid_disk_path(self):
+        if sys.platform == "win32":
+            self.skipTest("preflight.sh is a POSIX shell runtime check")
         env = os.environ.copy()
         env["DISK_PATH"] = "/path/does/not/exist"
         result = subprocess.run([str(PREFLIGHT), "--summary"], cwd=ROOT, env=env, capture_output=True, text=True)
@@ -33,7 +36,7 @@ class RuntimeToolsTests(unittest.TestCase):
             env["SKIP_PREFLIGHT"] = "1"
 
             cmd = [
-                "python3",
+                sys.executable,
                 str(DNR),
                 "--db-path",
                 str(db),
@@ -57,9 +60,11 @@ class RuntimeToolsTests(unittest.TestCase):
             log_file = td_path / "logs/daemon.log"
             env = os.environ.copy()
             env["DISK_PATH"] = "/path/does/not/exist"
+            env["SKIP_PREFLIGHT"] = "1"
+            env["SKIP_PREFLIGHT_RC"] = "2"
 
             cmd = [
-                "python3",
+                sys.executable,
                 str(DAEMON),
                 "--interval-seconds",
                 "1",

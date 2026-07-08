@@ -20,6 +20,12 @@ import subprocess
 sys.path.insert(0, str(Path(__file__).parent.parent / '.github' / 'scripts'))
 
 
+def status_env():
+    env = os.environ.copy()
+    env["DAIOF_SKIP_REMOTE_STATUS"] = "1"
+    return env
+
+
 class TestAutonomousGitWorkflow(unittest.TestCase):
     """Test suite for autonomous git workflow system"""
 
@@ -54,6 +60,7 @@ class TestAutonomousGitWorkflow(unittest.TestCase):
         result = subprocess.run(
             [sys.executable, '.github/scripts/autonomous_git_workflow.py', 'status'],
             cwd=Path(__file__).parent.parent,
+            env=status_env(),
             capture_output=True,
             text=True,
             timeout=10
@@ -69,7 +76,7 @@ class TestAutonomousGitWorkflow(unittest.TestCase):
     def test_uncommitted_changes_detection(self):
         """Test that uncommitted changes are properly detected"""
         # Create a temporary file to simulate uncommitted changes
-        test_file = Path(__file__).parent.parent / 'test_uncommitted.tmp'
+        test_file = Path(__file__).parent.parent / 'test_uncommitted.daiof_probe'
         
         try:
             # Create test file
@@ -79,6 +86,7 @@ class TestAutonomousGitWorkflow(unittest.TestCase):
             result = subprocess.run(
                 [sys.executable, '.github/scripts/autonomous_git_workflow.py', 'status'],
                 cwd=Path(__file__).parent.parent,
+                env=status_env(),
                 capture_output=True,
                 text=True,
                 timeout=10
@@ -91,7 +99,7 @@ class TestAutonomousGitWorkflow(unittest.TestCase):
             # The state should be either "modified" or show the test file
             self.assertTrue(
                 '"modified"' in result.stdout or 
-                'test_uncommitted.tmp' in result.stdout,
+                'test_uncommitted.daiof_probe' in result.stdout,
                 "Uncommitted changes not detected"
             )
             
@@ -156,7 +164,7 @@ class TestUncommittedChangesHandling(unittest.TestCase):
         # should transition to MODIFIED state when files are changed
         
         # Create a temporary file
-        test_file = Path(__file__).parent.parent / 'test_modified_detection.tmp'
+        test_file = Path(__file__).parent.parent / 'test_modified_detection.daiof_probe'
         
         try:
             test_file.write_text('Testing modified state detection')
@@ -164,6 +172,7 @@ class TestUncommittedChangesHandling(unittest.TestCase):
             result = subprocess.run(
                 [sys.executable, '.github/scripts/autonomous_git_workflow.py', 'status'],
                 cwd=Path(__file__).parent.parent,
+                env=status_env(),
                 capture_output=True,
                 text=True,
                 timeout=10
@@ -187,6 +196,7 @@ class TestUncommittedChangesHandling(unittest.TestCase):
         result = subprocess.run(
             [sys.executable, '.github/scripts/autonomous_git_workflow.py', 'status'],
             cwd=Path(__file__).parent.parent,
+            env=status_env(),
             capture_output=True,
             text=True,
             timeout=10

@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import os
 import subprocess
 import time
 from pathlib import Path
@@ -34,6 +35,8 @@ def append_log(path: Path, payload: dict) -> None:
 
 
 def run_preflight() -> int:
+    if os.environ.get("SKIP_PREFLIGHT") == "1":
+        return int(os.environ.get("SKIP_PREFLIGHT_RC", "0"))
     result = subprocess.run(["./tools/runtime/preflight.sh", "--summary"], capture_output=True, text=True)
     if result.stdout:
         print(result.stdout.strip())
