@@ -129,8 +129,6 @@ jobs:
         from digital_ai_organism_framework import DigitalEcosystem, DigitalOrganism
         ecosystem = DigitalEcosystem('ci-ecosystem')
         for i in range(5):
-            ecosystem.add_organism(DigitalOrganism(name=f'ci_org_{i}'))
-        ecosystem.simulate_generation()
             ecosystem.add_organism(DigitalOrganism(f'ci-ecosystem-{i}'))
         ecosystem.simulate_time_step(0.1)
         print(f'✅ Ecosystem functional with {len(ecosystem.organisms)} organisms')
