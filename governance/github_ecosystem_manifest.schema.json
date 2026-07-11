@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Copilot-home/DAIOF-Framework/blob/main/governance/github_ecosystem_manifest.schema.json",
+  "title": "Copilot-home GitHub Ecosystem Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "org",
+    "generated_at",
+    "source_of_truth",
+    "policy",
+    "repositories"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0.0"},
+    "org": {"type": "string", "const": "Copilot-home"},
+    "generated_at": {"type": "string", "format": "date"},
+    "source_of_truth": {
+      "type": "string",
+      "const": "github:Copilot-home/DAIOF-Framework"
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mutation_mode",
+        "ci_authority_rule",
+        "secret_policy",
+        "public_path_policy",
+        "default_branch_rule"
+      ],
+      "properties": {
+        "mutation_mode": {"type": "string", "const": "pull-request-only"},
+        "ci_authority_rule": {
+          "type": "string",
+          "const": "exactly-one-authoritative-gate-per-repository"
+        },
+        "secret_policy": {"type": "string", "const": "no-secrets-in-repository"},
+        "public_path_policy": {
+          "type": "string",
+          "const": "no-absolute-local-paths-in-public-artifacts"
+        },
+        "default_branch_rule": {
+          "type": "string",
+          "const": "main-unless-upstream-or-migration-exception-is-documented"
+        }
+      }
+    },
+    "repositories": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/repository"}
+    }
+  },
+  "$defs": {
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "visibility",
+        "size_kb",
+        "default_branch",
+        "namespace",
+        "role",
+        "lifecycle",
+        "ci_authority",
+        "local_first",
+        "local_artifacts_allowed",
+        "secret_policy",
+        "quota_criticality",
+        "evidence_status",
+        "last_verified_at"
+      ],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "visibility": {
+          "type": "string",
+          "enum": ["public", "private", "internal"]
+        },
+        "size_kb": {"type": "integer", "minimum": 0},
+        "default_branch": {"type": "string", "minLength": 1},
+        "namespace": {
+          "type": "string",
+          "enum": ["core", "runtime", "tooling", "workbench", "product", "experiment", "reference", "archive"]
+        },
+        "role": {"type": "string", "minLength": 1},
+        "lifecycle": {
+          "type": "string",
+          "enum": ["active", "incubating", "maintenance", "needs-normalization", "archive-candidate", "empty"]
+        },
+        "ci_authority": {
+          "type": "string",
+          "enum": ["local-verifier", "github-actions", "circleci", "upstream", "none", "undetermined"]
+        },
+        "ci_secondary": {
+          "type": "array",
+          "items": {"type": "string"},
+          "default": []
+        },
+        "local_first": {"type": "boolean"},
+        "local_artifacts_allowed": {"type": "boolean"},
+        "secret_policy": {"type": "string", "const": "no-secrets-in-repository"},
+        "quota_criticality": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "normalization_flags": {
+          "type": "array",
+          "items": {"type": "string"},
+          "default": []
+        },
+        "evidence_status": {
+          "type": "string",
+          "enum": ["verified-by-github-connector", "partial", "missing"]
+        },
+        "last_verified_at": {"type": "string", "format": "date"}
+      }
+    }
+  }
+}
