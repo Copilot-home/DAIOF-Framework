@@ -2,9 +2,9 @@ name: DAIOF CI/CD
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
 
 # Principle of Least Privilege: only read access for CI checks
 permissions:
@@ -16,152 +16,162 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
-        # Reduced to ubuntu-only to cut CI cost; framework is pure Python with no
-        # platform-specific code.  Re-add macos-latest/windows-latest if native
-        # extensions are introduced.
+        # The repository currently avoids external setup actions. All matrix jobs
+        # run on the runner-provided Python and report the resolved version.
         os: [ubuntu-latest]
         python-version: ['3.9', '3.10', '3.11', '3.12']
 
     steps:
-    - name: 📥 Checkout code
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        git init -q .
-        git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-        # DAIOF_PHASE4_PR_HEAD_CHECKOUT
-        if [ -n "${GITHUB_HEAD_REF:-}" ]; then
-          git fetch -q --depth 1 origin "refs/heads/${GITHUB_HEAD_REF}"
-        else
-          git fetch -q --depth 1 origin "${GITHUB_REF}"
-        fi
-        git checkout -q FETCH_HEAD
-    - name: 🐍 Set up Python ${{ matrix.python-version }}
-      run: python3 --version
-    - name: 📦 Install dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest pytest-cov flake8
+      - name: Checkout code
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git init -q .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if [ -n "${GITHUB_HEAD_REF:-}" ]; then
+            git fetch -q --depth 1 origin "refs/heads/${GITHUB_HEAD_REF}"
+          else
+            git fetch -q --depth 1 origin "${GITHUB_REF}"
+          fi
+          git checkout -q FETCH_HEAD
 
-    - name: 🔍 Lint with flake8 (critical errors only)
-      run: |
-        flake8 . --exclude=.git,__pycache__,.pytest_cache,.mypy_cache,.venv,venv,build,dist,.consciousness,vscode-merged --count --select=E9,F63,F7,F82 --show-source --statistics
+      - name: Report Python runtime
+        run: |
+          echo "Requested matrix label: ${{ matrix.python-version }}"
+          python3 --version
 
-        flake8 digital_ai_organism_framework.py haios_core.py haios_runtime.py scripts tools tests --count --select=E9,F63,F7,F82 --show-source --statistics
-    
-    - name: 🧬 Verify immutable genes
-      run: |
-        python3 -c "
-        from digital_ai_organism_framework import DigitalGenome
-        genome = DigitalGenome()
-        assert 'human_dependency_coefficient' in genome.traits
-        assert genome.traits['human_dependency_coefficient'] == 1.0
-        print('✅ Immutable genes verified')
-        "
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+          python3 -m pip install pytest pytest-cov flake8
 
-    - name: 🏛️ Verify doctrine compliance
-      run: |
-        python3 tests/test_doctrine_compliance.py
-        echo '✅ Doctrine compliance verified'
+      - name: Lint critical errors
+        run: |
+          python3 -m flake8 . \
+            --exclude=.git,__pycache__,.pytest_cache,.mypy_cache,.venv,venv,build,dist,.consciousness,vscode-merged \
+            --count --select=E9,F63,F7,F82 --show-source --statistics
 
-    - name: 🧪 Run tests
-      run: |
-        PYTHONPATH="$GITHUB_WORKSPACE:${PYTHONPATH:-}" pytest tests/ -v --cov=digital_ai_organism_framework --cov-report=xml --cov-report=term
+      - name: Verify immutable genes
+        run: |
+          python3 - <<'PY'
+          from digital_ai_organism_framework import DigitalGenome
 
-        PYTHONPATH="$PWD" pytest tests/ -v --cov=digital_ai_organism_framework --cov-report=xml --cov-report=term
-    
+          genome = DigitalGenome()
+          assert 'human_dependency_coefficient' in genome.traits
+          assert genome.traits['human_dependency_coefficient'] == 1.0
+          print('Immutable genes verified')
+          PY
+
+      - name: Verify doctrine compliance
+        run: |
+          python3 tests/test_doctrine_compliance.py
+          echo 'Doctrine compliance verified'
+
+      - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python3 -m pytest tests/ -v \
+            --cov=digital_ai_organism_framework \
+            --cov-report=xml \
+            --cov-report=term
+
   validate:
     name: Validate Framework
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📥 Checkout code
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        git init -q .
-        git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-        # DAIOF_PHASE4_PR_HEAD_CHECKOUT
-        if [ -n "${GITHUB_HEAD_REF:-}" ]; then
-          git fetch -q --depth 1 origin "refs/heads/${GITHUB_HEAD_REF}"
-        else
-          git fetch -q --depth 1 origin "${GITHUB_REF}"
-        fi
-        git checkout -q FETCH_HEAD
-    - name: 🐍 Set up Python
-      run: python3 --version
-    - name: 📦 Install dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Checkout code
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git init -q .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if [ -n "${GITHUB_HEAD_REF:-}" ]; then
+            git fetch -q --depth 1 origin "refs/heads/${GITHUB_HEAD_REF}"
+          else
+            git fetch -q --depth 1 origin "${GITHUB_REF}"
+          fi
+          git checkout -q FETCH_HEAD
 
-    - name: 🎼 Test Symphony Control Center
-      run: |
-        python3 -c "
-        from digital_ai_organism_framework import SymphonyControlCenter
-        symphony = SymphonyControlCenter()
-        print('✅ Symphony Control Center functional')
-        "
+      - name: Report Python runtime
+        run: python3 --version
 
-    - name: 🧬 Test Digital Organism lifecycle
-      run: |
-        python3 -c "
-        from digital_ai_organism_framework import DigitalOrganism
-        organism = DigitalOrganism(name='ci_lifecycle')
-        for _ in range(10):
-            organism.metabolism.consume_resources('ci_cycle', 0.1)
-            organism.metabolism.regenerate_resources(0.1)
-        assert organism.metabolism.get_resource_health() > 0
-        print(f'✅ Organism lifecycle working (resource health: {organism.metabolism.get_resource_health():.2f})')
-        organism = DigitalOrganism('ci-lifecycle')
-        organism.live_cycle(0.1)
-        assert organism.status == 'alive'
-        assert organism.health > 0
-        assert organism.metabolism.get_resource_health() > 0
-        print(f'✅ Organism lifecycle working (health: {organism.health:.2f})')
-        "
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
 
-    - name: 🌍 Test Ecosystem
-      run: |
-        python3 -c "
-        from digital_ai_organism_framework import DigitalEcosystem, DigitalOrganism
-        ecosystem = DigitalEcosystem('ci-ecosystem')
-        for i in range(5):
-            ecosystem.add_organism(DigitalOrganism(name=f'ci_org_{i}'))
-        ecosystem.simulate_generation()
-            ecosystem.add_organism(DigitalOrganism(f'ci-ecosystem-{i}'))
-        ecosystem.simulate_time_step(0.1)
-        print(f'✅ Ecosystem functional with {len(ecosystem.organisms)} organisms')
-        "
+      - name: Test Symphony Control Center
+        run: |
+          python3 - <<'PY'
+          from digital_ai_organism_framework import SymphonyControlCenter
+
+          symphony = SymphonyControlCenter()
+          assert symphony is not None
+          print('Symphony Control Center functional')
+          PY
+
+      - name: Test Digital Organism lifecycle
+        run: |
+          python3 - <<'PY'
+          from digital_ai_organism_framework import DigitalOrganism
+
+          organism = DigitalOrganism(name='ci-lifecycle')
+          organism.live_cycle(0.1)
+
+          assert organism.status == 'alive'
+          assert organism.health > 0
+          assert organism.metabolism.get_resource_health() > 0
+          print(f'Organism lifecycle functional (health={organism.health:.2f})')
+          PY
+
+      - name: Test Ecosystem
+        run: |
+          python3 - <<'PY'
+          from digital_ai_organism_framework import DigitalEcosystem, DigitalOrganism
+
+          ecosystem = DigitalEcosystem(name='ci-ecosystem')
+          for index in range(5):
+              ecosystem.add_organism(DigitalOrganism(name=f'ci-ecosystem-{index}'))
+
+          ecosystem.simulate_time_step(0.1)
+
+          assert len(ecosystem.organisms) >= 5
+          assert ecosystem.time == 0.1
+          print(f'Ecosystem functional with {len(ecosystem.organisms)} organisms')
+          PY
 
   security:
     name: Security Scan
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📥 Checkout code
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        git init -q .
-        git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-        # DAIOF_PHASE4_PR_HEAD_CHECKOUT
-        if [ -n "${GITHUB_HEAD_REF:-}" ]; then
-          git fetch -q --depth 1 origin "refs/heads/${GITHUB_HEAD_REF}"
-        else
-          git fetch -q --depth 1 origin "${GITHUB_REF}"
-        fi
-        git checkout -q FETCH_HEAD
-    - name: 🐍 Set up Python
-      run: python3 --version
-    - name: 🔐 Run bandit security linter
-      run: |
-        pip install bandit
-        bandit -r digital_ai_organism_framework.py haios_core.py haios_runtime.py src/ -f json -o bandit-report.json || true
-        bandit -r digital_ai_organism_framework.py haios_core.py haios_runtime.py src/ -ll
-      continue-on-error: true
+      - name: Checkout code
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git init -q .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if [ -n "${GITHUB_HEAD_REF:-}" ]; then
+            git fetch -q --depth 1 origin "refs/heads/${GITHUB_HEAD_REF}"
+          else
+            git fetch -q --depth 1 origin "${GITHUB_REF}"
+          fi
+          git checkout -q FETCH_HEAD
+
+      - name: Report Python runtime
+        run: python3 --version
+
+      - name: Run bandit security linter
+        continue-on-error: true
+        run: |
+          python3 -m pip install bandit
+          bandit -r digital_ai_organism_framework.py haios_core.py haios_runtime.py src/ -f json -o bandit-report.json || true
+          bandit -r digital_ai_organism_framework.py haios_core.py haios_runtime.py src/ -ll
 
   release:
     name: Create Release
@@ -172,30 +182,30 @@ jobs:
       contents: write
 
     steps:
-    - name: 📥 Checkout code
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        git init -q .
-        git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-        # DAIOF_PHASE4_PR_HEAD_CHECKOUT
-        if [ -n "${GITHUB_HEAD_REF:-}" ]; then
-          git fetch -q --depth 1 origin "refs/heads/${GITHUB_HEAD_REF}"
-        else
-          git fetch -q --depth 1 origin "${GITHUB_REF}"
-        fi
-        git checkout -q FETCH_HEAD
-    - name: 🎉 Create Release (gh CLI, no external action)
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        gh release create "${GITHUB_REF_NAME}" \
-          --title "DAIOF ${GITHUB_REF_NAME}" \
-          --notes "## Digital AI Organism Framework Release
+      - name: Checkout code
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git init -q .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if [ -n "${GITHUB_HEAD_REF:-}" ]; then
+            git fetch -q --depth 1 origin "refs/heads/${GITHUB_HEAD_REF}"
+          else
+            git fetch -q --depth 1 origin "${GITHUB_REF}"
+          fi
+          git checkout -q FETCH_HEAD
 
-        See [CHANGELOG.md](CHANGELOG.md) for details.
+      - name: Create Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "DAIOF ${GITHUB_REF_NAME}" \
+            --notes "## Digital AI Organism Framework Release
 
-        **Status**: Production Ready
+          See CHANGELOG.md for details.
 
-        Creator: Alpha_Prime_Omega (4287)
-        Maintainer: Digital AI Organism"
+          **Status**: Production Ready
+
+          Creator: Alpha_Prime_Omega (4287)
+          Maintainer: Digital AI Organism"
