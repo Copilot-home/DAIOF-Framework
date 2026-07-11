@@ -1,0 +1,48 @@
+name: One-time governance manifest regeneration
+
+on:
+  push:
+    branches:
+      - fix/post-merge-ci-closure
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase6-manifest-regenerate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    name: Regenerate manifest and remove bootstrap workflow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git init -q .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git fetch -q --depth 1 origin "refs/heads/${GITHUB_REF_NAME}"
+          git checkout -q -B "${GITHUB_REF_NAME}" FETCH_HEAD
+
+      - name: Install governance dependency
+        run: python3 -m pip install pyyaml
+
+      - name: Remove bootstrap workflow and regenerate evidence
+        run: |
+          git rm .github/workflows/phase6-manifest-regenerate.yml
+          python3 tools/governance/governance_gate.py generate
+          python3 tools/governance/governance_gate.py validate
+
+      - name: Commit regenerated manifest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add governance/workflow_manifest.json .github/workflows/phase6-manifest-regenerate.yml
+          git diff --cached --check
+          git commit -m "chore(governance): regenerate workflow manifest after CI repair"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
