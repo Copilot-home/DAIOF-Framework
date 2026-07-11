@@ -1,12 +1,12 @@
 {
   "$schema": "./github_ecosystem_manifest.schema.json",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "org": "Copilot-home",
   "generated_at": "2026-07-11",
   "source_of_truth": "github:Copilot-home/DAIOF-Framework",
   "policy": {
     "mutation_mode": "pull-request-only",
-    "ci_authority_rule": "exactly-one-authoritative-gate-per-repository",
+    "ci_authority_rule": "exactly-one-authoritative-gate-per-active-repository",
     "secret_policy": "no-secrets-in-repository",
     "public_path_policy": "no-absolute-local-paths-in-public-artifacts",
     "default_branch_rule": "main-unless-upstream-or-migration-exception-is-documented"
@@ -21,12 +21,18 @@
       "role": "GOVERNANCE_AND_RUNTIME_SOURCE_OF_TRUTH",
       "lifecycle": "active",
       "ci_authority": "local-verifier",
-      "ci_secondary": ["github-actions", "circleci"],
+      "ci_secondary": [
+        "github-actions",
+        "circleci"
+      ],
       "local_first": true,
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "high",
-      "normalization_flags": ["unify-cloud-ci-as-mirror-only", "enforce-required-governance-gate"],
+      "normalization_flags": [
+        "unify-cloud-ci-as-mirror-only",
+        "enforce-required-governance-gate"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -37,14 +43,17 @@
       "default_branch": "main",
       "namespace": "runtime",
       "role": "HYPERCORE_METADATA_REASONING_ENGINE",
-      "lifecycle": "active",
+      "lifecycle": "needs-normalization",
       "ci_authority": "undetermined",
       "ci_secondary": [],
       "local_first": true,
       "local_artifacts_allowed": true,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "medium",
-      "normalization_flags": ["declare-ci-authority", "align-repository-name-with-runtime-role"],
+      "normalization_flags": [
+        "declare-ci-authority",
+        "align-repository-name-with-runtime-role"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -57,12 +66,20 @@
       "role": "COPILOT_CLI_AND_MCP_INTERFACE",
       "lifecycle": "needs-normalization",
       "ci_authority": "undetermined",
-      "ci_secondary": ["github-actions", "circleci"],
+      "ci_secondary": [
+        "github-actions",
+        "circleci"
+      ],
       "local_first": true,
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "high",
-      "normalization_flags": ["remove-readme-identity-drift", "remove-os-artifacts", "choose-one-ci-authority", "replace-curl-pipe-shell-guidance"],
+      "normalization_flags": [
+        "remove-readme-identity-drift",
+        "remove-os-artifacts",
+        "choose-one-ci-authority",
+        "replace-curl-pipe-shell-guidance"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -80,7 +97,11 @@
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "medium",
-      "normalization_flags": ["replace-copied-daiof-readme", "declare-derivative-boundary", "declare-ci-authority"],
+      "normalization_flags": [
+        "replace-copied-daiof-readme",
+        "declare-derivative-boundary",
+        "declare-ci-authority"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -98,7 +119,9 @@
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "low",
-      "normalization_flags": ["confirm-retention-or-archive"],
+      "normalization_flags": [
+        "confirm-retention-or-archive"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -116,7 +139,10 @@
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "low",
-      "normalization_flags": ["deduplicate-demo-repositories", "confirm-retention-or-archive"],
+      "normalization_flags": [
+        "deduplicate-demo-repositories",
+        "confirm-retention-or-archive"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -134,7 +160,10 @@
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "low",
-      "normalization_flags": ["document-upstream-purpose", "archive-if-unmodified"],
+      "normalization_flags": [
+        "document-upstream-purpose",
+        "archive-if-unmodified"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -147,12 +176,18 @@
       "role": "DAIOF_DERIVATIVE_EXECUTION_NODE",
       "lifecycle": "needs-normalization",
       "ci_authority": "undetermined",
-      "ci_secondary": ["github-actions"],
+      "ci_secondary": [
+        "github-actions"
+      ],
       "local_first": true,
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "medium",
-      "normalization_flags": ["declare-derivative-boundary", "remove-generated-or-vendor-artifacts", "declare-ci-authority"],
+      "normalization_flags": [
+        "declare-derivative-boundary",
+        "remove-generated-or-vendor-artifacts",
+        "declare-ci-authority"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -170,7 +205,9 @@
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "low",
-      "normalization_flags": ["define-purpose-or-archive"],
+      "normalization_flags": [
+        "define-purpose-or-archive"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -179,6 +216,12 @@
       "visibility": "private",
       "size_kb": 190648,
       "default_branch": "hyperai_purge",
+      "default_branch_exception": {
+        "owner": "NguyenCuong1989",
+        "rationale": "The current default branch is a recovery and normalization branch retained while the component map is reconstructed.",
+        "exit_criteria": "Publish a verified component map, select the canonical long-lived branch, and update this manifest in the same reviewed change.",
+        "rollback": "Restore the previous default branch only through a reviewed organization-setting change."
+      },
       "namespace": "tooling",
       "role": "AI_DEVELOPMENT_COMPONENTS_AND_EXPERIMENTS",
       "lifecycle": "needs-normalization",
@@ -188,7 +231,10 @@
       "local_artifacts_allowed": true,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "medium",
-      "normalization_flags": ["document-nonstandard-default-branch", "replace-placeholder-readme", "declare-ci-authority"],
+      "normalization_flags": [
+        "replace-placeholder-readme",
+        "declare-ci-authority"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -201,12 +247,18 @@
       "role": "GOVERNED_EXECUTION_GATEWAY_PROTOTYPE",
       "lifecycle": "incubating",
       "ci_authority": "undetermined",
-      "ci_secondary": ["github-actions"],
+      "ci_secondary": [
+        "github-actions"
+      ],
       "local_first": true,
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "medium",
-      "normalization_flags": ["resolve-open-pr-backlog", "pin-python-dependencies", "declare-ci-authority"],
+      "normalization_flags": [
+        "resolve-open-pr-backlog",
+        "pin-python-dependencies",
+        "declare-ci-authority"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -224,7 +276,10 @@
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "low",
-      "normalization_flags": ["document-fork-delta", "define-sync-policy"],
+      "normalization_flags": [
+        "document-fork-delta",
+        "define-sync-policy"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -237,12 +292,18 @@
       "role": "VITE_REACT_UI_PROTOTYPE",
       "lifecycle": "incubating",
       "ci_authority": "undetermined",
-      "ci_secondary": ["github-actions"],
+      "ci_secondary": [
+        "github-actions"
+      ],
       "local_first": true,
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "low",
-      "normalization_flags": ["define-product-owner", "resolve-draft-pr", "declare-ci-authority"],
+      "normalization_flags": [
+        "define-product-owner",
+        "resolve-draft-pr",
+        "declare-ci-authority"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -260,7 +321,11 @@
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "medium",
-      "normalization_flags": ["rename-to-role-based-repository-name", "replace-curl-pipe-shell-guidance", "document-network-exposure-controls"],
+      "normalization_flags": [
+        "rename-to-role-based-repository-name",
+        "replace-curl-pipe-shell-guidance",
+        "document-network-exposure-controls"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -269,16 +334,27 @@
       "visibility": "public",
       "size_kb": 4,
       "default_branch": "codex/aios-runtime-memory-deploy",
+      "default_branch_exception": {
+        "owner": "NguyenCuong1989",
+        "rationale": "The branch currently contains the canonical AIOS runtime-memory deployment receipt and restore anchor.",
+        "exit_criteria": "Sanitize public paths, establish a portable main branch, and preserve the verified receipt as an immutable release artifact.",
+        "rollback": "Re-select this branch only if the portable main migration fails verification."
+      },
       "namespace": "runtime",
       "role": "AIOS_RUNTIME_MEMORY_AND_RESTORE_BRIDGE",
       "lifecycle": "needs-normalization",
       "ci_authority": "local-verifier",
-      "ci_secondary": ["github-actions"],
+      "ci_secondary": [
+        "github-actions"
+      ],
       "local_first": true,
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "high",
-      "normalization_flags": ["remove-absolute-local-paths-from-public-artifacts", "document-default-branch-exception", "add-portable-path-placeholders"],
+      "normalization_flags": [
+        "remove-absolute-local-paths-from-public-artifacts",
+        "add-portable-path-placeholders"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -291,12 +367,18 @@
       "role": "UPSTREAM_AGENT_RUNTIME_FORK",
       "lifecycle": "maintenance",
       "ci_authority": "upstream",
-      "ci_secondary": ["github-actions"],
+      "ci_secondary": [
+        "github-actions"
+      ],
       "local_first": true,
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "medium",
-      "normalization_flags": ["document-fork-delta", "audit-git-url-dependencies", "disallow-unverified-install-scripts"],
+      "normalization_flags": [
+        "document-fork-delta",
+        "audit-git-url-dependencies",
+        "disallow-unverified-install-scripts"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -305,16 +387,27 @@
       "visibility": "public",
       "size_kb": 23395,
       "default_branch": "canary",
+      "default_branch_exception": {
+        "owner": "NguyenCuong1989",
+        "rationale": "The repository intentionally follows the upstream canary line for workbench compatibility.",
+        "exit_criteria": "Adopt a stable upstream line only after compatibility, update cadence, and rollback tests pass.",
+        "rollback": "Return the default branch to canary if the stable-line migration regresses the workbench."
+      },
       "namespace": "workbench",
       "role": "ELECTRON_TERMINAL_WORKBENCH_BASE",
       "lifecycle": "maintenance",
       "ci_authority": "upstream",
-      "ci_secondary": ["github-actions"],
+      "ci_secondary": [
+        "github-actions"
+      ],
       "local_first": true,
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "low",
-      "normalization_flags": ["document-fork-delta", "document-canary-branch-exception", "audit-postinstall-chain"],
+      "normalization_flags": [
+        "document-fork-delta",
+        "audit-postinstall-chain"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     },
@@ -332,7 +425,9 @@
       "local_artifacts_allowed": false,
       "secret_policy": "no-secrets-in-repository",
       "quota_criticality": "low",
-      "normalization_flags": ["document-untrusted-workspace-limitations"],
+      "normalization_flags": [
+        "document-untrusted-workspace-limitations"
+      ],
       "evidence_status": "verified-by-github-connector",
       "last_verified_at": "2026-07-11"
     }
