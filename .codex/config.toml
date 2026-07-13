@@ -3,7 +3,6 @@ model = "qwen2.5:1.5b"
 model_provider = 'oss'
 model_reasoning_effort = "medium"
 model_verbosity = 'low'
-notify = ['/Users/andy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient', 'turn-ended']
 oss_provider = 'ollama'
 personality = 'pragmatic'
 sandbox_mode = 'danger-full-access'
@@ -16,6 +15,8 @@ tool_output_token_limit = 6000
 web_search = 'cached'
 approvals_reviewer = "user"
 
+
+notify = ["/Users/andy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
 [desktop]
 appearanceTheme = 'dark'
