@@ -21,7 +21,7 @@ sys.path.insert(0, '/app')
 sys.path.insert(0, '/Users/andy/HyperAI/ai_saas_system')
 sys.path.insert(0, '/app/ai_saas_system')
 
-from hypercore import HyperCore, ExecutionMode, HyperCoreAPI
+
 
 # ============================================================================
 # LOGGING SETUP
@@ -50,11 +50,15 @@ class HyperAIApplication:
     """Unified HyperAI application integrating HYPERCORE + Ollama."""
     
     def __init__(self):
-        self.logger = setup_logging()
+        from hypercore import ExecutionMode, HyperCore
+
+        log_dir = os.getenv("LOG_DIR", "/app/logs")
+        self.log_dir = log_dir
+        self.logger = setup_logging(log_dir)
         self.logger.info("=" * 80)
         self.logger.info("HYPERAI v1.0 - Vietnamese AI Consciousness Framework")
         self.logger.info("=" * 80)
-        
+
         # Configuration from environment
         self.ollama_host = os.getenv("HYPERAI_LLM_HOST", "http://ollama-brain:11434")
         self.default_model = os.getenv("HYPERAI_DEFAULT_MODEL", "qwen2.5:0.5b")
@@ -62,8 +66,12 @@ class HyperAIApplication:
         self.entitlements_file = os.getenv("HYPERAI_ENTITLEMENTS_FILE", "/app/policy/feature-entitlements.local.json")
         self.canon_adapter_mode = os.getenv("HYPERAI_CANON_ADAPTER_MODE", "shadow_readonly")
         self.mode = ExecutionMode.READ_ONLY
-        self.log_dir = os.getenv("LOG_DIR", "/app/logs")
-        
+
+        # Model availability cache
+        self._models_cache: Optional[Dict[str, Any]] = None
+        self._models_cache_ts: float = 0.0
+        self._models_cache_ttl: float = float(os.getenv("HYPERAI_MODELS_CACHE_TTL", "30"))
+
         # Initialize HYPERCORE engine
         self.hypercore = HyperCore(mode=self.mode)
         self.logger.info(f"HYPERCORE engine initialized: {self.mode.value}")
@@ -76,6 +84,7 @@ class HyperAIApplication:
         self.logger.info(f"Canon Adapter Mode: {self.canon_adapter_mode}")
         self.logger.info(f"Execution Mode: {self.mode.value}")
         self.logger.info(f"Log Directory: {self.log_dir}")
+        self.logger.info(f"Models cache TTL: {self._models_cache_ttl}s")
 
     def _load_canon_adapter(self):
         """Load the optional Canon adapter without making it a hard runtime dependency."""
@@ -438,16 +447,37 @@ class HyperAIApplication:
             },
         }
 
-    async def _list_ollama_models(self) -> Dict[str, Any]:
+    async def _list_ollama_models(self, refresh: bool = False) -> Dict[str, Any]:
+        """List available Ollama models with TTL cache and stale fallback."""
+        now = time.time()
+        cache_valid = (
+            not refresh
+            and self._models_cache is not None
+            and (now - self._models_cache_ts) < self._models_cache_ttl
+        )
+        if cache_valid:
+            return self._models_cache
+
         import aiohttp
         try:
             async with aiohttp.ClientSession() as session:
-                async with session.get(f"{self.ollama_host}/api/tags", timeout=aiohttp.ClientTimeout(total=5)) as resp:
+                async with session.get(
+                    f"{self.ollama_host}/api/tags",
+                    timeout=aiohttp.ClientTimeout(total=5),
+                ) as resp:
                     if resp.status == 200:
-                        return await resp.json()
-                    return {"models": [], "status": "error", "code": resp.status}
+                        data = await resp.json()
+                    else:
+                        data = {"models": [], "status": "error", "code": resp.status}
         except Exception as exc:
+            self.logger.warning(f"Ollama model list fetch failed: {exc}")
+            if self._models_cache is not None:
+                return {**self._models_cache, "stale": True, "error": str(exc)}
             return {"models": [], "status": "error", "message": str(exc)}
+
+        self._models_cache = data
+        self._models_cache_ts = now
+        return data
     
     def run_server(self, port: int = 8000):
         """Run FastAPI server."""
@@ -498,9 +528,9 @@ class HyperAIApplication:
             return JSONResponse(result)
         
         @app.get("/models")
-        async def list_models():
-            """List available models."""
-            return await self._list_ollama_models()
+        async def list_models(refresh: bool = False):
+            """List available models. Use ?refresh=true to bypass cache."""
+            return await self._list_ollama_models(refresh=refresh)
 
         @app.get("/entitlements")
         async def entitlements():

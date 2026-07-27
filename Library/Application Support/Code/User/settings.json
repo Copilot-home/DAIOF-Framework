@@ -393,7 +393,7 @@
     "activeDirectoryResourceId": "",
     "activeDirectoryEndpointUrl": ""
   },
-  "editor.defaultFormatter": "YouMayCallMeV.vscode-java-saber",
+  "editor.defaultFormatter": "vscode.configuration-editing",
   "editor.wordWrap": "on",
   "unhook.analytics.enabled": true,
   "supermaven.allowGitignore": true,
@@ -1201,5 +1201,6 @@
   "workbench.editor.empty.hint": "hidden",
   "workbench.preferredDarkColorTheme": "PowerShell ISE",
   "window.newWindowProfile": "Python",
-  "go.toolsManagement.autoUpdate": true
+  "go.toolsManagement.autoUpdate": true,
+  "workbench.editor.useModal": "some"
 }
