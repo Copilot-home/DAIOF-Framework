@@ -346,6 +346,7 @@
   "vscode-openai.embeddingsDeployment": "nomic-embed-text:latest",
   "vscode-openai.azureApiVersion": "2024-06-01",
   "modelflare.accountId": "${env:CLOUDFLARE_ACCOUNT_ID}",
+  "modelflare.apiKey": "PASTE_MODEFLARE_API_KEY_HERE",
   "modelflare.includeGatewaySupportedModels": true,
   "modelflare.gatewaySupportedModelProviders": ["openai", "anthropic", "google-ai-studio"],
   "modelflare.modelFilter": "all",

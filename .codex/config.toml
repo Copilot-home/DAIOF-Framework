@@ -16,6 +16,7 @@ web_search = 'cached'
 approvals_reviewer = "user"
 
 
+
 notify = ["/Users/andy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
 [desktop]
@@ -829,3 +830,6 @@ inherit = 'core'
 [notice]
 hide_rate_limit_model_nudge = true
 hide_full_access_warning = true
+
+[mcp_servers.pieces]
+url = "http://localhost:39300/model_context_protocol/2025-03-26/mcp"
