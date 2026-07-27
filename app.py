@@ -61,7 +61,7 @@ class HyperAIApplication:
 
         # Configuration from environment
         self.ollama_host = os.getenv("HYPERAI_LLM_HOST", "http://ollama-brain:11434")
-        self.default_model = os.getenv("HYPERAI_DEFAULT_MODEL", "qwen2.5:0.5b")
+        self.default_model = os.getenv("HYPERAI_DEFAULT_MODEL", "qwen2.5:1.5b")
         self.inference_timeout = float(os.getenv("HYPERAI_INFERENCE_TIMEOUT", "300"))
         self.entitlements_file = os.getenv("HYPERAI_ENTITLEMENTS_FILE", "/app/policy/feature-entitlements.local.json")
         self.canon_adapter_mode = os.getenv("HYPERAI_CANON_ADAPTER_MODE", "shadow_readonly")
