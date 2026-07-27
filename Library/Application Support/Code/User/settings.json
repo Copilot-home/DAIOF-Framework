@@ -20,8 +20,8 @@
   "chat.restoreLastPanelSession": true,
   "chat.todoListTool.descriptionField": true,
   "chat.tools.global.autoApprove": true,
-  "chat.tools.terminal.autoReplyToPrompts": true,
-  "chat.tools.terminal.ignoreDefaultAutoApproveRules": true,
+  "chat.tools.terminal.autoReplyToPrompts": false,
+  "chat.tools.terminal.ignoreDefaultAutoApproveRules": false,
   "chat.tools.terminal.terminalProfile.linux": {},
   "inlineChat.enableV2": true,
   "inlineChat.finishOnType": true,
@@ -35,9 +35,9 @@
     "chat.agent.enabled"
   ],
   "chat.agent.thinking.collapsedTools": "withThinking",
-  "chat.agent.maxRequests": 100000,
+  "chat.agent.maxRequests": 200,
   "chat.agent.thinkingStyle": "collapsed",
-  "chat.allowAnonymousAccess": true,
+  "chat.allowAnonymousAccess": false,
   "chat.mcp.serverSampling": {
     "Global in Code: microsoft/devbox-mcp-server": {
       "allowedModels": [
@@ -345,6 +345,12 @@
   "vscode-openai.embeddingModel": "nomic-embed-text:latest",
   "vscode-openai.embeddingsDeployment": "nomic-embed-text:latest",
   "vscode-openai.azureApiVersion": "2024-06-01",
+  "modelflare.accountId": "${env:CLOUDFLARE_ACCOUNT_ID}",
+  "modelflare.includeGatewaySupportedModels": true,
+  "modelflare.gatewaySupportedModelProviders": ["openai", "anthropic", "google-ai-studio"],
+  "modelflare.modelFilter": "all",
+  "modelflare.usageTracker.requestBudget": 400,
+  "modelflare.usageTracker.tokenBudget": 500000,
   "azure-api-center.selectedSubscriptions": [
     "92390e59-d9fa-49ce-bfb6-96bd3dada9da/f2e0edbb-313e-4c4c-8bac-94fe13300571"
   ],
@@ -1113,6 +1119,9 @@
     }
   ],
   "java.import.gradle.java.home": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
+  "java.jdt.ls.java.home": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
+  "gradle.javaHome": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
+  "sonarlint.ls.javaHome": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
   "C_Cpp.default.dotConfig": "${default}",
   "dotnet.defaultSolution": "${default}",
   "dotnet.inlayHints.enableInlayHintsForIndexerParameters": true,
@@ -1202,5 +1211,6 @@
   "workbench.preferredDarkColorTheme": "PowerShell ISE",
   "window.newWindowProfile": "Python",
   "go.toolsManagement.autoUpdate": true,
-  "workbench.editor.useModal": "some"
+  "workbench.editor.useModal": "some",
+  "metals.javaHome": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk/java/21"
 }
