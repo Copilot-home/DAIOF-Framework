@@ -43,7 +43,7 @@ Operational(H) = A.consistent
 |-----------|----------|----------|--------|------|
 | HyperAI app | `app.py` | `http://127.0.0.1:8000` | PASS | Default model `qwen2.5:1.5b`; compile OK |
 | Ollama daemon | `/opt/homebrew/bin/ollama` | `http://127.0.0.1:11434` | PASS | Ollama-first per `local-model` skill |
-| Phoenix bridge | `tr-gi-p/tools/phoenix-hyperai-api-server.py` | `http://127.0.0.1:9001` | PASS | Target `127.0.0.1:37002/api`; launchd anchor present |
+| Phoenix bridge | `tr-gi-p/tools/phoenix-hyperai-api-server.py` | `http://127.0.0.1:9001` | DECLARED, NOT RUNNING | launchd `com.hyperai.phoenix.bridge` not loaded; target `127.0.0.1:37002/api` |
 | Tenure server | `~/.tenure/docker-compose.yml` | `http://127.0.0.1:5757` | RESOLVED | Container `tenure-tenure-1` running; token generated |
 | Agent Hub | `agent-hub.agent-hub-vscode` extension | `127.0.0.1:8787` | DECLARED | Extension-managed; starts with VS Code: |
 | Docker Desktop | `~/Library/Containers/com.docker.docker` | — | PASS | Running after disk cleanup |
@@ -54,8 +54,8 @@ Operational(H) = A.consistent
 |----------|--------------|----------|--------|-------------------|
 | Ollama local | `ollama-local` | `127.0.0.1:11434` | PASS | No key; local model weights |
 | LM Studio | `lm-studio` | `127.0.0.1:1234` | PASS | No key; `~/.lmstudio/models` |
-| Modelflare (Cloudflare) | `modelflare.*` settings | Cloudflare AI Gateway | CONFIGURED, KEY MISSING | `CLOUDFLARE_ACCOUNT_ID` via env; API key placeholder |
-| Tenure | `tenure-local` (agent-hub) | `127.0.0.1:5757` | DECLARED, DISABLED | `TENURE_API_TOKEN` from `~/.tenure/token` via `.zshenv` |
+| Modelflare (Cloudflare) | `modelflare.*` settings | Cloudflare AI Gateway | CONFIGURED, PLACEHOLDER | `CLOUDFLARE_ACCOUNT_ID` via env; `modelflare.apiKey` = `PASTE_MODEFLARE_API_KEY_HERE` |
+| Tenure | `tenure-local` (agent-hub) | `127.0.0.1:5757` | ENABLED, NO PROVIDERS | `TENURE_API_TOKEN` from `~/.tenure/token` via `.zshenv`; needs onboard provider to expose models |
 | OpenAI / Anthropic / Gemini / etc. | `openai`, `anthropic`, `gemini`... | Cloud APIs | DISABLED | `*_API_KEY` env vars needed |
 
 ## M — Memory / Cache / State
