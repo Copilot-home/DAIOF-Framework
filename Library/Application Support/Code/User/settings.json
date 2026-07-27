@@ -351,6 +351,8 @@
   "modelflare.modelFilter": "all",
   "modelflare.usageTracker.requestBudget": 400,
   "modelflare.usageTracker.tokenBudget": 500000,
+  "tenure.baseUrl": "http://localhost:5757",
+  "tenure.enabled": true,
   "azure-api-center.selectedSubscriptions": [
     "92390e59-d9fa-49ce-bfb6-96bd3dada9da/f2e0edbb-313e-4c4c-8bac-94fe13300571"
   ],
