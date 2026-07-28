@@ -16,8 +16,11 @@ jobs:
     # Add steps to the job
     # See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#steps-overview & https://circleci.com/docs/reference/configuration-reference/#steps
     steps:
-      # Checkout the code as the first step.
-      - checkout
+      - run:
+          name: Checkout code
+          command: |
+            git clone --branch "$CIRCLE_BRANCH" "https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git" .
+            git checkout "$CIRCLE_SHA1"
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
