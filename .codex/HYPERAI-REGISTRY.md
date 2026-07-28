@@ -52,7 +52,7 @@ System stability = Lineage integrity
 
 | Service | LaunchAgent | Entrypoint | Port | Status | Note |
 |---------|-------------|------------|------|--------|------|
-| HyperAI OS Master | `com.hyperai.os.master` | `workbench/hyperai_os_master.py --daemon` | — | PASS | Survival governor; disk state now `STABLE` |
+| HyperAI OS Master | `com.hyperai.os.master` | `workbench/hyperai_os_master.py --daemon` | — | PASS | Survival governor; triggers `tools/hyperai_cleanup_executor.py` when disk_state not STABLE; disk freed to ~12.1GB / STABLE |
 | Orchestrator | `com.hyperai.orchestrator` | `workbench/agents/run_orchestrator.sh` | — | PASS | One-shot schedule; ran successfully |
 | Escalation Agent | `com.hyperai.escalation` | `workbench/agents/escalation_agent.py` | — | PASS | One-shot schedule; ran successfully |
 | FinalAI OpenAI Proxy | `com.hyperai.finalai-openai-proxy` | Python proxy | `127.0.0.1:50520` | PASS | Backend `http://192.168.3.158:5052/api/chat/message` |

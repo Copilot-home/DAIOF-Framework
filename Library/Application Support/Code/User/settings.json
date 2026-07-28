@@ -348,7 +348,11 @@
   "modelflare.accountId": "${env:CLOUDFLARE_ACCOUNT_ID}",
   "modelflare.apiKey": "PASTE_MODEFLARE_API_KEY_HERE",
   "modelflare.includeGatewaySupportedModels": true,
-  "modelflare.gatewaySupportedModelProviders": ["openai", "anthropic", "google-ai-studio"],
+  "modelflare.gatewaySupportedModelProviders": [
+    "openai",
+    "anthropic",
+    "google-ai-studio"
+  ],
   "modelflare.modelFilter": "all",
   "modelflare.usageTracker.requestBudget": 400,
   "modelflare.usageTracker.tokenBudget": 500000,
@@ -371,7 +375,7 @@
     },
     {
       "name": "JavaSE-25",
-      "path": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home"
+      "path": "/Library/Java/JavaVirtualMachines/temurin-25.jdk/Contents/Home"
     },
     {
       "name": "JavaSE-26",
@@ -457,7 +461,8 @@
     ],
     "file:///Users/andy/.vscode/extensions/continue.continue-2.0.0-darwin-arm64/config-yaml-schema.json": [
       ".continue/**/*.yaml"
-    ]
+    ],
+    "https://www.schemastore.org/bamboo-spec.json": "file:///Users/andy/.continue/config.yaml"
   },
   "supermaven.otherWarning": false,
   "githubPullRequests.pullBranch": "never",
@@ -1074,7 +1079,7 @@
     "zsh": {
       "path": "zsh",
       "env": {
-        "JAVA_HOME": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
+        "JAVA_HOME": "/Library/Java/JavaVirtualMachines/temurin-25.jdk/Contents/Home",
         "ZDOTDIR": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk"
       }
     },
@@ -1098,7 +1103,7 @@
       "overrideName": true,
       "env": {
         "ZDOTDIR": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk",
-        "JAVA_HOME": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home"
+        "JAVA_HOME": "/Library/Java/JavaVirtualMachines/temurin-25.jdk/Contents/Home"
       },
       "path": "zsh"
     },
@@ -1114,14 +1119,14 @@
   "maven.terminal.customEnv": [
     {
       "environmentVariable": "JAVA_HOME",
-      "value": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home"
+      "value": "/Library/Java/JavaVirtualMachines/temurin-25.jdk/Contents/Home"
     },
     {
       "environmentVariable": "ZDOTDIR",
       "value": "/Users/andy/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk"
     }
   ],
-  "java.import.gradle.java.home": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
+  "java.import.gradle.java.home": "/Library/Java/JavaVirtualMachines/temurin-25.jdk/Contents/Home",
   "java.jdt.ls.java.home": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
   "gradle.javaHome": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
   "sonarlint.ls.javaHome": "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
