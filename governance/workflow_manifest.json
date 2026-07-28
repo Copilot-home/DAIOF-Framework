@@ -283,7 +283,7 @@
         "contents": "read"
       },
       "pinned_action_references": 0,
-      "sha256": "3974f2749da603a4dd98679d364ba3229d788a43c86c8c6e49b0ce39fc5a1641",
+      "sha256": "59ccb484c34149ad0649ece855a6b86e7478f48040e2befbbffa5854f6d9dc36",
       "triggers": [
         "pull_request",
         "push"
