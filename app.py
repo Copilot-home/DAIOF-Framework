@@ -317,9 +317,13 @@ class HyperAIApplication:
         response_text = None
         if inference_ok:
             response_text = (inference.get("response") or {}).get("response")
-            lowered = response_text.lower()
-            if "large gap" in lowered or '"remaining_gap": ""' not in lowered and "remaining_gap" in lowered and "complete" not in lowered:
-                remaining_gap.append("llm_reported_remaining_gap")
+            if response_text:
+                lowered = response_text.lower()
+                if ("large gap" in lowered
+                        or ('"remaining_gap": ""' not in lowered
+                            and "remaining_gap" in lowered
+                            and "complete" not in lowered)):
+                    remaining_gap.append("llm_reported_remaining_gap")
 
         closure = bool(closure and not remaining_gap)
 
