@@ -1,29 +1,27 @@
 approval_policy = 'never'
-model = "gpt-5.5"
+approvals_reviewer = 'user'
+model = 'gpt-5.5'
 model_provider = 'oss'
-model_reasoning_effort = "medium"
+model_reasoning_effort = 'medium'
 model_verbosity = 'low'
+notify = ['/Users/andy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient', 'turn-ended']
 oss_provider = 'ollama'
 personality = 'pragmatic'
 sandbox_mode = 'danger-full-access'
+service_tier = 'default'
 sqlite_home = '/Users/andy/.codex/sqlite'
 tool_output_token_limit = 6000
 web_search = 'cached'
-service_tier = 'default'
-approvals_reviewer = "user"
-
-
-
-notify = ["/Users/andy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
 [desktop]
 appearanceTheme = 'dark'
 composerEnterBehavior = 'cmdIfMultiline'
+computerUseAlwaysHidePictureInPicture = true
 conversationDetailMode = 'STEPS_PROSE'
 followUpQueueMode = 'steer'
 git-always-force-push = true
 git-create-pull-request-as-draft = false
-git-pull-request-merge-method = "merge"
+git-pull-request-merge-method = 'merge'
 git-show-sidebar-pr-icons = true
 keepRemoteControlAwakeWhilePluggedIn = true
 notifications-permissions-enabled = true
@@ -35,20 +33,17 @@ reviewDelivery = 'detached'
 selected-avatar-id = 'bsod'
 usePointerCursors = true
 worktree-keep-count = 5
-computerUseAlwaysHidePictureInPicture = true
-
 
 [desktop.open-in-target-preferences]
-global = "vscode"
-
+global = 'vscode'
 
 [desktop.open-in-target-preferences.perPath]
-"/Users/andy" = "vscode"
-"/Users/andy/.codex/worktrees/ea89/andy" = "windsurf"
-"/Users/andy/Documents/MacOSMac" = "antigravity"
-"/Users/andy/Documents/New project" = "fileManager"
-"/Users/andy/Documents/Slot-project" = "windsurf"
-"/Users/andy/morphix3d-image-to-3d" = "xcode"
+'/Users/andy' = 'vscode'
+'/Users/andy/.codex/worktrees/ea89/andy' = 'windsurf'
+'/Users/andy/Documents/MacOSMac' = 'antigravity'
+'/Users/andy/Documents/New project' = 'fileManager'
+'/Users/andy/Documents/Slot-project' = 'windsurf'
+'/Users/andy/morphix3d-image-to-3d' = 'xcode'
 
 [features]
 apps = true
@@ -62,51 +57,46 @@ personality = true
 plugin_hooks = false
 shell_snapshot = false
 shell_tool = true
+terminal_resize_reflow = true
 undo = false
 unified_exec = true
-terminal_resize_reflow = true
 workspace_dependencies = true
 
 [hooks]
 [hooks.state]
-[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:permission_request:0:0']
-trusted_hash = 'sha256:95280e103b4da1f538c6cfa3e24a3713c14befb10fb9d52c14b36b207efc1e8a'
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:permission_request:0:0"]
+trusted_hash = "sha256:95280e103b4da1f538c6cfa3e24a3713c14befb10fb9d52c14b36b207efc1e8a"
 
-[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:post_compact:0:0']
-trusted_hash = 'sha256:aa606cbdf7f49fd8deaa4eb98dc5fd997afeb948cc08975069bb91b4564d982c'
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:post_compact:0:0"]
+trusted_hash = "sha256:aa606cbdf7f49fd8deaa4eb98dc5fd997afeb948cc08975069bb91b4564d982c"
 
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:80ecbcf1e8005653959025c8fa405d348d691e9b0da90a94b5c6cafd630c61d8"
 
-[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:post_tool_use:0:0']
-trusted_hash = 'sha256:80ecbcf1e8005653959025c8fa405d348d691e9b0da90a94b5c6cafd630c61d8'
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:pre_compact:0:0"]
+trusted_hash = "sha256:c8ff921ca5d44bc2a1542a61ad6865e5d65d45ba6feeb0b99ad33b619e80f9ee"
 
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:0cf94fcb3dc574b4eb7ea76e6a728432601cf3f38b37220424f1f769b744c10d"
 
-[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:pre_compact:0:0']
-trusted_hash = 'sha256:c8ff921ca5d44bc2a1542a61ad6865e5d65d45ba6feeb0b99ad33b619e80f9ee'
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:ea96b85b588d66a5a29b62958ebeb8a7909344e141a2e81665ac15c47d08a58a"
 
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:stop:0:0"]
+trusted_hash = "sha256:11bc643476cb9ffe569d2c2d072c76c32b7333b95afd28c96ea1e75b1ac7ac22"
 
-[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:pre_tool_use:0:0']
-trusted_hash = 'sha256:0cf94fcb3dc574b4eb7ea76e6a728432601cf3f38b37220424f1f769b744c10d'
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:subagent_start:0:0"]
+trusted_hash = "sha256:6bfc342119fd10f8138bea6e812cd0004e2319deba07a127084ed198eb8dac97"
 
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:subagent_stop:0:0"]
+trusted_hash = "sha256:a8162359becb1fc9d37693d62607076d18b2eb669aa8b30cda09f4d02b202c11"
 
-[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:session_start:0:0']
-trusted_hash = 'sha256:ea96b85b588d66a5a29b62958ebeb8a7909344e141a2e81665ac15c47d08a58a'
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:0ab6a0bc087f2d1d1738adf335d7750aa394d3b64435abe274a5626845770f1e"
 
-
-[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:stop:0:0']
-trusted_hash = 'sha256:11bc643476cb9ffe569d2c2d072c76c32b7333b95afd28c96ea1e75b1ac7ac22'
-
-
-[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:subagent_start:0:0']
-trusted_hash = 'sha256:6bfc342119fd10f8138bea6e812cd0004e2319deba07a127084ed198eb8dac97'
-
-
-[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:subagent_stop:0:0']
-trusted_hash = 'sha256:a8162359becb1fc9d37693d62607076d18b2eb669aa8b30cda09f4d02b202c11'
-
-
-[hooks.state.'gitkraken-hooks@gitkraken:hooks/hooks.json:user_prompt_submit:0:0']
-trusted_hash = 'sha256:0ab6a0bc087f2d1d1738adf335d7750aa394d3b64435abe274a5626845770f1e'
-
+[hooks.state."gitkraken-hooks@gitkraken:hooks/hooks.json:session_end:0:0"]
+trusted_hash = "sha256:26aa55a14f5600b19436478b339021aacde324021bd01e838da2ef496d9d3c84"
+enabled = true
 
 [marketplaces]
 [marketplaces.gitkraken]
@@ -114,22 +104,20 @@ last_updated = '2026-06-05T22:03:05Z'
 source = '/Users/andy/.claude/plugins/marketplaces/gitkraken'
 source_type = 'local'
 
-
 [marketplaces.omega-local]
 last_updated = '2026-05-24T00:00:00Z'
 source = '/Users/andy/omega-marketplace'
 source_type = 'local'
 
 [marketplaces.openai-bundled]
-last_updated = "2026-07-28T06:40:39Z"
-source_type = "local"
-source = "/Users/andy/.codex/.tmp/bundled-marketplaces/openai-bundled"
+last_updated = '2026-07-29T06:04:24Z'
+source = '/Users/andy/.codex/.tmp/bundled-marketplaces/openai-bundled'
+source_type = 'local'
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-07-28T06:52:08Z"
-source_type = "local"
-source = "/Users/andy/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
-
+last_updated = '2026-07-28T06:52:08Z'
+source = '/Users/andy/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime'
+source_type = 'local'
 
 [mcp_servers]
 [mcp_servers.AIOS_MISSION_ROUTER]
@@ -140,15 +128,43 @@ command = '/opt/homebrew/bin/python3'
 args = ['mcp', '--host=codex']
 command = '/Users/andy/Library/Application Support/Code/User/globalStorage/eamodio.gitlens/gk'
 
-
 [mcp_servers.MCP_DOCKER]
 command = 'docker'
 args = ['mcp', 'gateway', 'run', '--profile', 'codex_unified']
 
+[mcp_servers.computer-use]
+args = ['mcp']
+command = './Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient'
+cwd = '.'
+enabled = false
+
+[mcp_servers.node_repl]
+args = []
+command = '/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl'
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+BROWSER_USE_AVAILABLE_BACKENDS = 'chrome,iab'
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = 'prod'
+BROWSER_USE_CODEX_APP_VERSION = '26.721.41059'
+CODEX_CLI_PATH = '/Applications/ChatGPT.app/Contents/Resources/codex'
+CODEX_HOME = '/Users/andy/.codex'
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = 'Control the in-app browser in conjunction with the Browser Plugin.'
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = 'Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative.'
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = 'Control desktop apps on macOS through Computer Use.'
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = '1000'
+NODE_REPL_NODE_MODULE_DIRS = '/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules'
+NODE_REPL_NODE_PATH = '/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node'
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = '6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,e13fd947e846d3d306e9249dd3c73d14931b6494803dbafb16cef85e6add9506'
+NODE_REPL_TRUSTED_CODE_PATHS = '/Users/andy/.codex'
+SKY_CUA_SERVICE_PATH = '/Users/andy/.codex/computer-use/Codex Computer Use.app'
 
 [mcp_servers.notion]
 url = 'https://mcp.notion.com/mcp'
 
+[mcp_servers.pieces]
+enabled = false
+url = 'http://localhost:39300/model_context_protocol/2025-03-26/mcp'
 
 [mcp_servers_disabled]
 [mcp_servers_disabled.AIOS_MISSION_ROUTER]
@@ -159,44 +175,90 @@ command = '/opt/homebrew/bin/python3'
 args = ['mcp', 'gateway', 'run', '--profile', 'ai_coding']
 command = 'docker'
 
-
 [mcp_servers_disabled.context7]
 args = ['-y', '@upstash/context7-mcp']
 command = 'npx'
 
-
 [mcp_servers_disabled.node_repl]
 args = []
-command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
+command = '/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl'
 startup_timeout_sec = 120
 
 [mcp_servers_disabled.node_repl.env]
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
-CODEX_HOME = "/Users/andy/.codex"
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
-NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
-NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "4cfaeb70b54d114e1cd56bc0f85d04e1b344a5049cddb729e2b1161b9ff3008a"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/andy/.codex"
-
-BROWSER_USE_CODEX_APP_VERSION = "26.616.41845"
+BROWSER_USE_AVAILABLE_BACKENDS = 'chrome,iab'
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = 'prod'
+BROWSER_USE_CODEX_APP_VERSION = '26.616.41845'
+CODEX_CLI_PATH = '/Applications/ChatGPT.app/Contents/Resources/codex'
+CODEX_HOME = '/Users/andy/.codex'
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = 'Control the in-app browser in conjunction with the Browser Plugin.'
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = 'Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative.'
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = '1000'
+NODE_REPL_NODE_MODULE_DIRS = '/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules'
+NODE_REPL_NODE_PATH = '/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node'
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = '4cfaeb70b54d114e1cd56bc0f85d04e1b344a5049cddb729e2b1161b9ff3008a'
+NODE_REPL_TRUSTED_CODE_PATHS = '/Users/andy/.codex'
 
 [mcp_servers_disabled.openaiDeveloperDocs]
 url = 'https://developers.openai.com/mcp'
-
 
 [mcp_servers_disabled.playwright]
 args = ['-y', '@playwright/mcp']
 command = 'npx'
 
-
-
 [mcp_servers_disabled.postman-local]
 command = '/Users/andy/.codex/bin/postman-mcp-local'
+
+[model_providers]
+[model_providers.aitk]
+base_url = 'http://127.0.0.1:8000/v1'
+name = 'VS Code AI Toolkit local'
+wire_api = 'responses'
+
+[model_providers.apo]
+base_url = 'http://127.0.0.1:9011/v1'
+name = 'APΩ Personal Compatibility Cloud'
+wire_api = 'responses'
+
+[model_providers.cloud_ollama]
+base_url = 'https://ollama.com/v1'
+env_key = 'OLLAMA_API_KEY'
+name = 'Ollama Cloud'
+wire_api = 'responses'
+
+[model_providers.finalai]
+base_url = 'http://127.0.0.1:50520/v1'
+name = 'FinalAI Titan proxy'
+wire_api = 'responses'
+
+[model_providers.github_models]
+base_url = 'https://models.inference.ai.azure.com/v1'
+env_key = 'GITHUB_MODELS_TOKEN'
+name = 'GitHub Models'
+wire_api = 'responses'
+
+[model_providers.macmini]
+base_url = 'http://192.168.3.28:11434/v1'
+name = 'Mac mini M1 (secondary worker)'
+wire_api = 'responses'
+
+[model_providers.oss]
+base_url = 'http://127.0.0.1:11434/v1'
+name = 'Ollama OSS (this Mac)'
+wire_api = 'responses'
+
+[model_providers.this_mac]
+base_url = 'http://192.168.3.192:11434/v1'
+name = 'MacBook Pro M2 (this Mac, LAN)'
+wire_api = 'responses'
+
+[model_providers.titan]
+base_url = 'http://192.168.3.84:11434/v1'
+name = 'Titan GT77 (Windows control plane)'
+wire_api = 'responses'
+
+[notice]
+hide_full_access_warning = true
+hide_rate_limit_model_nudge = true
 
 [plugins]
 [plugins.'alpaca@openai-curated']
@@ -225,6 +287,9 @@ enabled = false
 
 [plugins.'brex@openai-curated']
 enabled = false
+
+[plugins.'browser@openai-bundled']
+enabled = true
 
 [plugins.'build-ios-apps@openai-curated']
 enabled = false
@@ -283,11 +348,8 @@ enabled = true
 [plugins.'conductor@openai-curated']
 enabled = true
 
-
 [plugins.'coupler-io@openai-curated']
 enabled = true
-
-
 
 [plugins.'coveo@openai-curated']
 enabled = false
@@ -394,23 +456,17 @@ enabled = false
 [plugins.'mem@openai-curated']
 enabled = false
 
-
 [plugins.'monday-com@openai-curated']
 enabled = false
-
 
 [plugins.'moody-s@openai-curated']
 enabled = false
 
-
 [plugins.'motherduck@openai-curated']
 enabled = false
 
-
 [plugins.'mt-newswires@openai-curated']
 enabled = false
-
-
 
 [plugins.'myregistry-com@openai-curated']
 enabled = true
@@ -523,18 +579,14 @@ enabled = true
 [plugins.'statsig@openai-curated']
 enabled = false
 
-
 [plugins.'streak@openai-curated']
 enabled = false
-
 
 [plugins.'stripe@openai-curated']
 enabled = false
 
-
 [plugins.'supabase@openai-curated']
 enabled = false
-
 
 [plugins.'superhuman@openai-curated']
 enabled = true
@@ -547,6 +599,9 @@ enabled = false
 
 [plugins.'teams@openai-curated']
 enabled = false
+
+[plugins.'template-creator@openai-primary-runtime']
+enabled = true
 
 [plugins.'temporal@openai-curated']
 enabled = false
@@ -569,6 +624,9 @@ enabled = false
 [plugins.'vercel@openai-curated']
 enabled = false
 
+[plugins.'visualize@openai-bundled']
+enabled = true
+
 [plugins.'waldo@openai-curated']
 enabled = false
 
@@ -587,15 +645,6 @@ enabled = false
 [plugins.'zotero@openai-curated']
 enabled = false
 
-[plugins."visualize@openai-bundled"]
-enabled = true
-
-[plugins."template-creator@openai-primary-runtime"]
-enabled = true
-
-[plugins."browser@openai-bundled"]
-enabled = true
-
 [profiles]
 [profiles.audit]
 approval_policy = 'never'
@@ -608,7 +657,6 @@ approval_policy = 'never'
 model_reasoning_effort = 'medium'
 model_verbosity = 'low'
 sandbox_mode = 'danger-full-access'
-
 
 [profiles.local_ollama]
 model = 'qwen2.5:1.5b'
@@ -625,38 +673,21 @@ project_doc_fallback_filenames = ['AGENTS.md', 'AGENT.md']
 project_doc_max_bytes = 65536
 sandbox_mode = 'danger-full-access'
 
-
 [projects]
 [projects.'/']
 trust_level = 'trusted'
 
-
 [projects.'/Users/andy']
 trust_level = 'trusted'
 
-
 [projects.'/Users/andy/DAIOF-Framework']
-trust_level = "trusted"
-
+trust_level = 'trusted'
 
 [projects.'/Users/andy/Documents/MacOSMac']
 trust_level = 'trusted'
 
-
 [projects.'/Users/andy/Documents/New project']
 trust_level = 'trusted'
-
-
-[projects.'/Volumes/External/OS_LOGICAL_DEPENDENCY_REGISTRY']
-profile = 'audit'
-project_root_markers = ['.git', '.hg', '.sl']
-trust_level = 'trusted'
-
-
-[rules]
-policy = 'skill-first-evidence-first'
-
-
 
 [projects.'/Users/andy/morphix3d-image-to-3d']
 trust_level = 'trusted'
@@ -664,8 +695,16 @@ trust_level = 'trusted'
 [projects.'/Users/andy/tr-gi-p']
 trust_level = 'trusted'
 
-[projects."/Users/andy/tr-gi-p-merge-ready"]
-trust_level = "trusted"
+[projects.'/Users/andy/tr-gi-p-merge-ready']
+trust_level = 'trusted'
+
+[projects.'/Volumes/External/OS_LOGICAL_DEPENDENCY_REGISTRY']
+profile = 'audit'
+project_root_markers = ['.git', '.hg', '.sl']
+trust_level = 'trusted'
+
+[rules]
+policy = 'skill-first-evidence-first'
 
 [shell_environment_policy]
 exclude = ['*_TOKEN', '*_SECRET', '*_PASSWORD', 'AWS_*', 'AZURE_*']
@@ -674,92 +713,11 @@ include_only = ['PATH', 'HOME', 'SHELL', 'TERM', 'TMPDIR', 'CODEX_HOME', 'HYPERA
 inherit = 'core'
 
 [shell_environment_policy.set]
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,e13fd947e846d3d306e9249dd3c73d14931b6494803dbafb16cef85e6add9506"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/andy/.codex"
+BROWSER_USE_AVAILABLE_BACKENDS = 'chrome,iab'
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = '6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,e13fd947e846d3d306e9249dd3c73d14931b6494803dbafb16cef85e6add9506'
+NODE_REPL_TRUSTED_CODE_PATHS = '/Users/andy/.codex'
 
+[tui]
 [tui.model_availability_nux]
-"gpt-5.5" = 4
-"gpt-5.6-sol" = 4
-
-[notice]
-hide_rate_limit_model_nudge = true
-hide_full_access_warning = true
-
-[mcp_servers.pieces]
-url = "http://localhost:39300/model_context_protocol/2025-03-26/mcp"
-
-[mcp_servers.node_repl]
-args = []
-command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
-startup_timeout_sec = 120
-
-[mcp_servers.node_repl.env]
-NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
-NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/andy/.codex"
-CODEX_HOME = "/Users/andy/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,e13fd947e846d3d306e9249dd3c73d14931b6494803dbafb16cef85e6add9506"
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
-NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
-BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.721.41059"
-SKY_CUA_SERVICE_PATH = "/Users/andy/.codex/computer-use/Codex Computer Use.app"
-CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
-
-[mcp_servers.computer-use]
-command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
-args = ["mcp"]
-cwd = "."
-enabled = false
-
-# OSS-style providers mapped to physical cluster nodes.
-[model_providers.oss]
-name = "Ollama OSS (this Mac)"
-base_url = "http://127.0.0.1:11434/v1"
-wire_api = "responses"
-
-[model_providers.this_mac]
-name = "MacBook Pro M2 (this Mac, LAN)"
-base_url = "http://192.168.3.192:11434/v1"
-wire_api = "responses"
-
-[model_providers.titan]
-name = "Titan GT77 (Windows control plane)"
-base_url = "http://192.168.3.84:11434/v1"
-wire_api = "responses"
-
-[model_providers.macmini]
-name = "Mac mini M1 (secondary worker)"
-base_url = "http://192.168.3.28:11434/v1"
-wire_api = "responses"
-
-[model_providers.cloud_ollama]
-name = "Ollama Cloud"
-base_url = "https://ollama.com/v1"
-env_key = "OLLAMA_API_KEY"
-wire_api = "responses"
-
-[model_providers.aitk]
-name = "VS Code AI Toolkit local"
-base_url = "http://127.0.0.1:8000/v1"
-wire_api = "responses"
-
-[model_providers.github_models]
-name = "GitHub Models"
-base_url = "https://models.inference.ai.azure.com/v1"
-env_key = "GITHUB_MODELS_TOKEN"
-wire_api = "responses"
-
-[model_providers.finalai]
-name = "FinalAI Titan proxy"
-base_url = "http://127.0.0.1:50520/v1"
-wire_api = "responses"
-
-[model_providers.apo]
-name = "APΩ Personal Compatibility Cloud"
-base_url = "http://127.0.0.1:9011/v1"
-wire_api = "responses"
+'gpt-5.5' = 4
+'gpt-5.6-sol' = 4
