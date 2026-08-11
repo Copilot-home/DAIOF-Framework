@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "source": "/Users/andy/balancehub/shortest_path_report.json",
+    "engine": "HyperAI \u00a74287",
+    "compression_ratio": 0.9583333333333334
+  },
+  "purified_path": [
+    "dijkstra",
+    "astar",
+    "framework",
+    "creator",
+    "verification"
+  ],
+  "core_metrics": {
+    "convergence_ratio": 1.0,
+    "avg_reduction": 1.0,
+    "velocity": 1.0,
+    "acceleration": 0.0,
+    "convergence_rate": 0.47916666666666663,
+    "formula_compliance": "SATISFIED",
+    "iterations": 5,
+    "initial_complexity": 4,
+    "final_complexity": 0,
+    "complexity_reduction": 4,
+    "complexity_reduction_percent": 100.0,
+    "complexity_history": [
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "violations": [],
+    "mathematical_proof": "D_{k+1} \u2264 D_k satisfied in 4/4 transitions (100% - PERFECT CONVERGENCE)"
+  }
+}
