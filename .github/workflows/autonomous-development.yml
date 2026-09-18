@@ -109,7 +109,8 @@ jobs:
           # Check if there are changes
           if [ -n "$(git status --porcelain)" ]; then
             git add .
-            git reset -- .autonomy
+            # Runtime reports/provenance belong to the Actions run, not source history.
+            git reset -- .autonomy reports/development_report.md
             TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
             TASK="${{ github.event.inputs.task_type || 'full_autonomous_cycle' }}"
             git commit -m "🧬 Autonomous evolution: $TIMESTAMP - Task: $TASK - Self-development cycle completed [Digital Organism]
