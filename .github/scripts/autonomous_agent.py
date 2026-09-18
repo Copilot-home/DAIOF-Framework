@@ -21,9 +21,8 @@ from typing import Dict, List, Optional
 try:
     from github import Github, GithubException
 except ImportError:
-    print("❌ PyGithub not installed. Installing...")
-    os.system("pip install PyGithub")
-    from github import Github, GithubException
+    Github = None
+    GithubException = Exception
 
 
 class AutonomousAIAgent:
@@ -43,6 +42,12 @@ class AutonomousAIAgent:
             self.repo = None
             self.dry_run = True
         else:
+            if Github is None:
+                self.log_action("PyGithub unavailable: GitHub operations are UNKNOWN, no runtime installation attempted", "WARNING")
+                self.gh = None
+                self.repo = None
+                self.dry_run = True
+                return
             try:
                 self.gh = Github(self.token)
                 self.repo = self.gh.get_repo(self.repo_name)
@@ -60,7 +65,7 @@ class AutonomousAIAgent:
         print(log_entry)
         
     def get_repo_metrics(self):
-        """Lấy metrics repo - return dummy values in dry-run mode"""
+        """Read repository metrics when the repository connection is real; preserve UNKNOWN otherwise."""
         if not self.repo:
             self.log_action("📊 Repository metrics unavailable: GitHub repository is not connected", "WARNING")
             return {
@@ -372,7 +377,7 @@ Generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
             else:
                 self.log_action(f"⚠️ Unknown task type: {self.task_type}", "WARNING")
             
-            self.log_action("✅ AI Agent completed successfully")
+            self.log_action("✅ AI Agent cycle completed; individual actions remain evidence-scoped")
             
         except Exception as e:
             self.log_action(f"❌ AI Agent failed: {str(e)}", "ERROR")
