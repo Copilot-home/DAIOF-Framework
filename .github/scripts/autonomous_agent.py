@@ -32,7 +32,7 @@ class AutonomousAIAgent:
     def __init__(self):
         self.log = []  # Initialize log first
         self.token = os.getenv('GITHUB_TOKEN')
-        self.repo_name = os.getenv('REPO_NAME', 'NguyenCuong1989/DAIOF-Framework')
+        self.repo_name = os.getenv('REPO_NAME', 'Copilot-home/DAIOF-Framework')
         self.task_type = os.getenv('TASK_TYPE', 'auto_maintain')
         self.dry_run = os.getenv('DRY_RUN', 'true').lower() == 'true'
         
@@ -61,15 +61,18 @@ class AutonomousAIAgent:
         
     def get_repo_metrics(self):
         """Lấy metrics repo - return dummy values in dry-run mode"""
-        if not self.repo or self.dry_run:
-            self.log_action("📊 Dry-run: Returning placeholder metrics", "DEBUG")
+        if not self.repo:
+            self.log_action("📊 Repository metrics unavailable: GitHub repository is not connected", "WARNING")
             return {
-                'stars': 42,  # Placeholder
-                'forks': 5,
-                'watchers': 10,
-                'open_issues': 0,
-                'subscribers': 15,
+                'stars': None,
+                'forks': None,
+                'watchers': None,
+                'open_issues': None,
+                'subscribers': None,
             }
+
+        if self.dry_run:
+            self.log_action("📊 Dry-run: Reading repository metrics without mutation", "DEBUG")
         
         return {
             'stars': self.repo.stargazers_count,
