@@ -1,9 +1,9 @@
 name: 🧬 Autonomous Git Workflow - Complete Repository Control
 
 on:
-#   schedule:
-    # Run every 15 minutes for continuous autonomous operation
-#     - cron: '*/15 * * * *'
+  schedule:
+    # Governed autonomous control loop: every 30 minutes
+    - cron: '*/30 * * * *'
   workflow_dispatch:
     inputs:
       operation:
@@ -25,6 +25,11 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: read
+
+concurrency:
+  group: daiof-autonomous-git-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   autonomous_git_workflow:
@@ -102,14 +107,15 @@ jobs:
               ;;
             "full_workflow_cycle"|*)
               echo "🔄 Executing full autonomous workflow cycle..."
-              timeout 600 python3 .github/scripts/autonomous_git_workflow.py cycle || {
-                echo "✅ Workflow cycle completed normally"
-              }
+              timeout 600 python3 .github/scripts/autonomous_git_workflow.py cycle
               ;;
           esac
       
       - name: 📊 Generate Workflow Analytics
         if: always()
+        env:
+          OPERATION: ${{ github.event.inputs.operation || 'full_workflow_cycle' }}
+          INTERVAL: ${{ github.event.inputs.interval || '30' }}
         run: |
           echo "📊 Generating workflow analytics..."
           
