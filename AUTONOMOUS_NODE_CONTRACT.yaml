@@ -1,0 +1,48 @@
+schema: AUTONOMOUS-REPOSITORY-NODE-1.0
+root:
+  architecture: APΩ
+  ecosystem: HyperAI
+  originator: alpha_prime_omega
+  principle: "Each capable repository may operate as an autonomous node while sharing a common root."
+node:
+  identity:
+    repository: "Copilot-home/DAIOF-Framework"
+    owner: "INFER_FROM_REPOSITORY"
+  lifecycle:
+    states: [DORMANT, BOOTSTRAPPING, CAPABLE, ACTIVE, ECONOMICALLY_ACTIVE, SELF_SUSTAINING, NETWORK_NODE]
+    current: UNKNOWN
+  capabilities:
+    build: UNKNOWN
+    operate: UNKNOWN
+    provide_service: UNKNOWN
+    create_value: UNKNOWN
+    generate_revenue: UNKNOWN
+    delegate: UNKNOWN
+  autonomy:
+    observe: true
+    plan: true
+    execute: UNKNOWN
+    learn: UNKNOWN
+    evolve: UNKNOWN
+  network:
+    enabled: UNKNOWN
+    peers: []
+    capability_exchange: UNKNOWN
+    task_delegation: UNKNOWN
+    artifact_exchange: UNKNOWN
+  economics:
+    enabled: UNKNOWN
+    value_loop: UNKNOWN
+    revenue_loop: UNKNOWN
+    reinvestment_loop: UNKNOWN
+  governance:
+    evidence_required: true
+    provenance_required: true
+    state_must_match_reality: true
+    no_silent_drift: true
+  classification:
+    role: UNKNOWN
+    family: DAIOF
+    relation: UNKNOWN
+    canonical: UNKNOWN
+    evidence_level: DISCOVERY
