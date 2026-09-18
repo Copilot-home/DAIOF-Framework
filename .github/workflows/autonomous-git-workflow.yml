@@ -119,10 +119,7 @@ jobs:
         run: |
           echo "📊 Generating workflow analytics..."
           
-          # Create analytics directory
-          mkdir -p analytics
-          
-          # Generate basic analytics
+          # Keep runtime analytics in the Actions summary; do not create repository churn.
           echo "{
             \"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
             \"repository\": \"$GITHUB_REPOSITORY\",
@@ -132,9 +129,9 @@ jobs:
             \"framework\": \"HYPERAI\",
             \"haios_compliance\": true,
             \"k_state\": 1
-          }" > analytics/workflow_analytics.json
+          }"
           
-          echo "✅ Workflow analytics generated"
+          echo "✅ Workflow analytics generated in Actions summary"
       
       - name: 📈 Update Repository Health Dashboard
         if: always()
