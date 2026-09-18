@@ -84,7 +84,7 @@ jobs:
           echo "## AI Agent Activity Report" >> $GITHUB_STEP_SUMMARY
           echo "- **Task Type**: ${{ github.event.inputs.task_type || 'auto_maintain' }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Execution Time**: $(date -u)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Status**: ✅ Completed" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
 
       - name: 💾 Commit Changes (if any)
         run: |
@@ -94,7 +94,8 @@ jobs:
           # Kiểm tra xem có thay đổi không
           if [[ -n $(git status -s) ]]; then
             git add .
-            git reset -- .autonomy
+            # Runtime logs/probes belong to the Actions artifact, not source history.
+            git reset -- .autonomy metrics/daily_*.json metrics/agent_log_*.txt
             git commit -m "🤖 AI Agent: Autonomous maintenance update
 
             - Task: ${{ github.event.inputs.task_type || 'auto_maintain' }}
