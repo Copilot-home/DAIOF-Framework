@@ -20,7 +20,7 @@ DAIOF (Digital AI Organism Framework) is a revolutionary framework that treats A
 ### 🚀 Quick Start
 
 ```bash
-git clone https://github.com/NguyenCuong1989/DAIOF-Framework.git
+git clone https://github.com/Copilot-home/DAIOF-Framework.git
 cd DAIOF-Framework
 pip install -r requirements.txt
 python digital_ai_organism_framework.py
@@ -77,10 +77,10 @@ AI literally cannot survive without human interaction.
 
 ### 🤝 Get Involved
 
-- [GitHub Repository](https://github.com/NguyenCuong1989/DAIOF-Framework)
-- [Contributing Guide](https://github.com/NguyenCuong1989/DAIOF-Framework/blob/main/CONTRIBUTING.md)
-- [Discussions](https://github.com/NguyenCuong1989/DAIOF-Framework/discussions)
-- [Issues](https://github.com/NguyenCuong1989/DAIOF-Framework/issues)
+- [GitHub Repository](https://github.com/Copilot-home/DAIOF-Framework)
+- [Contributing Guide](https://github.com/Copilot-home/DAIOF-Framework/blob/main/CONTRIBUTING.md)
+- [Discussions](https://github.com/Copilot-home/DAIOF-Framework/discussions)
+- [Issues](https://github.com/Copilot-home/DAIOF-Framework/issues)
 
 ---
 
