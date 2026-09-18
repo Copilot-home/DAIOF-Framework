@@ -47,9 +47,37 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TASK_TYPE: ${{ github.event.inputs.task_type || 'auto_maintain' }}
           REPO_NAME: ${{ github.repository }}
+          DRY_RUN: 'false'
+          AUTONOMY_RUN_ID: ${{ github.run_id }}
+          AUTONOMY_RUN_ATTEMPT: ${{ github.run_attempt }}
         run: |
           python3 .github/scripts/autonomous_agent.py
 
+      - name: 🔐 Capture Execution Provenance
+        if: always()
+        run: |
+          mkdir -p .autonomy
+          git status --short > .autonomy/git-status-before-commit.txt
+          git diff --stat > .autonomy/git-diff-stat-before-commit.txt
+          git diff --name-status > .autonomy/git-changed-files-before-commit.txt
+          cat > .autonomy/execution-provenance.json <<EOF
+          {
+            "schema": "APO-AUTONOMY-PROVENANCE-1.0",
+            "repository": "${GITHUB_REPOSITORY}",
+            "workflow": "${GITHUB_WORKFLOW}",
+            "run_id": "${GITHUB_RUN_ID}",
+            "run_attempt": "${GITHUB_RUN_ATTEMPT}",
+            "event": "${GITHUB_EVENT_NAME}",
+            "ref": "${GITHUB_REF}",
+            "sha_at_start": "${GITHUB_SHA}",
+            "actor": "${GITHUB_ACTOR}",
+            "triggering_actor": "${{ github.triggering_actor }}",
+            "task_type": "${{ github.event.inputs.task_type || 'auto_maintain' }}",
+            "dry_run": false,
+            "runner": "${RUNNER_NAME}",
+            "timestamp_utc": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          }
+          EOF
       - name: 📊 Generate Activity Report
         if: always()
         run: |
@@ -70,9 +98,23 @@ jobs:
 
             - Task: ${{ github.event.inputs.task_type || 'auto_maintain' }}
             - Timestamp: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-            - Executed by: GitHub Actions autonomous workflow"
+            - Executed by: GitHub Actions autonomous workflow
+            - Provenance: run=${{ github.run_id }} attempt=${{ github.run_attempt }} actor=${{ github.actor }}"
             git push
+            echo "AUTONOMY_COMMIT_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+            echo "AUTONOMY_COMMIT_SHA=$(git rev-parse HEAD)"
             echo "✅ Changes committed and pushed"
           else
+            echo "AUTONOMY_COMMIT_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+            echo "AUTONOMY_COMMIT_SHA=$(git rev-parse HEAD)"
             echo "ℹ️ No changes to commit"
           fi
+
+      - name: 📦 Publish Execution Provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: autonomy-provenance-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .autonomy/
+          if-no-files-found: warn
+          retention-days: 30
