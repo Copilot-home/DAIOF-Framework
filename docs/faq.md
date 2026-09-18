@@ -159,7 +159,7 @@ The framework uses standard Python libraries:
 
 ```bash
 # Clone repository
-git clone https://github.com/NguyenCuong1989/DAIOF-Framework.git
+git clone https://github.com/Copilot-home/DAIOF-Framework.git
 cd DAIOF-Framework
 
 # Install dependencies
@@ -180,7 +180,7 @@ See [Getting Started](getting-started.html) for detailed instructions.
 2. Credit the creator: Nguyễn Đức Cường (alpha_prime_omega)
 3. Include attribution: "Powered by HYPERAI Framework"
 
-See [LICENSE](https://github.com/NguyenCuong1989/DAIOF-Framework/blob/main/LICENSE) for details.
+See [LICENSE](https://github.com/Copilot-home/DAIOF-Framework/blob/main/LICENSE) for details.
 
 ### How do I contribute to DAIOF?
 
@@ -190,7 +190,7 @@ See [LICENSE](https://github.com/NguyenCuong1989/DAIOF-Framework/blob/main/LICEN
 4. Add tests
 5. Submit a pull request
 
-See [CONTRIBUTING.md](https://github.com/NguyenCuong1989/DAIOF-Framework/blob/main/CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](https://github.com/Copilot-home/DAIOF-Framework/blob/main/CONTRIBUTING.md) for guidelines.
 
 ---
 
@@ -601,7 +601,7 @@ with open('organism_state.json', 'w') as f:
 - v1.3: Multi-environment simulations
 - v2.0: Distributed ecosystems, cloud support
 
-See [GitHub Issues](https://github.com/NguyenCuong1989/DAIOF-Framework/issues) for details.
+See [GitHub Issues](https://github.com/Copilot-home/DAIOF-Framework/issues) for details.
 
 ---
 
@@ -610,13 +610,13 @@ See [GitHub Issues](https://github.com/NguyenCuong1989/DAIOF-Framework/issues) f
 ### Where can I get help?
 
 1. **Documentation**: [https://nguyencuong1989.github.io/DAIOF-Framework/](https://nguyencuong1989.github.io/DAIOF-Framework/)
-2. **GitHub Discussions**: [Community Forum](https://github.com/NguyenCuong1989/DAIOF-Framework/discussions)
-3. **GitHub Issues**: [Bug Reports](https://github.com/NguyenCuong1989/DAIOF-Framework/issues)
+2. **GitHub Discussions**: [Community Forum](https://github.com/Copilot-home/DAIOF-Framework/discussions)
+3. **GitHub Issues**: [Bug Reports](https://github.com/Copilot-home/DAIOF-Framework/issues)
 4. **Examples**: Check `examples/` directory in repository
 
 ### How do I report bugs?
 
-1. Go to [GitHub Issues](https://github.com/NguyenCuong1989/DAIOF-Framework/issues)
+1. Go to [GitHub Issues](https://github.com/Copilot-home/DAIOF-Framework/issues)
 2. Click "New Issue"
 3. Choose "Bug Report" template
 4. Provide details:
@@ -628,7 +628,7 @@ See [GitHub Issues](https://github.com/NguyenCuong1989/DAIOF-Framework/issues) f
 
 ### Can I request features?
 
-**Yes!** Use the "Feature Request" template on [GitHub Issues](https://github.com/NguyenCuong1989/DAIOF-Framework/issues).
+**Yes!** Use the "Feature Request" template on [GitHub Issues](https://github.com/Copilot-home/DAIOF-Framework/issues).
 
 ### Is there a community?
 
@@ -711,7 +711,7 @@ You must:
 - ✅ Include copyright notice
 - ✅ Credit creator
 
-See [LICENSE](https://github.com/NguyenCuong1989/DAIOF-Framework/blob/main/LICENSE) for full text.
+See [LICENSE](https://github.com/Copilot-home/DAIOF-Framework/blob/main/LICENSE) for full text.
 
 ### Can I sell products built with DAIOF?
 
@@ -740,8 +740,8 @@ MIT License provides limited patent protection. The license grants you patent ri
 
 - **Read Documentation**: [https://nguyencuong1989.github.io/DAIOF-Framework/](https://nguyencuong1989.github.io/DAIOF-Framework/)
 - **Check Tutorials**: [Tutorials](tutorials.html)
-- **Ask Community**: [GitHub Discussions](https://github.com/NguyenCuong1989/DAIOF-Framework/discussions)
-- **Report Issues**: [GitHub Issues](https://github.com/NguyenCuong1989/DAIOF-Framework/issues)
+- **Ask Community**: [GitHub Discussions](https://github.com/Copilot-home/DAIOF-Framework/discussions)
+- **Report Issues**: [GitHub Issues](https://github.com/Copilot-home/DAIOF-Framework/issues)
 
 ---
 
