@@ -35,10 +35,10 @@ setup(
     description="A framework for creating self-evolving, self-maintaining AI entities",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/NguyenCuong1989/DAIOF-Framework",
+    url="https://github.com/Copilot-home/DAIOF-Framework",
     project_urls={
-        "Bug Reports": "https://github.com/NguyenCuong1989/DAIOF-Framework/issues",
-        "Source": "https://github.com/NguyenCuong1989/DAIOF-Framework",
+        "Bug Reports": "https://github.com/Copilot-home/DAIOF-Framework/issues",
+        "Source": "https://github.com/Copilot-home/DAIOF-Framework",
         "Documentation": "https://nguyencuong1989.github.io/DAIOF-Framework/",
     },
     packages=find_packages(where="src"),
