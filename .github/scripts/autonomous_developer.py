@@ -34,7 +34,7 @@ class AutonomousDeveloper:
         # Initialize GitHub API
         if self.github_token:
             self.gh = Github(self.github_token)
-            self.repo = self.gh.get_repo(os.environ.get('GITHUB_REPOSITORY', 'NguyenCuong1989/DAIOF-Framework'))
+            self.repo = self.gh.get_repo(os.environ.get('GITHUB_REPOSITORY', 'Copilot-home/DAIOF-Framework'))
         
         # Load organism genome
         self.genome = self._load_genome()
@@ -84,12 +84,14 @@ class AutonomousDeveloper:
                 )
                 
                 if result.returncode == 0:
-                    # Sort imports with isort
+                    before = py_file.read_text()
                     subprocess.run(
                         ['isort', '--quiet', str(py_file)],
                         capture_output=True
                     )
-                    improvements += 1
+                    after = py_file.read_text()
+                    if before != after:
+                        improvements += 1
                     
             except Exception as e:
                 print(f"   ⚠️  Could not process {py_file}: {e}")
@@ -105,31 +107,17 @@ class AutonomousDeveloper:
         """Automatically generate missing content"""
         print("📝 Auto Content Generation Started...")
         
-        # Check for missing documentation
-        docs_to_create = []
-        
-        # Check for CONTRIBUTING.md
-        if not (self.repo_path / 'CONTRIBUTING.md').exists():
-            docs_to_create.append('CONTRIBUTING.md')
-            self._create_contributing_guide()
-        
-        # Check for CODE_OF_CONDUCT.md
-        if not (self.repo_path / 'CODE_OF_CONDUCT.md').exists():
-            docs_to_create.append('CODE_OF_CONDUCT.md')
-            self._create_code_of_conduct()
-        
-        # Check for SECURITY.md
-        if not (self.repo_path / 'SECURITY.md').exists():
-            docs_to_create.append('SECURITY.md')
-            self._create_security_policy()
-        
-        if docs_to_create:
-            self.actions_taken.append(f"Created documentation: {', '.join(docs_to_create)}")
-            self.improvements_made.append("Project documentation enhanced")
-            print(f"   ✅ Created {len(docs_to_create)} documentation files")
+        # Documentation is observed, not synthesized.
+        missing = [
+            name for name in ('CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md')
+            if not (self.repo_path / name).exists()
+        ]
+        if missing:
+            self.actions_taken.append(f"Documentation gaps detected: {', '.join(missing)}")
+            print(f"   ℹ️  Documentation gaps: {', '.join(missing)}")
         else:
-            print("   ℹ️  All essential documentation exists")
-    
+            print("   ℹ️  Core project documentation present")
+
     def _create_contributing_guide(self):
         """Create CONTRIBUTING.md"""
         content = """# Contributing to DAIOF Framework
@@ -331,25 +319,13 @@ None currently.
         """Check and suggest dependency updates"""
         print("📦 Auto Dependency Check Started...")
         
-        # Check if requirements.txt exists
         req_file = self.repo_path / 'requirements.txt'
-        
-        if not req_file.exists():
-            # Create basic requirements.txt
-            requirements = [
-                "PyGithub>=2.1.0",
-                "PyYAML>=6.0",
-                "requests>=2.31.0",
-                "python-dotenv>=1.0.0"
-            ]
-            
-            req_file.write_text('\n'.join(requirements) + '\n')
-            self.actions_taken.append("Created requirements.txt")
-            self.improvements_made.append("Dependency management improved")
-            print("   ✅ Created requirements.txt")
+        if req_file.exists():
+            print("   ℹ️  requirements.txt exists; dependency mutation disabled")
         else:
-            print("   ℹ️  requirements.txt exists")
-    
+            self.actions_taken.append("Dependency manifest missing: requirements.txt")
+            print("   ℹ️  requirements.txt missing; no synthetic dependency set created")
+
     def _auto_optimize_health(self):
         """Optimize organism health metrics"""
         print("🏥 Auto Health Optimization Started...")
