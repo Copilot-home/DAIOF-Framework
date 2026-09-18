@@ -12,8 +12,6 @@ on:
         type: choice
         options:
           - auto_improve_code
-          - auto_generate_content
-          - auto_update_dependencies
           - auto_optimize_health
           - full_autonomous_cycle
         default: full_autonomous_cycle
