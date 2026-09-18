@@ -26,7 +26,7 @@ except ImportError:
 
 
 class AutonomousAIAgent:
-    """AI Agent có khả năng hoạt động tự động trên GitHub"""
+    """Bounded agent for repository observation and maintenance."""
     
     def __init__(self):
         self.log = []  # Initialize log first
@@ -376,6 +376,7 @@ Generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
                 self.metrics_report()
             else:
                 self.log_action(f"⚠️ Unknown task type: {self.task_type}", "WARNING")
+                return 2
             
             self.log_action("✅ AI Agent cycle completed; individual actions remain evidence-scoped")
             
