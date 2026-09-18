@@ -127,6 +127,22 @@ Provenance: run=${{ github.run_id }} attempt=${{ github.run_attempt }} actor=${{
           echo "🏥 Running post-development health check..."
           python3 .github/scripts/health_monitor.py || true
 
+      - name: 🔗 Finalize Execution Provenance
+        if: always()
+        run: |
+          export FINAL_COMMIT_SHA="${AUTONOMY_COMMIT_SHA:-$(git rev-parse HEAD)}"
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          p = Path('.autonomy/execution-provenance.json')
+          if p.exists():
+              data = json.loads(p.read_text())
+              data['final_commit_sha'] = os.environ['FINAL_COMMIT_SHA']
+              data['status'] = os.environ.get('GITHUB_JOB_STATUS', 'unknown')
+              p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
+          PY
+
       - name: 📦 Publish Execution Provenance
         if: always()
         uses: actions/upload-artifact@v4
