@@ -124,7 +124,7 @@ jobs:
           if p.exists():
               data = json.loads(p.read_text())
               data['final_commit_sha'] = os.environ['FINAL_COMMIT_SHA']
-              data['status'] = os.environ.get('GITHUB_JOB_STATUS', 'unknown')
+              data['status'] = '${{ job.status }}'
               p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
           PY
 
