@@ -94,6 +94,7 @@ jobs:
           # Kiểm tra xem có thay đổi không
           if [[ -n $(git status -s) ]]; then
             git add .
+            git reset -- .autonomy
             git commit -m "🤖 AI Agent: Autonomous maintenance update
 
             - Task: ${{ github.event.inputs.task_type || 'auto_maintain' }}
