@@ -599,7 +599,7 @@ class DigitalGenome:
     def get_genome_hash(self) -> str:
         """Get unique hash for genome identification"""
         genome_str = json.dumps(self.traits, sort_keys=True)
-        return hashlib.md5(genome_str.encode()).hexdigest()[:12]
+        return hashlib.md5(genome_str.encode(), usedforsecurity=False).hexdigest()[:12]
 
 class DigitalMetabolism:
     """Resource management and energy conversion system for an organism.
