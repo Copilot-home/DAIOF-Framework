@@ -167,7 +167,6 @@ jobs:
         run: python3 --version
 
       - name: Run bandit security linter
-        continue-on-error: true
         run: |
           python3 -m pip install bandit
           bandit -r digital_ai_organism_framework.py haios_core.py haios_runtime.py src/ -f json -o bandit-report.json || true
