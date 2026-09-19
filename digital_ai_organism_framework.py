@@ -1318,6 +1318,17 @@ class DigitalEcosystem:
         # Log ecosystem stats
         if int(self.time) % 10 == 0:  # Every 10 time units
             self._log_ecosystem_stats()
+
+    def run_cycle(self, time_delta: float = 1.0) -> dict:
+        """Compose/service contract used by digital_ecosystem.py."""
+        self.simulate_time_step(time_delta)
+        living = sum(1 for org in self.organisms.values() if org.status == "alive")
+        return {
+            "name": self.name,
+            "time": self.time,
+            "living": living,
+            "organism_count": len(self.organisms),
+        }
     
     def _apply_environmental_pressures(self):
         """Apply environmental selection pressures"""

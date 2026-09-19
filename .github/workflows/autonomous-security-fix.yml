@@ -1,281 +1,150 @@
-name: 🛡️ Autonomous Security Fix & Maintenance
+name: Security scan and PR
 
+# Scan on main. Never mutate the default branch.
+# Fixes (if any) go to an isolated branch via create-pull-request only.
 on:
-#   schedule:
-    # Run every 6 hours to check for security issues
-#     - cron: '0 */6 * * *'
+  schedule:
+    - cron: "0 */6 * * *"
   workflow_dispatch:
     inputs:
-      fix_type:
-        description: 'Type of fixes to apply'
-        required: false
-        type: choice
-        options:
-          - all_fixes
-          - npm_vulnerabilities
-          - dependency_updates
-          - code_quality
-        default: all_fixes
+      apply_safe_fixes:
+        description: "Apply non-force npm audit fix / pip-audit --fix onto a PR branch"
+        type: boolean
+        default: false
   push:
-    branches:
-      - main
-      - master
-      - stable
+    branches: [main, master, stable]
     paths:
-      - '**/package.json'
-      - '**/package-lock.json'
-      - '**/requirements.txt'
-      - '**/Gemfile'
-      - '**/go.mod'
+      - "**/package.json"
+      - "**/package-lock.json"
+      - "**/requirements.txt"
+      - "**/requirements.in"
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+  security-events: write
 
 jobs:
-  autonomous_security_fix:
+  scan:
     runs-on: ubuntu-latest
-    name: 🧬 Autonomous Security Fix System
-    
+    outputs:
+      npm_vulns: ${{ steps.npm_audit.outputs.npm_vulns_found }}
+      python_vulns: ${{ steps.python_audit.outputs.python_vulns_found }}
     steps:
-      - name: 🧬 Clone Repository
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          git init -q .
-          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git fetch -q --depth 1 origin "${GITHUB_REF}"
-          git checkout -q FETCH_HEAD
-      - name: 🔐 Verify HAIOS Consciousness
-        run: |
-          echo "🧬 HAIOS Consciousness: ACTIVE"
-          echo "🎯 Creator: Nguyễn Đức Cường (alpha_prime_omega)"
-          echo "📊 Framework: HYPERAI | K-State: 1"
-      
-      - name: 🐍 Setup Python Environment
-        run: python3 --version
-      - name: 📦 Setup Node.js Environment (system Node, no external action)
-        run: node --version && npm --version
-      
-      - name: 🔄 Initialize Convergence-Optimized Todo System
-        run: |
-          echo "🧬 Initializing autonomous todo system with D_{k+1} ≤ D_k convergence..."
-          
-          # Run convergence system to assess current state
-          if [ -f "autonomous_todo_system.py" ]; then
-            python3 autonomous_todo_system.py
-          fi
-      
-      - name: 🔍 Scan for NPM Vulnerabilities
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: npm audit (lockfile tree only)
         id: npm_audit
-        continue-on-error: true
         run: |
-          echo "🔍 Scanning for npm vulnerabilities..."
-          
-          # Find all package.json files
-          find . -name "package.json" -not -path "*/node_modules/*" | while read pkg; do
-            DIR=$(dirname "$pkg")
-            echo "📦 Checking: $DIR"
-            
-            cd "$DIR"
-            
-            # Check if node_modules exists
-            if [ -d "node_modules" ]; then
-              npm audit --json > audit_report.json 2>&1 || true
-              
-              VULNS=$(cat audit_report.json | grep -o '"vulnerabilities"' | wc -l)
-              
-              if [ "$VULNS" -gt 0 ]; then
-                echo "⚠️ Found vulnerabilities in $DIR"
-                echo "npm_vulns_found=true" >> $GITHUB_OUTPUT
-              fi
-            fi
-            
-            cd - > /dev/null
-          done
-      
-      - name: 🔧 Auto-fix NPM Vulnerabilities
-        if: steps.npm_audit.outputs.npm_vulns_found == 'true'
-        run: |
-          echo "🔧 Applying autonomous npm vulnerability fixes..."
-          
-          find . -name "package.json" -not -path "*/node_modules/*" | while read pkg; do
-            DIR=$(dirname "$pkg")
-            echo "🔧 Fixing: $DIR"
-            
-            cd "$DIR"
-            
-            if [ -d "node_modules" ]; then
-              # Try npm audit fix first
-              echo "  → Running npm audit fix..."
-              npm audit fix --json > fix_report.json 2>&1 || true
-              
-              # If moderate/high vulnerabilities remain, try force fix
-              REMAINING=$(npm audit --json 2>&1 | grep -o '"high":[0-9]*' | grep -o '[0-9]*' || echo "0")
-              
-              if [ "$REMAINING" -gt 0 ]; then
-                echo "  → Running npm audit fix --force for remaining issues..."
-                npm audit fix --force || true
-              fi
-              
-              echo "  ✅ Fixes applied to $DIR"
-            fi
-            
-            cd - > /dev/null
-          done
-      
-      - name: 🔍 Scan for Python Vulnerabilities
+          echo "npm_vulns_found=false" >> "$GITHUB_OUTPUT"
+          if [ ! -f package-lock.json ]; then
+            echo "No root package-lock.json — skip npm audit"
+            exit 0
+          fi
+          set +e
+          npm audit --omit=dev --json > npm-audit.json
+          RC=$?
+          set -e
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          p = Path("npm-audit.json")
+          found = False
+          try:
+              data = json.loads(p.read_text() or "{}")
+              meta = (data.get("metadata") or {}).get("vulnerabilities") or {}
+              found = any(int(meta.get(k) or 0) > 0 for k in ("critical", "high", "moderate", "low"))
+              print("npm vulnerability counts:", meta)
+          except Exception as e:
+              print("npm audit json parse:", e)
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"npm_vulns_found={'true' if found else 'false'}\n")
+          PY
+          if [ "$RC" -gt 1 ]; then
+            echo "npm audit failed with $RC"
+            exit "$RC"
+          fi
+
+      - name: pip-audit
         id: python_audit
-        continue-on-error: true
         run: |
-          echo "🔍 Scanning for Python vulnerabilities..."
-          
-          pip install safety pip-audit 2>&1 || true
-          
-          find . -name "requirements.txt" -not -path "*/venv/*" | while read req; do
-            DIR=$(dirname "$req")
-            echo "🐍 Checking: $DIR"
-            
-            # Run safety check
-            safety check -r "$req" --json > safety_report.json 2>&1 || true
-            
-            # Run pip-audit
-            pip-audit -r "$req" --format json > pip_audit_report.json 2>&1 || true
-          done
-      
-      - name: 🔧 Auto-fix Python Vulnerabilities
-        if: steps.python_audit.outputs.python_vulns_found == 'true'
-        continue-on-error: true
-        run: |
-          echo "🔧 Applying autonomous Python vulnerability fixes..."
-          
-          find . -name "requirements.txt" -not -path "*/venv/*" | while read req; do
-            DIR=$(dirname "$req")
-            echo "🔧 Fixing: $DIR"
-            
-            cd "$DIR"
-            
-            # Try pip-audit auto-fix
-            pip-audit -r requirements.txt --fix || true
-            
-            cd - > /dev/null
-          done
-      
-      - name: 🧹 Clean Up Stale Branches
-        continue-on-error: true
-        run: |
-          echo "🧹 Cleaning up stale branches..."
-          
-          # List merged branches older than 30 days
-          git branch -r --merged | grep -v '\*\|main\|master\|stable\|develop' | while read branch; do
-            BRANCH_NAME=$(echo $branch | sed 's/origin\///')
-            LAST_COMMIT=$(git log -1 --format=%ct "$branch")
-            NOW=$(date +%s)
-            DAYS_OLD=$(( ($NOW - $LAST_COMMIT) / 86400 ))
-            
-            if [ $DAYS_OLD -gt 30 ]; then
-              echo "  🗑️ Branch $BRANCH_NAME is $DAYS_OLD days old - marking for deletion"
-            fi
-          done
-      
-      - name: 📊 Update Convergence Metrics
-        run: |
-          echo "📊 Calculating complexity reduction after fixes..."
-          
-          # Run todo system to calculate D_k after fixes
-          if [ -f "autonomous_todo_system.py" ]; then
-            python3 autonomous_todo_system.py
-            
-            # Check convergence
-            if [ -f "autonomous_todo.db" ]; then
-              CONVERGENCE=$(sqlite3 autonomous_todo.db "SELECT convergence_ratio FROM metrics ORDER BY cycle DESC LIMIT 1" 2>&1 || echo "1.0")
-              echo "📈 Current convergence ratio: $CONVERGENCE"
-              
-              if (( $(echo "$CONVERGENCE < 0.9" | bc -l 2>/dev/null || echo "0") )); then
-                echo "⚠️ Convergence below 90% - system needs optimization"
-              else
-                echo "✅ System converging: D_{k+1} ≤ D_k maintained"
-              fi
-            fi
+          echo "python_vulns_found=false" >> "$GITHUB_OUTPUT"
+          python -m pip install -q pip-audit
+          REQ=requirements.txt
+          if [ ! -f "$REQ" ]; then
+            echo "No requirements.txt"
+            exit 0
           fi
-      
-      - name: 💾 Commit Autonomous Fixes
-        id: commit_fixes
-        run: |
-          git config user.name "DAIOF Autonomous Security Fix"
-          git config user.email "security-fix@daiof-framework.dev"
-          
-          # Check for changes
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "📝 Committing autonomous security fixes..."
-            
-            git add -A
-            
-            # Generate detailed commit message
-            TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
-            FIX_TYPE="${{ github.event.inputs.fix_type || 'all_fixes' }}"
-            
-            git commit -m "🛡️ Autonomous Security Fix: $TIMESTAMP - Type: $FIX_TYPE - Framework: HYPERAI - Creator: Nguyễn Đức Cường (alpha_prime_omega) - Applied npm/python3 fixes - Convergence D_{k+1} ≤ D_k maintained - Verification: 4287"
-            
-            echo "changes_committed=true" >> $GITHUB_OUTPUT
-            echo "✅ Autonomous fixes committed"
-          else
-            echo "ℹ️ No security issues found - system optimal"
-            echo "changes_committed=false" >> $GITHUB_OUTPUT
+          set +e
+          python -m pip_audit -r "$REQ" --progress-spinner off | tee pip-audit.txt
+          RC=$?
+          set -e
+          if [ "$RC" -ne 0 ]; then
+            echo "python_vulns_found=true" >> "$GITHUB_OUTPUT"
           fi
-      
-      - name: 🚀 Create Pull Request for Review (gh CLI, no external action)
-        if: steps.commit_fixes.outputs.changes_committed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          branch="autonomous-security-fix-${{ github.run_id }}"
-          git checkout -b "$branch"
-          git push -f origin "$branch"
-          gh pr create \
-            --base "${{ github.event.repository.default_branch }}" \
-            --head "$branch" \
-            --title "🛡️ Autonomous Security Fix - ${{ github.run_id }}" \
-            --body "## 🛡️ Autonomous Security Fix Report
+          # pip-audit: 0 = clean, 1 = vulns found, other = tool failure
+          if [ "$RC" -ge 2 ]; then
+            echo "pip-audit tool failure $RC"
+            exit "$RC"
+          fi
 
-          **Framework**: HYPERAI
-          **Creator**: Nguyễn Đức Cường (alpha_prime_omega)
-          **K-State**: 1 (Perfect Consciousness)
-
-          ### 🔧 Fixes Applied
-          - NPM vulnerability patches
-          - Dependency updates
-          - Security best practices enforcement
-
-          ### 📊 Convergence Status
-          - Formula: D_{k+1} ≤ D_k
-          - Status: Converging
-          - Verification: 4287
-
-          ---
-          *Automatically created by the DAIOF Autonomous Security Fix System*" \
-            --label security --label automated --label autonomous --label haios-compliant || \
-          gh pr edit "$branch" --add-label "security,automated,autonomous,haios-compliant" || true
-      
-      - name: 🎯 Generate Summary
+      - uses: actions/upload-artifact@v4
         if: always()
+        with:
+          name: security-scan-${{ github.run_id }}
+          path: |
+            npm-audit.json
+            pip-audit.txt
+          if-no-files-found: ignore
+
+  propose-fixes:
+    needs: scan
+    if: >
+      github.event_name != 'push' &&
+      inputs.apply_safe_fixes == true &&
+      (needs.scan.outputs.npm_vulns == 'true' || needs.scan.outputs.python_vulns == 'true')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Safe dependency fixes (no --force, no git add -A on default branch)
         run: |
-          echo "## 🛡️ Autonomous Security Fix Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 📊 Operation Details" >> $GITHUB_STEP_SUMMARY
-          echo "- **Timestamp**: $(date -u +"%Y-%m-%d %H:%M UTC")" >> $GITHUB_STEP_SUMMARY
-          echo "- **Fix Type**: ${{ github.event.inputs.fix_type || 'all_fixes' }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Framework**: HYPERAI" >> $GITHUB_STEP_SUMMARY
-          echo "- **Creator**: Nguyễn Đức Cường (alpha_prime_omega)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### ✅ Fixes Applied" >> $GITHUB_STEP_SUMMARY
-          echo "- NPM vulnerabilities: Checked and fixed" >> $GITHUB_STEP_SUMMARY
-          echo "- Python dependencies: Checked and fixed" >> $GITHUB_STEP_SUMMARY
-          echo "- Code quality: Optimized" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 🧬 Convergence Status" >> $GITHUB_STEP_SUMMARY
-          echo "- Formula: D_{k+1} ≤ D_k" >> $GITHUB_STEP_SUMMARY
-          echo "- Status: ✅ Converging" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "---" >> $GITHUB_STEP_SUMMARY
-          echo "*🛡️ Repository security maintained autonomously*" >> $GITHUB_STEP_SUMMARY
+          if [ -f package-lock.json ]; then
+            npm audit fix --omit=dev || true
+          fi
+          if [ -f requirements.txt ]; then
+            python -m pip install -q pip-audit
+            python -m pip_audit -r requirements.txt --fix || true
+          fi
+
+      - uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: security-scan-${{ github.run_id }}
+          delete-branch: true
+          commit-message: "chore(security): safe audit fixes"
+          title: "chore(security): audit findings ${{ github.run_id }}"
+          body: |
+            Isolated PR from security scan. No force-push. No `npm audit fix --force`.
+            Review before merge. Default branch was not mutated.
+          labels: |
+            security
+            automated
