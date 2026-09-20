@@ -97,6 +97,17 @@ celerybeat.pid
 
 # Environments
 .env
+.env.*
+!.env.example
+.dev-inventory/
+.facebook_session/
+playwright_profile/
+.vscode-test/
+.haios_snapshots/
+src.gen/
+.windsurf/
+.max/
+.aios_blackbox/
 .venv
 env/
 venv/

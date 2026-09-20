@@ -19,7 +19,7 @@ try:
     while True:
         try:
             # Generate evaluation
-            result = evaluation_runner.generate_response_for_query('System health check')
+            result = evaluation_runner.generate_response_for_query('health status')
             print(f'✅ Evaluation: {len(result)} chars generated')
 
             time.sleep(300)  # Run every 5 minutes

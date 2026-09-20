@@ -26,7 +26,11 @@ except ImportError:
 def generate_response_for_query(query):
     """Generate a response for a given query using the DAIOF framework."""
     
-    if "health status" in query.lower():
+    q = query.lower()
+    if "health status" in q or "system health check" in q or q.strip() in {
+        "health check",
+        "health",
+    }:
         # Create a sample organism and check its health
         genome = DigitalGenome()
         organism = DigitalOrganism("TestOrganism", genome)

@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/NguyenCuong1989/DAIOF-Framework#readme",
   "dependencies": {
-    "@playwright/test": "^1.56.1",
+    "@playwright/test": "^1.63.0",
     "express": "^4.21.2"
   }
 }
