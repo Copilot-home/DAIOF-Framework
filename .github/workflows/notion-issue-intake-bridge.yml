@@ -1,0 +1,95 @@
+name: Notion GitHub Issue Intake Bridge
+
+on:
+  issues:
+    types: [opened, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  mirror-to-notion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror issue into DB_TASKS
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_STATE: ${{ github.event.issue.state }}
+          ISSUE_LABELS: ${{ join(github.event.issue.labels.*.name, ', ') }}
+          REPOSITORY: ${{ github.repository }}
+          NOTION_DATABASE_ID: "38eba9f29bbc4da7ba2a99afae5c607b"
+        run: |
+          python3 - <<'PY'
+          import json, os, sys, urllib.request
+
+          token = os.environ.get("NOTION_API_KEY")
+          if not token:
+              print("NOTION_API_KEY missing", file=sys.stderr)
+              raise SystemExit(2)
+
+          title = os.environ["ISSUE_TITLE"]
+          issue_number = os.environ["ISSUE_NUMBER"]
+          repo = os.environ["REPOSITORY"]
+          url = os.environ["ISSUE_URL"]
+          labels = os.environ.get("ISSUE_LABELS", "")
+          body = os.environ.get("ISSUE_BODY") or ""
+
+          payload = {
+              "parent": {"database_id": os.environ["NOTION_DATABASE_ID"]},
+              "properties": {
+                  "Task Name": {"title": [{"text": {"content": f"[GitHub] #{issue_number} {title}"[:2000]}}]},
+                  "Status": {"status": {"name": "In Progress"}},
+                  "Assigned To": {"select": {"name": "Notion AI"}},
+                  "Impact": {"select": {"name": "Medium"}},
+                  "Conversation Log": {"rich_text": [{"text": {"content": f"Source: {repo}#{issue_number} | {url} | labels={labels}"[:2000]}}]},
+                  "__PROVENANCE__": {"rich_text": [{"text": {"content": "CERTIFIED_DAIOF"}}]},
+              },
+              "children": [
+                  {
+                      "object": "block",
+                      "type": "paragraph",
+                      "paragraph": {
+                          "rich_text": [{
+                              "type": "text",
+                              "text": {"content": f"GitHub issue intake. State={os.environ['ISSUE_STATE']}. Body: {body[:1500]}"},
+                          }]
+                      },
+                  }
+              ],
+          }
+
+          req = urllib.request.Request(
+              "https://api.notion.com/v1/pages",
+              data=json.dumps(payload).encode("utf-8"),
+              method="POST",
+              headers={
+                  "Authorization": f"Bearer {token}",
+                  "Notion-Version": "2022-06-28",
+                  "Content-Type": "application/json",
+              },
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=30) as resp:
+                  data = json.load(resp)
+          except Exception as exc:
+              print(f"NOTION_BRIDGE_FAIL: {exc}", file=sys.stderr)
+              raise
+
+          page_id = data.get("id")
+          page_url = data.get("url")
+          if not page_id:
+              print("NOTION_BRIDGE_FAIL: response has no page id", file=sys.stderr)
+              raise SystemExit(3)
+
+          print(json.dumps({
+              "decision": "PASS",
+              "receipt": "NOTION_PAGE_CREATED",
+              "page_id": page_id,
+              "page_url": page_url,
+              "github_issue": f"{repo}#{issue_number}",
+          }, ensure_ascii=False))
+          PY
