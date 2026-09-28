@@ -11,7 +11,7 @@ jobs:
   mirror-to-notion:
     runs-on: ubuntu-latest
     steps:
-      - name: Mirror issue into DB_TASKS
+      - name: Mirror issue into DB_TASKS with overflow fallback
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
@@ -22,6 +22,7 @@ jobs:
           ISSUE_LABELS: ${{ join(github.event.issue.labels.*.name, ', ') }}
           REPOSITORY: ${{ github.repository }}
           NOTION_DATABASE_ID: "38eba9f29bbc4da7ba2a99afae5c607b"
+          NOTION_OVERFLOW_PAGE_ID: "25225a7519934e1c80c41635caf8bd1d"
         run: |
           python3 - <<'PY'
           import json, os, sys, urllib.request, urllib.error
@@ -52,40 +53,25 @@ jobs:
                       body = {"raw": raw[:1000]}
                   return exc.code, body
 
-          me_status, me = request("GET", "https://api.notion.com/v1/users/me")
-          print(json.dumps({
-              "probe": "notion_identity",
-              "http_status": me_status,
-              "ok": me_status == 200,
-              "error_code": me.get("code") if isinstance(me, dict) else None,
-          }, ensure_ascii=False))
-
-          db_id = os.environ["NOTION_DATABASE_ID"]
-          db_status, db = request("GET", f"https://api.notion.com/v1/databases/{db_id}")
-          print(json.dumps({
-              "probe": "db_tasks_access",
-              "http_status": db_status,
-              "ok": db_status == 200,
-              "error_code": db.get("code") if isinstance(db, dict) else None,
-              "error_message": db.get("message") if isinstance(db, dict) else None,
-          }, ensure_ascii=False))
-
+          me_status, _ = request("GET", "https://api.notion.com/v1/users/me")
+          db_status, _ = request("GET", f"https://api.notion.com/v1/databases/{os.environ['NOTION_DATABASE_ID']}")
           if me_status != 200:
-              print("NOTION_BRIDGE_BLOCKED: API identity authentication/authorization failed", file=sys.stderr)
+              print(f"NOTION_BRIDGE_BLOCKED: identity probe HTTP {me_status}", file=sys.stderr)
               raise SystemExit(10)
           if db_status != 200:
-              print("NOTION_BRIDGE_BLOCKED: DB_TASKS is not writable/readable by the GitHub Actions integration", file=sys.stderr)
+              print(f"NOTION_BRIDGE_BLOCKED: DB_TASKS probe HTTP {db_status}", file=sys.stderr)
               raise SystemExit(11)
 
-          title = os.environ["ISSUE_TITLE"]
-          issue_number = os.environ["ISSUE_NUMBER"]
           repo = os.environ["REPOSITORY"]
+          issue_number = os.environ["ISSUE_NUMBER"]
+          title = os.environ["ISSUE_TITLE"]
           url = os.environ["ISSUE_URL"]
           labels = os.environ.get("ISSUE_LABELS", "")
+          state = os.environ["ISSUE_STATE"]
           body = os.environ.get("ISSUE_BODY") or ""
 
           payload = {
-              "parent": {"database_id": db_id},
+              "parent": {"database_id": os.environ["NOTION_DATABASE_ID"]},
               "properties": {
                   "Task Name": {"title": [{"text": {"content": f"[GitHub] #{issue_number} {title}"[:2000]}}]},
                   "Status": {"status": {"name": "In Progress"}},
@@ -97,39 +83,72 @@ jobs:
               "children": [{
                   "object": "block",
                   "type": "paragraph",
-                  "paragraph": {
-                      "rich_text": [{
-                          "type": "text",
-                          "text": {"content": f"GitHub issue intake. State={os.environ['ISSUE_STATE']}. Body: {body[:1500]}"},
-                      }]
-                  },
+                  "paragraph": {"rich_text": [{"type": "text", "text": {"content": f"GitHub issue intake. State={state}. Body: {body[:1500]}"}}]},
               }],
           }
 
-          status, data = request("POST", "https://api.notion.com/v1/pages", payload)
-          print(json.dumps({
-              "probe": "page_create",
-              "http_status": status,
-              "ok": status in (200, 201),
-              "error_code": data.get("code") if isinstance(data, dict) else None,
-              "error_message": data.get("message") if isinstance(data, dict) else None,
-          }, ensure_ascii=False))
+          create_status, created = request("POST", "https://api.notion.com/v1/pages", payload)
+          if create_status in (200, 201) and created.get("id"):
+              print(json.dumps({
+                  "decision": "PASS",
+                  "mode": "NEW_DB_TASK",
+                  "receipt": "NOTION_PAGE_CREATED",
+                  "page_id": created["id"],
+                  "page_url": created.get("url"),
+                  "github_issue": f"{repo}#{issue_number}",
+              }, ensure_ascii=False))
+              raise SystemExit(0)
 
-          if status not in (200, 201):
-              print("NOTION_BRIDGE_FAIL: page creation failed", file=sys.stderr)
+          if create_status != 403 or created.get("code") != "restricted_resource":
+              print(json.dumps({
+                  "decision": "FAIL",
+                  "mode": "NEW_DB_TASK",
+                  "http_status": create_status,
+                  "error_code": created.get("code"),
+                  "error_message": created.get("message"),
+              }, ensure_ascii=False), file=sys.stderr)
               raise SystemExit(12)
 
-          page_id = data.get("id")
-          page_url = data.get("url")
-          if not page_id:
-              print("NOTION_BRIDGE_FAIL: response has no page id", file=sys.stderr)
+          # Notion workspace block quota prevents creation. Preserve intake by updating
+          # an existing DB_TASKS page's Conversation Log without creating new blocks.
+          page_id = os.environ["NOTION_OVERFLOW_PAGE_ID"]
+          read_status, page = request("GET", f"https://api.notion.com/v1/pages/{page_id}")
+          if read_status != 200:
+              print(f"NOTION_OVERFLOW_BLOCKED: existing page read HTTP {read_status}", file=sys.stderr)
               raise SystemExit(13)
 
+          current = ""
+          prop = (page.get("properties") or {}).get("Conversation Log") or {}
+          for item in prop.get("rich_text", []):
+              current += ((item.get("plain_text") or (item.get("text") or {}).get("content") or ""))
+
+          event = f"\n[BRIDGE_OVERFLOW] {repo}#{issue_number} | {url} | state={state} | labels={labels} | title={title} | body={body[:800]}"
+          merged = (current + event)[-1900:]
+
+          patch = {
+              "properties": {
+                  "Status": {"status": {"name": "In Progress"}},
+                  "Assigned To": {"select": {"name": "Notion AI"}},
+                  "Conversation Log": {"rich_text": [{"text": {"content": merged}}]},
+              }
+          }
+          patch_status, patched = request("PATCH", f"https://api.notion.com/v1/pages/{page_id}", patch)
+          if patch_status not in (200, 201):
+              print(json.dumps({
+                  "decision": "BLOCKED",
+                  "mode": "OVERFLOW_FALLBACK",
+                  "http_status": patch_status,
+                  "error_code": patched.get("code"),
+                  "error_message": patched.get("message"),
+              }, ensure_ascii=False), file=sys.stderr)
+              raise SystemExit(14)
+
           print(json.dumps({
-              "decision": "PASS",
-              "receipt": "NOTION_PAGE_CREATED",
+              "decision": "PASS_WITH_OVERFLOW_FALLBACK",
+              "mode": "EXISTING_DB_TASK_EVENT_LOG",
+              "receipt": "NOTION_EXISTING_TASK_UPDATED",
               "page_id": page_id,
-              "page_url": page_url,
               "github_issue": f"{repo}#{issue_number}",
+              "reason": "workspace_free_block_limit",
           }, ensure_ascii=False))
           PY
