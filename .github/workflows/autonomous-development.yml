@@ -112,7 +112,7 @@ jobs:
             TASK="${{ github.event.inputs.task_type || 'full_autonomous_cycle' }}"
             git commit -m "🧬 Autonomous evolution: $TIMESTAMP - Task: $TASK - Self-development cycle completed [Digital Organism]
 
-Provenance: run=${{ github.run_id }} attempt=${{ github.run_attempt }} actor=${{ github.actor }}"
+            Provenance: run=${{ github.run_id }} attempt=${{ github.run_attempt }} actor=${{ github.actor }}"
             git push
             echo "AUTONOMY_COMMIT_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
             echo "AUTONOMY_COMMIT_SHA=$(git rev-parse HEAD)"
