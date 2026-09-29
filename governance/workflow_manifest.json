@@ -7,21 +7,23 @@
   ],
   "metrics": {
     "deploy_workflow_count": 4,
-    "explicit_permission_coverage": 0.8148,
-    "pinned_action_rate": 1.0,
+    "explicit_permission_coverage": 0.8214,
+    "pinned_action_rate": 0.0,
     "workflow_drift_rate": 0.0
   },
   "schema_version": "1.0.0",
   "source": ".github/workflows",
-  "workflow_count": 27,
+  "workflow_count": 28,
   "workflows": [
     {
-      "action_references": 0,
+      "action_references": 1,
       "deploy_capable": false,
       "explicit_permissions": true,
       "jobs": [
         {
-          "actions": [],
+          "actions": [
+            "actions/upload-artifact@v4"
+          ],
           "environment": null,
           "id": "autonomous-agent",
           "needs": [],
@@ -31,15 +33,19 @@
       "name": "AI Agent Autonomous Operations",
       "path": ".github/workflows/ai-agent-autonomous.yml",
       "permissions": {
+        "actions": "read",
         "contents": "write",
         "pull-requests": "write"
       },
       "pinned_action_references": 0,
-      "sha256": "5c8de8a1c9852d027aad944a58a979c21e1953201424dacd96eff9aeb9e0294a",
+      "sha256": "dff66cce39ad4306d67ba2b10d0ed6d6ad2dab2a510fb9553c7a5a495c514113",
       "triggers": [
+        "schedule",
         "workflow_dispatch"
       ],
-      "unpinned_actions": []
+      "unpinned_actions": [
+        "actions/upload-artifact@v4"
+      ]
     },
     {
       "action_references": 0,
@@ -160,12 +166,14 @@
       "unpinned_actions": []
     },
     {
-      "action_references": 0,
+      "action_references": 1,
       "deploy_capable": false,
       "explicit_permissions": true,
       "jobs": [
         {
-          "actions": [],
+          "actions": [
+            "actions/upload-artifact@v4"
+          ],
           "environment": null,
           "id": "autonomous_development",
           "needs": [],
@@ -175,15 +183,19 @@
       "name": "\ud83e\uddec Autonomous Development - Self-Evolving Organism",
       "path": ".github/workflows/autonomous-development.yml",
       "permissions": {
+        "actions": "read",
         "contents": "write",
         "pull-requests": "write"
       },
       "pinned_action_references": 0,
-      "sha256": "e1449d6c6ddbf26af0030498c01f8412c665a51f1d0b700004546e1d825f95ff",
+      "sha256": "92fa3adaf33bd6115319f5c864ff164a61eee51d21bb3ee013d94c34f02d57a6",
       "triggers": [
+        "schedule",
         "workflow_dispatch"
       ],
-      "unpinned_actions": []
+      "unpinned_actions": [
+        "actions/upload-artifact@v4"
+      ]
     },
     {
       "action_references": 0,
@@ -201,42 +213,76 @@
       "name": "\ud83e\uddec Autonomous Git Workflow - Complete Repository Control",
       "path": ".github/workflows/autonomous-git-workflow.yml",
       "permissions": {
+        "actions": "read",
         "contents": "write",
         "pull-requests": "write"
       },
       "pinned_action_references": 0,
-      "sha256": "1790ed23a48f38a911dcca8e2c3cdfa5da974ebc97a48aea2f3575456954cbdf",
+      "sha256": "c70228c2334cabe3b90c3614188528c57eb0573599b02e3a5ab6b59bc0d27957",
       "triggers": [
+        "schedule",
         "workflow_dispatch"
       ],
       "unpinned_actions": []
     },
     {
-      "action_references": 0,
+      "action_references": 8,
       "deploy_capable": false,
       "explicit_permissions": true,
       "jobs": [
         {
-          "actions": [],
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/setup-python@v5",
+            "peter-evans/create-pull-request@v6"
+          ],
           "environment": null,
-          "id": "autonomous_security_fix",
+          "id": "propose-fixes",
+          "needs": [
+            "scan"
+          ],
+          "permissions": {
+            "contents": "write",
+            "pull-requests": "write"
+          }
+        },
+        {
+          "actions": [
+            "actions/checkout@v4",
+            "actions/setup-node@v4",
+            "actions/setup-python@v5",
+            "actions/upload-artifact@v4"
+          ],
+          "environment": null,
+          "id": "scan",
           "needs": [],
           "permissions": null
         }
       ],
-      "name": "\ud83d\udee1\ufe0f Autonomous Security Fix & Maintenance",
+      "name": "Security scan and PR",
       "path": ".github/workflows/autonomous-security-fix.yml",
       "permissions": {
-        "contents": "write",
-        "pull-requests": "write"
+        "contents": "read",
+        "security-events": "write"
       },
       "pinned_action_references": 0,
-      "sha256": "48e350141f657c989e3bc0cd63dc2b7abecc3543c070f5913c1f077c65480948",
+      "sha256": "f926de88410352ace35d439890923e681ef6426b11b2c06947681f3fc1657e07",
       "triggers": [
         "push",
+        "schedule",
         "workflow_dispatch"
       ],
-      "unpinned_actions": []
+      "unpinned_actions": [
+        "actions/checkout@v4",
+        "actions/checkout@v4",
+        "actions/setup-node@v4",
+        "actions/setup-node@v4",
+        "actions/setup-python@v5",
+        "actions/setup-python@v5",
+        "actions/upload-artifact@v4",
+        "peter-evans/create-pull-request@v6"
+      ]
     },
     {
       "action_references": 0,
@@ -283,7 +329,7 @@
         "contents": "read"
       },
       "pinned_action_references": 0,
-      "sha256": "59ccb484c34149ad0649ece855a6b86e7478f48040e2befbbffa5854f6d9dc36",
+      "sha256": "59f6773e511cf28aa50d2198cf63bc88ba857b84361c36f72ae4699efa9393ef",
       "triggers": [
         "pull_request",
         "push"
@@ -601,6 +647,31 @@
       "sha256": "52491cc28479eb27b54d1e0f1f8c5ad56905bd2a54e1bfcce8caa947b41f35ce",
       "triggers": [
         "workflow_dispatch"
+      ],
+      "unpinned_actions": []
+    },
+    {
+      "action_references": 0,
+      "deploy_capable": false,
+      "explicit_permissions": true,
+      "jobs": [
+        {
+          "actions": [],
+          "environment": null,
+          "id": "mirror-to-notion",
+          "needs": [],
+          "permissions": null
+        }
+      ],
+      "name": "Notion GitHub Issue Intake Bridge",
+      "path": ".github/workflows/notion-issue-intake-bridge.yml",
+      "permissions": {
+        "contents": "read"
+      },
+      "pinned_action_references": 0,
+      "sha256": "d8083df431932cd7f647f5eead77859df44d927bcecb610c303b88e211759690",
+      "triggers": [
+        "issues"
       ],
       "unpinned_actions": []
     },
