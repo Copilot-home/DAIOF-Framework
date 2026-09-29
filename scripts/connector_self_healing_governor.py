@@ -10,7 +10,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 MATRIX = ROOT / "docs/operations/CONNECTOR_HEALTH_MATRIX.yaml"
 
-BLOCK_MUTATION_STATES = {"auth_stale", "broken", "production_guarded", "unknown"}
+HARD_DENY_STATES = {"auth_stale", "broken", "unknown"}
 ADAPTER_STATES = {"ready_with_adapter"}
 SAFE_STATES = {"ready", "legacy_ready"}
 
@@ -37,16 +37,16 @@ def classify(connector: str, action: str) -> dict:
     if action in blocked:
         decision = "DENY"
         reason = "explicitly_blocked_action"
-    elif state == "production_guarded" and any(x in action for x in ["create", "refund", "invoice", "payment", "charge", "customer_mutation"]):
-        decision = "DENY"
-        reason = "financial_mutation_blocked"
-    elif state in BLOCK_MUTATION_STATES and action not in allowed:
+    elif state in HARD_DENY_STATES:
         decision = "DENY"
         reason = f"state_{state}_requires_guard"
+    elif action not in allowed:
+        decision = "DENY"
+        reason = "action_not_allowlisted"
     elif state in ADAPTER_STATES:
         decision = "ALLOW_WITH_ADAPTER"
         reason = "normalizer_required"
-    elif state in SAFE_STATES or action in allowed:
+    elif state in SAFE_STATES or state in {"partial", "production_guarded"}:
         decision = "ALLOW"
         reason = "policy_pass"
     else:
