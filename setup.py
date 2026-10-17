@@ -61,15 +61,15 @@ setup(
     install_requires=requirements,
     extras_require={
         "dev": [
-            "pytest>=7.0",
-            "pytest-cov>=4.0",
-            "black>=23.0",
-            "flake8>=6.0",
-            "mypy>=1.0",
+            "pytest>=8.3.5",
+            "pytest-cov>=5.0.0",
+            "black>=24.8.0",
+            "flake8>=7.1.2",
+            "mypy>=1.14.1",
         ],
         "docs": [
-            "sphinx>=5.0",
-            "sphinx-rtd-theme>=1.0",
+            "sphinx>=7.1.2",
+            "sphinx-rtd-theme>=3.1.0",
         ],
     },
     entry_points={
