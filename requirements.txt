@@ -1,5 +1,3 @@
-numpy>=1.19.0
-PyGithub>=1.55
-pyyaml>=5.4
-pathlib2>=2.3.0
-requests>=2.25.0
+PyGithub>=2.8.1
+PyYAML>=6.0.3
+requests>=2.32.4

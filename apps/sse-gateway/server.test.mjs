@@ -45,8 +45,13 @@ test("SSE requires a valid token and streams status/result frames", async () => 
     const decoder = new TextDecoder();
     let output = "";
 
-    while (!output.includes("event: result")) {
-      const { value } = await reader.read();
+    while (
+      !output.includes(
+        'data: {"query":"email","intent":"email","tools":["Gmail"]}\n\n',
+      )
+    ) {
+      const { value, done } = await reader.read();
+      if (done) break;
       output += decoder.decode(value);
     }
     controller.abort();
