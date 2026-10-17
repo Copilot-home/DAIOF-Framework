@@ -1,3 +1,4 @@
+import datetime as dt
 import os
 import sys
 import sqlite3
@@ -52,6 +53,12 @@ class RuntimeToolsTests(unittest.TestCase):
 
             self.assertEqual(first.returncode, 0)
             self.assertEqual(second.returncode, 0)
+            self.assertTrue((log_dir / "daily_dnr_run.log").is_file())
+            marker = marker_dir / f"daily_dnr.{dt.date.today().isoformat()}.done"
+            self.assertTrue(marker.is_file())
+            with sqlite3.connect(db) as conn:
+                run_count = conn.execute("SELECT COUNT(*) FROM dnr_runs").fetchone()[0]
+            self.assertEqual(run_count, 1)
 
     def test_health_daemon_writes_trend(self):
         with tempfile.TemporaryDirectory() as td:
