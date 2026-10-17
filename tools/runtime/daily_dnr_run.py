@@ -60,20 +60,6 @@ def parse_args() -> argparse.Namespace:
 def configure_logging(log_dir: Path) -> None:
     log_dir.mkdir(parents=True, exist_ok=True)
     log_file = log_dir / "daily_dnr_run.log"
-import datetime as dt
-import logging
-import sqlite3
-from pathlib import Path
-
-STATE_DIR = Path.home() / ".hyperai" / "state"
-LOG_DIR = Path.home() / ".hyperai" / "logs"
-DB_PATH = Path.home() / "Desktop" / "workbench" / "hyperai_eternal_memories.db"
-CYCLE_NAME = "daily_dnr"
-
-
-def configure_logging() -> None:
-    LOG_DIR.mkdir(parents=True, exist_ok=True)
-    log_file = LOG_DIR / "daily_dnr_run.log"
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(message)s",
@@ -85,7 +71,6 @@ def marker_for_today(marker_dir: Path) -> Path:
     marker_dir.mkdir(parents=True, exist_ok=True)
     today = dt.date.today().isoformat()
     return marker_dir / f"{CYCLE_NAME}.{today}.done"
-
 
 def mark_cycle_complete(marker: Path) -> None:
     tmp = marker.with_suffix(f"{marker.suffix}.tmp")
@@ -116,22 +101,6 @@ def ensure_wal_initialized(db_path: Path, state_dir: Path) -> None:
 def connect_db(db_path: Path, state_dir: Path) -> sqlite3.Connection:
     ensure_wal_initialized(db_path, state_dir)
     conn = sqlite3.connect(db_path, timeout=30)
-def marker_for_today() -> Path:
-    STATE_DIR.mkdir(parents=True, exist_ok=True)
-    today = dt.date.today().isoformat()
-    return STATE_DIR / f"{CYCLE_NAME}.{today}.done"
-
-
-def already_executed_this_cycle_today() -> bool:
-    return marker_for_today().exists()
-
-
-def mark_cycle_complete() -> None:
-    marker_for_today().write_text(dt.datetime.now(dt.timezone.utc).isoformat())
-
-
-def connect_db(path: Path) -> sqlite3.Connection:
-    conn = sqlite3.connect(path, timeout=30)
     conn.execute("PRAGMA journal_mode=WAL;")
     conn.execute("PRAGMA synchronous=NORMAL;")
     return conn
@@ -153,7 +122,10 @@ def run_cycle(db_path: Path, marker_dir: Path, lock_file: Path, state_dir: Path)
             conn.execute(
                 "CREATE TABLE IF NOT EXISTS dnr_runs (id INTEGER PRIMARY KEY, run_at TEXT NOT NULL)"
             )
-            conn.execute("INSERT INTO dnr_runs(run_at) VALUES (?)", (dt.datetime.utcnow().isoformat(),))
+            conn.execute(
+                "INSERT INTO dnr_runs(run_at) VALUES (?)",
+                (dt.datetime.now(dt.timezone.utc).isoformat(),),
+            )
             conn.commit()
 
         mark_cycle_complete(marker)
@@ -208,38 +180,6 @@ def main() -> int:
     except Exception:  # noqa: BLE001
         logging.exception("Unexpected failure in daily DNR cycle")
         return 2
-def run_cycle() -> None:
-    if already_executed_this_cycle_today():
-        logging.info("Cycle already executed today. Skipping.")
-        return
-
-    if not DB_PATH.exists():
-        logging.warning("Database not found at %s. Skipping cycle.", DB_PATH)
-        return
-
-    with connect_db(DB_PATH) as conn:
-        # Replace with your deterministic cycle logic.
-        conn.execute(
-            "CREATE TABLE IF NOT EXISTS dnr_runs (id INTEGER PRIMARY KEY, run_at TEXT NOT NULL)"
-        )
-        conn.execute("INSERT INTO dnr_runs(run_at) VALUES (?)", (dt.datetime.utcnow().isoformat(),))
-        conn.commit()
-
-    mark_cycle_complete()
-    logging.info("Cycle complete.")
-
-
-def main() -> int:
-    configure_logging()
-    try:
-        run_cycle()
-        return 0
-    except sqlite3.Error:
-        logging.exception("SQLite failure in daily DNR cycle")
-        return 1
-    except Exception:  # noqa: BLE001
-        logging.exception("Unexpected failure in daily DNR cycle")
-        return 1
 
 
 if __name__ == "__main__":
